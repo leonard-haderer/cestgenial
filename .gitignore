@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+virt/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Outputs générés
+outputs/*.csv
+outputs/*.xlsx
+maps/*.html
+
+# Garder les dossiers mais ignorer le contenu
+!outputs/.gitkeep
+!maps/.gitkeep
+
+# Données sensibles (si ajoutées plus tard)
+data/*_sensible.csv
+*.log
+

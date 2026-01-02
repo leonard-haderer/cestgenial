@@ -1,0 +1,33 @@
+nom_crise,type_crise,pays,latitude,longitude,intensite,date,population_touchee,accessibilite,description,en_cours,date_fin
+Séisme Haïti 2010,Séisme,Haïti,18.9712,-72.2852,9.0,2010-01-12,3000000,0.3,Grand séisme dévastateur,False,2010-12-31
+Tsunami Indonésie 2004,Tsunami,Indonésie,-3.2956,114.5900,9.1,2004-12-26,5000000,0.4,Tsunami majeur dans l'océan Indien,False,2005-12-31
+Ouragan Katrina,Ouragan,États-Unis,29.9511,-90.0715,5.0,2005-08-29,1500000,0.7,Ouragan de catégorie 5,False,2005-12-31
+Inondation Pakistan 2010,Inondation,Pakistan,30.3753,69.3451,8.5,2010-07-28,20000000,0.5,Inondations massives,False,2011-12-31
+Séisme Népal 2015,Séisme,Népal,28.1470,84.7080,7.8,2015-04-25,8000000,0.4,Séisme majeur dans l'Himalaya,False,2016-12-31
+Famine Somalie 2011,Famine,Somalie,2.0469,45.3182,9.5,2011-07-20,12000000,0.2,Crise alimentaire majeure,False,2012-12-31
+Cyclone Idai,Cyclone,Mozambique,-19.3022,34.9079,4.5,2019-03-14,3000000,0.3,Cyclone tropical destructeur,False,2019-12-31
+Séisme Turquie 2023,Séisme,Turquie,37.1667,37.0333,7.8,2023-02-06,15000000,0.6,Séisme majeur en Turquie-Syrie,False,2023-12-31
+Inondation Bangladesh 2020,Inondation,Bangladesh,23.6850,90.3563,7.0,2020-07-01,5000000,0.5,Inondations saisonnières,False,2020-12-31
+Volcan Taal 2020,Éruption volcanique,Philippines,14.0101,121.0000,6.0,2020-01-12,500000,0.6,Éruption volcanique majeure,False,2020-12-31
+Incendie Australie 2019-2020,Incendie,Australie,-25.2744,133.7751,8.0,2019-09-01,25000000,0.7,Feux de brousse massifs,False,2020-03-31
+Séisme Chili 2010,Séisme,Chili,-35.8467,-72.7183,8.8,2010-02-27,2000000,0.6,Séisme majeur suivi d'un tsunami,False,2010-12-31
+Typhon Haiyan,Typhon,Philippines,11.2500,125.0000,5.0,2013-11-08,16000000,0.4,Typhon super destructeur,False,2014-12-31
+Séisme Iran 2003,Séisme,Iran,26.8206,58.1956,6.6,2003-12-26,300000,0.5,Séisme destructeur,False,2004-12-31
+Inondation Allemagne 2021,Inondation,Allemagne,50.1109,7.1301,7.5,2021-07-14,200000,0.8,Inondations catastrophiques,False,2021-12-31
+Séisme Italie 2016,Séisme,Italie,42.7039,13.2228,6.2,2016-08-24,300000,0.7,Séisme dans les Apennins,False,2016-12-31
+Cyclone Amphan,Cyclone,Inde,22.5726,88.3639,4.0,2020-05-20,10000000,0.5,Cyclone super intense,False,2020-12-31
+Séisme Japon 2011,Séisme,Japon,38.2975,142.3722,9.1,2011-03-11,45000000,0.8,Séisme et tsunami de Tohoku,False,2011-12-31
+Inondation Chine 2020,Inondation,Chine,30.5928,114.3055,8.0,2020-06-01,40000000,0.6,Inondations massives du Yangtsé,False,2020-12-31
+Séisme Équateur 2016,Séisme,Équateur,-0.1807,-78.4678,7.8,2016-04-16,1000000,0.5,Séisme majeur côtier,False,2016-12-31
+COVID-19 Pandémie,Pandémie,Mondial,30.5928,114.3055,10.0,2020-03-11,7800000000,0.6,Pandémie mondiale de coronavirus,False,2023-12-31
+Grippe espagnole 1918,Pandémie,Mondial,40.4168,-3.7038,9.5,1918-03-01,2000000000,0.3,Pandémie de grippe la plus meurtrière,False,1920-12-31
+Guerre Ukraine 2022,Guerre,Ukraine,50.4501,30.5234,9.0,2022-02-24,44000000,0.4,Conflit armé majeur en Europe,True,
+Guerre Syrie 2011,Guerre,Syrie,33.5138,36.2765,8.5,2011-03-15,22000000,0.3,Guerre civile syrienne,True,
+Guerre Yémen 2015,Guerre,Yémen,15.3694,44.1910,8.0,2015-03-26,30000000,0.2,Conflit au Yémen,True,
+Seconde Guerre mondiale,Guerre,Mondial,52.5200,13.4050,10.0,1939-09-01,2000000000,0.5,Conflit mondial majeur,False,1945-09-02
+Inondation Pakistan 2024,Inondation,Pakistan,30.3753,69.3451,7.5,2024-08-01,15000000,0.4,Inondations saisonnières majeures,True,
+Séisme Maroc 2024,Séisme,Maroc,31.7917,-7.0926,6.8,2024-09-08,5000000,0.5,Séisme destructeur dans le Haut Atlas,True,
+Cyclone Biparjoy 2024,Cyclone,Inde,22.5726,88.3639,4.5,2024-06-15,8000000,0.5,Cyclone intense dans le golfe du Bengale,True,
+Famine Soudan 2024,Famine,Soudan,12.8628,30.2176,8.5,2024-04-15,12000000,0.2,Crise alimentaire majeure,True,
+Incendie Canada 2024,Incendie,Canada,56.1304,-106.3468,7.5,2024-05-01,10000000,0.6,Feux de forêt massifs,True,
+

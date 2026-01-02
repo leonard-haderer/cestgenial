@@ -1,0 +1,3 @@
+# Ce fichier permet de garder le dossier outputs dans git
+# Les fichiers générés seront ignorés par .gitignore
+
