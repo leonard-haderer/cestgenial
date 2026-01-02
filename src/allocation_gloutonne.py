@@ -279,3 +279,4 @@ if __name__ == "__main__":
     allocation_toutes, stock_restant_toutes = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=False)
     afficher_resume_allocation(allocation_toutes, stock_restant_toutes)
 
+

@@ -408,3 +408,4 @@ function afficherResultatsPrediction(result) {
     container.innerHTML = html;
 }
 
+

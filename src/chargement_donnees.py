@@ -174,3 +174,4 @@ if __name__ == "__main__":
         print("\nListe des crises actuelles:")
         print(crises_actuelles[['nom_crise', 'type_crise', 'pays', 'date']].to_string())
 
+

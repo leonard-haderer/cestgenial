@@ -5,6 +5,7 @@ Auteur: Projet CGénial 2025
 
 from flask import Flask, render_template, request, jsonify, send_file
 import pandas as pd
+import numpy as np
 from pathlib import Path
 import json
 import os
@@ -44,12 +45,51 @@ def api_crises():
     try:
         seulement_actuelles = request.args.get('actuelles', 'false').lower() == 'true'
         crises = charger_crises(seulement_actuelles=seulement_actuelles)
+        
+        # Convertit les dates en chaînes de caractères pour la sérialisation JSON
+        crises_copy = crises.copy()
+        if 'date' in crises_copy.columns:
+            crises_copy['date'] = crises_copy['date'].apply(
+                lambda x: x.strftime('%Y-%m-%d') if pd.notna(x) else None
+            )
+        if 'date_fin' in crises_copy.columns:
+            crises_copy['date_fin'] = crises_copy['date_fin'].apply(
+                lambda x: x.strftime('%Y-%m-%d') if pd.notna(x) else None
+            )
+        
+        # Convertit les booléens en Python natifs (pandas peut utiliser numpy.bool_)
+        if 'en_cours' in crises_copy.columns:
+            crises_copy['en_cours'] = crises_copy['en_cours'].astype(bool)
+        
+        # Convertit en dictionnaire et nettoie les valeurs NaN
+        data = []
+        for _, row in crises_copy.iterrows():
+            record = {}
+            for col, val in row.items():
+                # Gère les valeurs NaN et NaT
+                if pd.isna(val) or val is pd.NaT:
+                    record[col] = None
+                # Convertit les types numpy en types Python natifs
+                elif isinstance(val, (np.integer, np.int64)):
+                    record[col] = int(val)
+                elif isinstance(val, (np.floating, np.float64)):
+                    record[col] = float(val)
+                elif isinstance(val, np.bool_):
+                    record[col] = bool(val)
+                elif isinstance(val, str) and val == 'NaT':
+                    record[col] = None
+                else:
+                    record[col] = val
+            data.append(record)
+        
         return jsonify({
             'success': True,
-            'data': crises.to_dict('records'),
+            'data': data,
             'actuelles': seulement_actuelles
         })
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -100,7 +140,7 @@ def api_statistiques():
 def api_allocation():
     """API pour calculer l'allocation gloutonne (uniquement crises actuelles)"""
     try:
-        data = request.json
+        data = request.json or {}
         stock = data.get('stock', {})
         seulement_actuelles = data.get('seulement_actuelles', True)  # Par défaut, seulement actuelles
         
@@ -127,15 +167,46 @@ def api_allocation():
             seulement_actuelles=seulement_actuelles
         )
         
+        # Convertit les dates et types pour la sérialisation JSON
+        if len(allocation) > 0:
+            allocation_copy = allocation.copy()
+            for col in allocation_copy.columns:
+                if pd.api.types.is_datetime64_any_dtype(allocation_copy[col]):
+                    allocation_copy[col] = allocation_copy[col].dt.strftime('%Y-%m-%d')
+            
+            # Convertit en dictionnaire et nettoie les valeurs
+            allocation_dict = []
+            for _, row in allocation_copy.iterrows():
+                record = {}
+                for col, val in row.items():
+                    if pd.isna(val):
+                        record[col] = None
+                    elif isinstance(val, (np.integer, np.int64)):
+                        record[col] = int(val)
+                    elif isinstance(val, (np.floating, np.float64)):
+                        record[col] = float(val)
+                    elif isinstance(val, np.bool_):
+                        record[col] = bool(val)
+                    else:
+                        record[col] = val
+                allocation_dict.append(record)
+            
+            top5_dict = allocation_dict[:5] if len(allocation_dict) > 0 else []
+        else:
+            allocation_dict = []
+            top5_dict = []
+        
         return jsonify({
             'success': True,
-            'allocation': allocation.to_dict('records'),
+            'allocation': allocation_dict,
             'stock_restant': stock_restant,
-            'top5': allocation.head(5).to_dict('records') if len(allocation) > 0 else [],
+            'top5': top5_dict,
             'nb_crises_traitees': len(allocation),
             'seulement_actuelles': seulement_actuelles
         })
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
@@ -298,4 +369,5 @@ if __name__ == '__main__':
     print("\nAppuyez sur Ctrl+C pour arrêter le serveur\n")
     
     app.run(host='0.0.0.0', port=8080, debug=True)
+
 

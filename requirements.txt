@@ -21,3 +21,4 @@ flask>=2.0.0
 # Géospatial (optionnel, pour analyses avancées)
 # geopandas>=0.10.0  # Décommenter si nécessaire
 
+

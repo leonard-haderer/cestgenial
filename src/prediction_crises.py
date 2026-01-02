@@ -574,3 +574,4 @@ if __name__ == "__main__":
                             modele_int, scaler_int)
     afficher_prediction(resultat)
 
+
