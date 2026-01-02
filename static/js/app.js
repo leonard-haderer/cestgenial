@@ -184,6 +184,11 @@ function afficherResultatsAllocation(result) {
             <i class="fas fa-info-circle"></i> 
             <strong>${result.nb_crises_traitees} crise(s) ${result.seulement_actuelles ? 'actuelle(s)' : ''} traitée(s)</strong>
         </div>
+        <div class="alert alert-warning alert-custom">
+            <i class="fas fa-exclamation-triangle"></i> 
+            <strong>Mécanique d'allocation :</strong> 25% des ressources sont réservées (non utilisées). 
+            Les 75% restants sont alloués proportionnellement au produit (score d'urgence × population touchée) de chaque crise.
+        </div>
     `;
     
     if (result.top5.length === 0) {
@@ -202,7 +207,87 @@ function afficherResultatsAllocation(result) {
         
         html += '</ul></div></div>';
         
-        html += '<div class="card mt-3"><div class="card-header"><i class="fas fa-boxes"></i> Stocks Restants</div><div class="card-body"><ul class="list-group">';
+        // Bloc avec toutes les crises actuelles traitées
+        if (result.allocation && result.allocation.length > 0) {
+            html += '<div class="card mt-3"><div class="card-header"><i class="fas fa-list"></i> Toutes les Crises Actuelles Traitées</div><div class="card-body">';
+            html += '<div class="table-responsive"><table class="table table-hover table-striped" id="table-allocation">';
+            html += '<thead><tr>';
+            html += '<th>Rang</th><th>Nom de la Crise</th><th>Type</th><th>Pays</th><th>Intensité</th>';
+            html += '<th>Score Urgence</th><th>Population</th><th>Accessibilité</th>';
+            html += '</tr></thead><tbody>';
+            
+            result.allocation.forEach((crise, idx) => {
+                const scoreUrgence = crise.score_urgence_normalise ? crise.score_urgence_normalise.toFixed(2) : 'N/A';
+                const rowId = `crise-row-${idx}`;
+                const detailRowId = `crise-detail-${idx}`;
+                
+                // Ligne principale (cliquable)
+                html += `<tr class="crise-row" id="${rowId}" onclick="toggleCriseDetails(${idx})" style="cursor: pointer;">`;
+                html += `<td><strong>${idx + 1}</strong></td>`;
+                html += `<td><strong>${crise.nom_crise || 'N/A'}</strong> <i class="fas fa-chevron-down ms-1"></i></td>`;
+                html += `<td><span class="badge bg-primary">${crise.type_crise || 'N/A'}</span></td>`;
+                html += `<td>${crise.pays || 'N/A'}</td>`;
+                html += `<td><span class="badge bg-danger">${crise.intensite || 'N/A'}</span></td>`;
+                html += `<td>${scoreUrgence}%</td>`;
+                html += `<td>${(crise.population_touchee || 0).toLocaleString('fr-FR')}</td>`;
+                html += `<td>${(crise.accessibilite || 0).toFixed(2)}</td>`;
+                html += '</tr>';
+                
+                // Ligne détaillée (cachée par défaut)
+                html += `<tr id="${detailRowId}" class="crise-detail-row" style="display: none;">`;
+                html += '<td colspan="8" class="bg-light">';
+                html += '<div class="p-3">';
+                html += '<h6 class="mb-3"><i class="fas fa-box-open"></i> Ressources Allouées</h6>';
+                html += '<div class="row">';
+                
+                // Mapping des ressources avec leurs noms d'affichage
+                const ressourcesMapping = {
+                    'allocation_denrees_alimentaires_kg': 'Denrées alimentaires (kg)',
+                    'allocation_eau_potable_litres': 'Eau potable (litres)',
+                    'allocation_generateurs': 'Générateurs',
+                    'allocation_hopitaux_campagne': 'Hôpitaux de campagne',
+                    'allocation_medicaments_doses': 'Médicaments (doses)',
+                    'allocation_personnel_medical': 'Personnel médical',
+                    'allocation_tentes': 'Tentes',
+                    'allocation_vehicules_urgence': 'Véhicules d urgence'
+                };
+                
+                // Affiche les ressources allouées
+                let hasAllocation = false;
+                for (const [key, label] of Object.entries(ressourcesMapping)) {
+                    const valeur = crise[key] || 0;
+                    if (valeur > 0) {
+                        hasAllocation = true;
+                    }
+                    html += '<div class="col-md-6 mb-2">';
+                    html += `<strong>${label}:</strong> <span class="badge ${valeur > 0 ? 'bg-success' : 'bg-secondary'}">${valeur.toLocaleString('fr-FR')}</span>`;
+                    html += '</div>';
+                }
+                
+                if (!hasAllocation) {
+                    html += '<div class="col-12 mt-2"><em class="text-muted">Aucune ressource allouée pour cette crise.</em></div>';
+                }
+                
+                html += '</div></div></td></tr>';
+            });
+            
+            html += '</tbody></table></div>';
+            html += '</div></div>';
+        }
+        
+        // Affiche le stock réservé (25%)
+        if (result.stock_reserve) {
+            html += '<div class="card mt-3"><div class="card-header bg-warning"><i class="fas fa-lock"></i> Stocks Réservés (25% - Non Utilisés)</div><div class="card-body"><ul class="list-group">';
+            
+            for (const [ressource, quantite] of Object.entries(result.stock_reserve)) {
+                html += `<li class="list-group-item">${ressource.replace(/_/g, ' ')}: <strong>${quantite.toLocaleString('fr-FR')}</strong></li>`;
+            }
+            
+            html += '</ul></div></div>';
+        }
+        
+        // Affiche les stocks restants (dans les 75% allouables)
+        html += '<div class="card mt-3"><div class="card-header"><i class="fas fa-boxes"></i> Stocks Restants (dans les 75% Allouables)</div><div class="card-body"><ul class="list-group">';
         
         for (const [ressource, quantite] of Object.entries(result.stock_restant)) {
             html += `<li class="list-group-item">${ressource.replace(/_/g, ' ')}: ${quantite.toLocaleString('fr-FR')}</li>`;
@@ -212,6 +297,29 @@ function afficherResultatsAllocation(result) {
     }
     
     container.innerHTML = html;
+}
+
+// Fonction pour afficher/masquer les détails d'une crise
+function toggleCriseDetails(idx) {
+    const detailRow = document.getElementById(`crise-detail-${idx}`);
+    const mainRow = document.getElementById(`crise-row-${idx}`);
+    const icon = mainRow.querySelector('.fa-chevron-down, .fa-chevron-up');
+    
+    if (detailRow.style.display === 'none') {
+        detailRow.style.display = '';
+        if (icon) {
+            icon.classList.remove('fa-chevron-down');
+            icon.classList.add('fa-chevron-up');
+        }
+        mainRow.classList.add('table-active');
+    } else {
+        detailRow.style.display = 'none';
+        if (icon) {
+            icon.classList.remove('fa-chevron-up');
+            icon.classList.add('fa-chevron-down');
+        }
+        mainRow.classList.remove('table-active');
+    }
 }
 
 // Génère la carte

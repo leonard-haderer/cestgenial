@@ -162,7 +162,7 @@ def api_allocation():
         # Fusionne avec les valeurs par défaut
         stock_final = {**stock_defaut, **stock}
         
-        allocation, stock_restant = allouer_ressources_glouton(
+        allocation, stock_restant, stock_reserve = allouer_ressources_glouton(
             crises, besoins, stock_final, 
             seulement_actuelles=seulement_actuelles
         )
@@ -200,6 +200,7 @@ def api_allocation():
             'success': True,
             'allocation': allocation_dict,
             'stock_restant': stock_restant,
+            'stock_reserve': stock_reserve,
             'top5': top5_dict,
             'nb_crises_traitees': len(allocation),
             'seulement_actuelles': seulement_actuelles
@@ -233,7 +234,7 @@ def api_carte():
                 'personnel_medical': 3000,
                 'denrees_alimentaires_kg': 10000000
             }
-            allocation, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
+            allocation, _, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
         
         carte = creer_carte_interactive(crises, allocation)
         dossier_maps = dossier_projet / 'maps'

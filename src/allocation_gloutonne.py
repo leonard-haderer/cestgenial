@@ -1,12 +1,13 @@
 """
-Module d'allocation gloutonne des ressources en cas de crise
+Module d'allocation proportionnelle des ressources en cas de crise
 Auteur: Projet CGénial 2025
 
-Algorithme glouton: 
+Algorithme d'allocation proportionnelle: 
 - Filtre uniquement les crises actuelles (en_cours=True)
 - Calcule un score d'urgence pour chaque crise
-- Trie les crises par score décroissant
-- Alloue les ressources disponibles en priorité aux crises les plus urgentes
+- Réserve 25% des ressources (non utilisées)
+- Alloue les 75% restants proportionnellement au score d'urgence de chaque crise
+- Respecte les besoins réels de chaque crise (ne dépasse pas le besoin)
 """
 
 import pandas as pd
@@ -40,7 +41,9 @@ def calculer_score_urgence(crise):
 
 def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulement_actuelles=True):
     """
-    Alloue les ressources disponibles aux crises selon un algorithme glouton
+    Alloue les ressources disponibles aux crises selon un algorithme proportionnel au produit (score d'urgence × population touchée)
+    - 25% des ressources sont réservées (non utilisées)
+    - 75% des ressources sont allouées proportionnellement au produit (score d'urgence × population touchée) de chaque crise
     Ne considère que les crises actuelles (en_cours=True) par défaut
     
     Args:
@@ -51,7 +54,7 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
         seulement_actuelles (bool): Si True, ne considère que les crises en cours
     
     Returns:
-        tuple: (df_allocation, stock_restant) - DataFrame avec allocations et stocks restants
+        tuple: (df_allocation, stock_restant, stock_reserve) - DataFrame avec allocations, stocks restants et stocks réservés
     """
     # Filtre les crises actuelles si demandé
     if seulement_actuelles:
@@ -59,7 +62,9 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
             df_crises_filtre = df_crises[df_crises['en_cours'] == True].copy()
             if len(df_crises_filtre) == 0:
                 print("⚠ Aucune crise actuelle trouvée. Vérifiez la colonne 'en_cours' dans les données.")
-                return pd.DataFrame(), stock_disponible
+                # Calcule le stock réservé (25%)
+                stock_reserve = {k: int(v * 0.25) for k, v in stock_disponible.items()}
+                return pd.DataFrame(), stock_disponible, stock_reserve
         else:
             print("⚠ Colonne 'en_cours' non trouvée. Toutes les crises seront considérées.")
             df_crises_filtre = df_crises.copy()
@@ -71,19 +76,38 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
     
     if len(df_allocation) == 0:
         print("⚠ Aucune crise à traiter.")
-        return df_allocation, stock_disponible
+        # Calcule le stock réservé (25%)
+        stock_reserve = {k: int(v * 0.25) for k, v in stock_disponible.items()}
+        return df_allocation, stock_disponible, stock_reserve
     
     # Calcule le score d'urgence pour chaque crise
     df_allocation['score_urgence'] = df_allocation.apply(calculer_score_urgence, axis=1)
     
+    # Calcule le produit (score d'urgence × population touchée) pour chaque crise
+    df_allocation['produit_score_population'] = df_allocation['score_urgence'] * df_allocation['population_touchee']
+    
     # Trie les crises par score d'urgence décroissant (les plus urgentes en premier)
     df_allocation = df_allocation.sort_values('score_urgence', ascending=False).reset_index(drop=True)
+    
+    # Calcule la somme totale des produits (score × population) pour la proportionnalité
+    somme_produits = df_allocation['produit_score_population'].sum()
     
     # Initialise les colonnes d'allocation pour chaque type de ressource
     ressources = [col for col in df_besoins.columns if col != 'type_crise']
     
-    # Crée un dictionnaire pour suivre les stocks restants
-    stock_restant = stock_disponible.copy()
+    # Calcule le stock réservé (25% de chaque ressource)
+    stock_reserve = {}
+    stock_allouable = {}
+    for ressource in ressources:
+        if ressource in stock_disponible:
+            stock_reserve[ressource] = int(stock_disponible[ressource] * 0.25)
+            stock_allouable[ressource] = stock_disponible[ressource] - stock_reserve[ressource]
+        else:
+            stock_reserve[ressource] = 0
+            stock_allouable[ressource] = 0
+    
+    # Crée un dictionnaire pour suivre les stocks alloués (pour vérification)
+    stock_alloue_total = {ressource: 0 for ressource in ressources}
     
     # Initialise toutes les allocations à 0
     for ressource in ressources:
@@ -91,30 +115,46 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
         df_allocation[f'besoin_{ressource}'] = 0
         df_allocation[f'pourcentage_satisfait_{ressource}'] = 0.0
     
-    # Parcourt chaque crise dans l'ordre de priorité (glouton)
+    # Calcule les allocations proportionnelles pour chaque crise
     for idx, crise in df_allocation.iterrows():
         # Calcule les besoins pour cette crise
         besoins_crise = calculer_besoins_crise(crise, df_besoins)
         
-        # Pour chaque ressource, essaie d'allouer selon les besoins
+        # Pour chaque ressource, calcule l'allocation proportionnelle
         for ressource in ressources:
             # Enregistre le besoin total
             besoin = besoins_crise.get(ressource, 0)
             df_allocation.at[idx, f'besoin_{ressource}'] = besoin
             
-            # Vérifie si la ressource est disponible dans le stock
-            if ressource in stock_restant:
-                # Alloue le minimum entre le besoin et le stock disponible
-                allocation = min(besoin, stock_restant[ressource])
-                df_allocation.at[idx, f'allocation_{ressource}'] = allocation
+            if ressource in stock_allouable and somme_produits > 0:
+                # Calcule la part proportionnelle au produit (score d'urgence × population touchée)
+                produit_crise = crise['produit_score_population']
+                part_proportionnelle = (produit_crise / somme_produits) * stock_allouable[ressource]
                 
-                # Met à jour le stock restant
-                stock_restant[ressource] -= allocation
+                # L'allocation est le minimum entre :
+                # 1. La part proportionnelle calculée
+                # 2. Le besoin réel de la crise
+                # 3. Le stock allouable restant (pour éviter de dépasser)
+                allocation = min(part_proportionnelle, besoin, stock_allouable[ressource] - stock_alloue_total[ressource])
+                
+                # S'assure que l'allocation n'est pas négative
+                allocation = max(0, int(allocation))
+                
+                df_allocation.at[idx, f'allocation_{ressource}'] = allocation
+                stock_alloue_total[ressource] += allocation
                 
                 # Calcule le pourcentage de besoin satisfait
                 if besoin > 0:
                     pourcentage = (allocation / besoin) * 100
                     df_allocation.at[idx, f'pourcentage_satisfait_{ressource}'] = round(pourcentage, 2)
+    
+    # Calcule le stock restant (stock allouable - stock alloué)
+    stock_restant = {}
+    for ressource in ressources:
+        if ressource in stock_allouable:
+            stock_restant[ressource] = stock_allouable[ressource] - stock_alloue_total[ressource]
+        else:
+            stock_restant[ressource] = 0
     
     # Ajoute une colonne avec le score d'urgence normalisé (pour affichage)
     score_max = df_allocation['score_urgence'].max()
@@ -123,7 +163,7 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
     else:
         df_allocation['score_urgence_normalise'] = 0
     
-    return df_allocation, stock_restant
+    return df_allocation, stock_restant, stock_reserve
 
 
 def calculer_besoins_crise(crise, df_besoins):
@@ -216,13 +256,14 @@ def exporter_allocation_excel(df_allocation, chemin_fichier=None):
     return chemin_fichier
 
 
-def afficher_resume_allocation(df_allocation, stock_restant):
+def afficher_resume_allocation(df_allocation, stock_restant, stock_reserve=None):
     """
     Affiche un résumé de l'allocation des ressources
     
     Args:
         df_allocation (pandas.DataFrame): DataFrame avec les allocations
         stock_restant (dict): Dictionnaire des stocks restants
+        stock_reserve (dict): Dictionnaire des stocks réservés (25%)
     """
     print("\n" + "="*60)
     print("RÉSUMÉ DE L'ALLOCATION DES RESSOURCES")
@@ -271,12 +312,12 @@ if __name__ == "__main__":
     
     # Test avec seulement les crises actuelles
     print("\n=== Allocation pour les crises actuelles uniquement ===")
-    allocation, stock_restant = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
-    afficher_resume_allocation(allocation, stock_restant)
+    allocation, stock_restant, stock_reserve = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
+    afficher_resume_allocation(allocation, stock_restant, stock_reserve)
     
     # Test avec toutes les crises
     print("\n=== Allocation pour toutes les crises ===")
-    allocation_toutes, stock_restant_toutes = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=False)
-    afficher_resume_allocation(allocation_toutes, stock_restant_toutes)
+    allocation_toutes, stock_restant_toutes, stock_reserve_toutes = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=False)
+    afficher_resume_allocation(allocation_toutes, stock_restant_toutes, stock_reserve_toutes)
 
 

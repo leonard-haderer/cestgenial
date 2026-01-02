@@ -126,10 +126,10 @@ def lancer_allocation():
         # Lance l'allocation (seulement crises actuelles par défaut)
         print("\nLancement de l'algorithme glouton...")
         print("(Seules les crises actuelles seront considérées)")
-        allocation, stock_restant = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
+        allocation, stock_restant, stock_reserve = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
         
         # Affiche le résumé
-        afficher_resume_allocation(allocation, stock_restant)
+        afficher_resume_allocation(allocation, stock_restant, stock_reserve)
         
         # Propose d'exporter les résultats
         print("\nSouhaitez-vous exporter les résultats?")
@@ -197,7 +197,7 @@ def visualiser_carte():
                 'denrees_alimentaires_kg': 10000000
             }
             print("\nCalcul des allocations (crises actuelles uniquement)...")
-            df_allocation, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
+            df_allocation, _, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
         
         # Crée la carte
         print("\nCréation de la carte interactive...")
