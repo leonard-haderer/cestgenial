@@ -1,13 +1,15 @@
 """
-Module d'allocation proportionnelle des ressources en cas de crise
+Module d'allocation des ressources en cas de crise
 Auteur: Projet CGénial 2025
 
-Algorithme d'allocation proportionnelle: 
+Algorithme d'allocation simple: 
 - Filtre uniquement les crises actuelles (en_cours=True)
-- Calcule un score d'urgence pour chaque crise
+- Calcule un score d'urgence pour chaque crise (intensité × population × (1 - accessibilité))
 - Réserve 25% des ressources (non utilisées)
-- Alloue les 75% restants proportionnellement au score d'urgence de chaque crise
-- Respecte les besoins réels de chaque crise (ne dépasse pas le besoin)
+- Calcule les besoins en fonction du type de crise et du score d'urgence (normalisé par rapport au score moyen)
+- Pour chaque ressource, calcule le besoin total de toutes les crises
+- Si le stock allouable (75%) est suffisant : donne à chaque crise son besoin complet
+- Sinon : divise les allocations par un coefficient unique pour partager équitablement
 """
 
 import pandas as pd
@@ -41,10 +43,13 @@ def calculer_score_urgence(crise):
 
 def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulement_actuelles=True):
     """
-    Alloue les ressources disponibles aux crises selon un algorithme proportionnel au produit (score d'urgence × population touchée)
+    Alloue les ressources disponibles aux crises selon une logique simple :
     - 25% des ressources sont réservées (non utilisées)
-    - 75% des ressources sont allouées proportionnellement au produit (score d'urgence × population touchée) de chaque crise
-    Ne considère que les crises actuelles (en_cours=True) par défaut
+    - 75% des ressources sont allouables
+    - Calcule les besoins en fonction du type de crise et du score d'urgence (pas de l'intensité seule)
+    - Pour chaque ressource, calcule le besoin total de toutes les crises
+    - Si le stock allouable est suffisant : donne à chaque crise son besoin complet
+    - Sinon : divise les allocations par un coefficient unique pour partager équitablement
     
     Args:
         df_crises (pandas.DataFrame): DataFrame des crises
@@ -80,17 +85,11 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
         stock_reserve = {k: int(v * 0.25) for k, v in stock_disponible.items()}
         return df_allocation, stock_disponible, stock_reserve
     
-    # Calcule le score d'urgence pour chaque crise
+    # Calcule le score d'urgence pour chaque crise (gardé pour l'affichage)
     df_allocation['score_urgence'] = df_allocation.apply(calculer_score_urgence, axis=1)
     
-    # Calcule le produit (score d'urgence × population touchée) pour chaque crise
-    df_allocation['produit_score_population'] = df_allocation['score_urgence'] * df_allocation['population_touchee']
-    
-    # Trie les crises par score d'urgence décroissant (les plus urgentes en premier)
+    # Trie les crises par score d'urgence décroissant (pour l'affichage)
     df_allocation = df_allocation.sort_values('score_urgence', ascending=False).reset_index(drop=True)
-    
-    # Calcule la somme totale des produits (score × population) pour la proportionnalité
-    somme_produits = df_allocation['produit_score_population'].sum()
     
     # Initialise les colonnes d'allocation pour chaque type de ressource
     ressources = [col for col in df_besoins.columns if col != 'type_crise']
@@ -101,60 +100,70 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
     for ressource in ressources:
         if ressource in stock_disponible:
             stock_reserve[ressource] = int(stock_disponible[ressource] * 0.25)
-            stock_allouable[ressource] = stock_disponible[ressource] - stock_reserve[ressource]
+            stock_allouable[ressource] = int(stock_disponible[ressource] - stock_reserve[ressource])
         else:
             stock_reserve[ressource] = 0
             stock_allouable[ressource] = 0
     
-    # Crée un dictionnaire pour suivre les stocks alloués (pour vérification)
-    stock_alloue_total = {ressource: 0 for ressource in ressources}
-    
-    # Initialise toutes les allocations à 0
+    # Initialise toutes les allocations et besoins à 0
     for ressource in ressources:
         df_allocation[f'allocation_{ressource}'] = 0
         df_allocation[f'besoin_{ressource}'] = 0
         df_allocation[f'pourcentage_satisfait_{ressource}'] = 0.0
     
-    # Calcule les allocations proportionnelles pour chaque crise
+    # Normalise les scores d'urgence pour les utiliser comme facteur d'ajustement des besoins
+    # On normalise par rapport au score moyen pour avoir un facteur autour de 1.0
+    score_moyen = df_allocation['score_urgence'].mean()
+    if score_moyen > 0:
+        df_allocation['facteur_score_urgence'] = df_allocation['score_urgence'] / score_moyen
+    else:
+        df_allocation['facteur_score_urgence'] = 1.0
+    
+    # Calcule les besoins pour chaque crise en utilisant le score d'urgence
     for idx, crise in df_allocation.iterrows():
-        # Calcule les besoins pour cette crise
-        besoins_crise = calculer_besoins_crise(crise, df_besoins)
-        
-        # Pour chaque ressource, calcule l'allocation proportionnelle
+        besoins_crise = calculer_besoins_crise(crise, df_besoins, facteur_score=df_allocation.at[idx, 'facteur_score_urgence'])
         for ressource in ressources:
-            # Enregistre le besoin total
             besoin = besoins_crise.get(ressource, 0)
             df_allocation.at[idx, f'besoin_{ressource}'] = besoin
-            
-            if ressource in stock_allouable and somme_produits > 0:
-                # Calcule la part proportionnelle au produit (score d'urgence × population touchée)
-                produit_crise = crise['produit_score_population']
-                part_proportionnelle = (produit_crise / somme_produits) * stock_allouable[ressource]
-                
-                # L'allocation est le minimum entre :
-                # 1. La part proportionnelle calculée
-                # 2. Le besoin réel de la crise
-                # 3. Le stock allouable restant (pour éviter de dépasser)
-                allocation = min(part_proportionnelle, besoin, stock_allouable[ressource] - stock_alloue_total[ressource])
-                
-                # S'assure que l'allocation n'est pas négative
-                allocation = max(0, int(allocation))
-                
-                df_allocation.at[idx, f'allocation_{ressource}'] = allocation
-                stock_alloue_total[ressource] += allocation
-                
-                # Calcule le pourcentage de besoin satisfait
-                if besoin > 0:
-                    pourcentage = (allocation / besoin) * 100
-                    df_allocation.at[idx, f'pourcentage_satisfait_{ressource}'] = round(pourcentage, 2)
     
-    # Calcule le stock restant (stock allouable - stock alloué)
+    # Pour chaque ressource, calcule l'allocation selon la nouvelle logique
     stock_restant = {}
     for ressource in ressources:
-        if ressource in stock_allouable:
-            stock_restant[ressource] = stock_allouable[ressource] - stock_alloue_total[ressource]
-        else:
+        if ressource not in stock_allouable:
             stock_restant[ressource] = 0
+            continue
+        
+        # Calcule le besoin total pour cette ressource (somme de tous les besoins)
+        besoin_total = df_allocation[f'besoin_{ressource}'].sum()
+        stock_allouable_ressource = stock_allouable[ressource]
+        
+        if besoin_total == 0:
+            # Aucun besoin pour cette ressource, tout le stock allouable reste disponible
+            stock_restant[ressource] = int(stock_allouable_ressource)
+            continue
+        
+        # Détermine le coefficient de réduction si nécessaire
+        if stock_allouable_ressource >= besoin_total:
+            # Stock allouable suffisant : on peut donner à chaque crise son besoin complet
+            coefficient = 1.0
+        else:
+            # Stock allouable insuffisant : on divise par un coefficient unique
+            coefficient = stock_allouable_ressource / besoin_total
+        
+        # Alloue à chaque crise selon le coefficient
+        for idx, crise in df_allocation.iterrows():
+            besoin = df_allocation.at[idx, f'besoin_{ressource}']
+            allocation = int(besoin * coefficient)
+            df_allocation.at[idx, f'allocation_{ressource}'] = allocation
+            
+            # Calcule le pourcentage de besoin satisfait
+            if besoin > 0:
+                pourcentage = (allocation / besoin) * 100
+                df_allocation.at[idx, f'pourcentage_satisfait_{ressource}'] = round(pourcentage, 2)
+        
+        # Calcule le stock restant (dans les 75% allouables)
+        allocation_totale = df_allocation[f'allocation_{ressource}'].sum()
+        stock_restant[ressource] = int(stock_allouable_ressource - allocation_totale)
     
     # Ajoute une colonne avec le score d'urgence normalisé (pour affichage)
     score_max = df_allocation['score_urgence'].max()
@@ -166,14 +175,15 @@ def allouer_ressources_glouton(df_crises, df_besoins, stock_disponible, seulemen
     return df_allocation, stock_restant, stock_reserve
 
 
-def calculer_besoins_crise(crise, df_besoins):
+def calculer_besoins_crise(crise, df_besoins, facteur_score=1.0):
     """
     Calcule les besoins en ressources pour une crise spécifique
-    en fonction de son type et de son intensité
+    en fonction de son type et de son score d'urgence
     
     Args:
         crise (pandas.Series): Une ligne du DataFrame des crises
         df_besoins (pandas.DataFrame): DataFrame des besoins par type
+        facteur_score (float): Facteur d'ajustement basé sur le score d'urgence normalisé
     
     Returns:
         dict: Dictionnaire contenant les besoins calculés
@@ -191,9 +201,9 @@ def calculer_besoins_crise(crise, df_besoins):
     # Récupère la première ligne (normalement il n'y en a qu'une par type)
     besoins = besoins_type.iloc[0].to_dict()
     
-    # Ajuste les besoins selon l'intensité de la crise
-    # Plus l'intensité est élevée, plus les besoins sont importants
-    facteur_intensite = crise['intensite'] / 5.0  # Normalise par rapport à une intensité moyenne de 5
+    # Ajuste les besoins selon le score d'urgence de la crise
+    # Plus le score d'urgence est élevé, plus les besoins sont importants
+    # Le facteur_score est déjà normalisé par rapport au score moyen
     
     # Crée un dictionnaire des besoins ajustés
     besoins_ajustes = {}
@@ -201,7 +211,7 @@ def calculer_besoins_crise(crise, df_besoins):
         # Ne multiplie pas le type_crise (c'est une chaîne de caractères)
         if ressource != 'type_crise':
             # Arrondit à l'entier le plus proche
-            besoins_ajustes[ressource] = int(quantite * facteur_intensite)
+            besoins_ajustes[ressource] = int(quantite * facteur_score)
     
     return besoins_ajustes
 

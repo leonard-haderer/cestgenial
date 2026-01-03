@@ -196,11 +196,30 @@ def api_allocation():
             allocation_dict = []
             top5_dict = []
         
+        # Convertit les dictionnaires stock_restant et stock_reserve en types Python natifs
+        stock_restant_clean = {}
+        for key, val in stock_restant.items():
+            if isinstance(val, (np.integer, np.int64)):
+                stock_restant_clean[key] = int(val)
+            elif isinstance(val, (np.floating, np.float64)):
+                stock_restant_clean[key] = float(val)
+            else:
+                stock_restant_clean[key] = val
+        
+        stock_reserve_clean = {}
+        for key, val in stock_reserve.items():
+            if isinstance(val, (np.integer, np.int64)):
+                stock_reserve_clean[key] = int(val)
+            elif isinstance(val, (np.floating, np.float64)):
+                stock_reserve_clean[key] = float(val)
+            else:
+                stock_reserve_clean[key] = val
+        
         return jsonify({
             'success': True,
             'allocation': allocation_dict,
-            'stock_restant': stock_restant,
-            'stock_reserve': stock_reserve,
+            'stock_restant': stock_restant_clean,
+            'stock_reserve': stock_reserve_clean,
             'top5': top5_dict,
             'nb_crises_traitees': len(allocation),
             'seulement_actuelles': seulement_actuelles

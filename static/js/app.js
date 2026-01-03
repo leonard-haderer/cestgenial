@@ -187,7 +187,8 @@ function afficherResultatsAllocation(result) {
         <div class="alert alert-warning alert-custom">
             <i class="fas fa-exclamation-triangle"></i> 
             <strong>Mécanique d'allocation :</strong> 25% des ressources sont réservées (non utilisées). 
-            Les 75% restants sont alloués proportionnellement au produit (score d'urgence × population touchée) de chaque crise.
+            Les 75% restants sont alloués selon les besoins réels : si le stock est suffisant, chaque crise reçoit son besoin complet. 
+            Sinon, toutes les allocations sont réduites proportionnellement par un coefficient unique.
         </div>
     `;
     
@@ -256,11 +257,18 @@ function afficherResultatsAllocation(result) {
                 let hasAllocation = false;
                 for (const [key, label] of Object.entries(ressourcesMapping)) {
                     const valeur = crise[key] || 0;
+                    const ressourceKey = key.replace('allocation_', '');
+                    const pourcentageKey = `pourcentage_satisfait_${ressourceKey}`;
+                    const pourcentage = crise[pourcentageKey] || 0;
+                    
                     if (valeur > 0) {
                         hasAllocation = true;
                     }
                     html += '<div class="col-md-6 mb-2">';
                     html += `<strong>${label}:</strong> <span class="badge ${valeur > 0 ? 'bg-success' : 'bg-secondary'}">${valeur.toLocaleString('fr-FR')}</span>`;
+                    if (pourcentage > 0) {
+                        html += ` <span class="badge bg-info">${pourcentage.toFixed(1)}% du besoin</span>`;
+                    }
                     html += '</div>';
                 }
                 
