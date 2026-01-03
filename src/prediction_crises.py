@@ -264,7 +264,7 @@ def charger_donnees_pays(chemin_fichier=None):
 
 def rechercher_pays(nom_pays, df_pays):
     """
-    Recherche un pays dans la base de données
+    Recherche un pays dans la base de données avec support des noms alternatifs
     
     Args:
         nom_pays (str): Nom du pays à rechercher
@@ -273,8 +273,77 @@ def rechercher_pays(nom_pays, df_pays):
     Returns:
         dict ou None: Dictionnaire avec les données du pays ou None si non trouvé
     """
-    # Recherche insensible à la casse et aux accents
-    nom_pays_lower = nom_pays.lower().strip()
+    # Dictionnaire de noms alternatifs pour certains pays
+    noms_alternatifs = {
+        'usa': 'États-Unis',
+        'united states': 'États-Unis',
+        'us': 'États-Unis',
+        'uk': 'Royaume-Uni',
+        'united kingdom': 'Royaume-Uni',
+        'russie': 'Russie',
+        'russia': 'Russie',
+        'chine': 'Chine',
+        'china': 'Chine',
+        'inde': 'Inde',
+        'india': 'Inde',
+        'japon': 'Japon',
+        'japan': 'Japon',
+        'france': 'France',
+        'allemagne': 'Allemagne',
+        'germany': 'Allemagne',
+        'espagne': 'Espagne',
+        'spain': 'Espagne',
+        'italie': 'Italie',
+        'italy': 'Italie',
+        'brésil': 'Brésil',
+        'brazil': 'Brésil',
+        'mexique': 'Mexique',
+        'mexico': 'Mexique',
+        'canada': 'Canada',
+        'australie': 'Australie',
+        'australia': 'Australie',
+        'corée du sud': 'Corée du Sud',
+        'south korea': 'Corée du Sud',
+        'corée du nord': 'Corée du Nord',
+        'north korea': 'Corée du Nord',
+        'afrique du sud': 'Afrique du Sud',
+        'south africa': 'Afrique du Sud',
+        'nouvelle-zélande': 'Nouvelle-Zélande',
+        'new zealand': 'Nouvelle-Zélande',
+        'arabie saoudite': 'Arabie Saoudite',
+        'saudi arabia': 'Arabie Saoudite',
+        'égypte': 'Égypte',
+        'egypt': 'Égypte',
+        'turquie': 'Turquie',
+        'turkey': 'Turquie',
+        'iran': 'Iran',
+        'irak': 'Irak',
+        'iraq': 'Irak',
+        'pakistan': 'Pakistan',
+        'bangladesh': 'Bangladesh',
+        'indonésie': 'Indonésie',
+        'indonesia': 'Indonésie',
+        'philippines': 'Philippines',
+        'thaïlande': 'Thaïlande',
+        'thailand': 'Thaïlande',
+        'vietnam': 'Viêt Nam',
+        'viêt nam': 'Viêt Nam',
+        'viet nam': 'Viêt Nam',
+    }
+    
+    # Normalise le nom du pays (enlève les accents pour la recherche)
+    import unicodedata
+    def remove_accents(text):
+        nfkd = unicodedata.normalize('NFKD', text)
+        return ''.join([c for c in nfkd if not unicodedata.combining(c)])
+    
+    nom_pays_original = nom_pays.strip()
+    nom_pays_lower = nom_pays_original.lower().strip()
+    
+    # Vérifie d'abord les noms alternatifs
+    if nom_pays_lower in noms_alternatifs:
+        nom_pays_original = noms_alternatifs[nom_pays_lower]
+        nom_pays_lower = nom_pays_original.lower().strip()
     
     # Essaie une correspondance exacte
     pays_trouve = df_pays[df_pays['pays'].str.lower().str.strip() == nom_pays_lower]
@@ -288,7 +357,7 @@ def rechercher_pays(nom_pays, df_pays):
             'population': int(pays['population'])
         }
     
-    # Recherche partielle
+    # Recherche partielle (insensible à la casse)
     pays_trouve = df_pays[df_pays['pays'].str.lower().str.contains(nom_pays_lower, na=False)]
     
     if not pays_trouve.empty:
@@ -301,11 +370,40 @@ def rechercher_pays(nom_pays, df_pays):
                 'population': int(pays['population'])
             }
         else:
-            # Plusieurs correspondances
-            print(f"\nPlusieurs pays correspondent à '{nom_pays}':")
-            for idx, row in pays_trouve.iterrows():
-                print(f"  - {row['pays']}")
-            return None
+            # Plusieurs correspondances - retourne le premier mais pourrait être amélioré
+            pays = pays_trouve.iloc[0]
+            return {
+                'pays': pays['pays'],
+                'latitude': float(pays['latitude']),
+                'longitude': float(pays['longitude']),
+                'population': int(pays['population'])
+            }
+    
+    # Recherche sans accents pour plus de flexibilité
+    nom_pays_sans_accents = remove_accents(nom_pays_lower)
+    df_pays_sans_accents = df_pays.copy()
+    df_pays_sans_accents['pays_normalise'] = df_pays_sans_accents['pays'].apply(lambda x: remove_accents(x.lower().strip()))
+    
+    pays_trouve = df_pays_sans_accents[df_pays_sans_accents['pays_normalise'].str.contains(nom_pays_sans_accents, na=False)]
+    
+    if not pays_trouve.empty:
+        if len(pays_trouve) == 1:
+            pays = pays_trouve.iloc[0]
+            return {
+                'pays': pays['pays'],
+                'latitude': float(pays['latitude']),
+                'longitude': float(pays['longitude']),
+                'population': int(pays['population'])
+            }
+        else:
+            # Plusieurs correspondances - retourne le premier
+            pays = pays_trouve.iloc[0]
+            return {
+                'pays': pays['pays'],
+                'latitude': float(pays['latitude']),
+                'longitude': float(pays['longitude']),
+                'population': int(pays['population'])
+            }
     
     return None
 

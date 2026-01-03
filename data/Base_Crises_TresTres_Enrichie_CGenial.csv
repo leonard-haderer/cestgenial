@@ -1,17 +1,17 @@
 nom_crise,type_crise,pays,latitude,longitude,intensite,date,population_touchee,accessibilite,description,en_cours,date_fin
 Séisme Haïti 2010,Séisme,Haïti,18.9712,-72.2852,9.0,2010-01-12,3000000,0.3,Grand séisme dévastateur,False,2010-12-31
-Tsunami Indonésie 2004,Tsunami,Indonésie,-3.2956,114.5900,9.1,2004-12-26,5000000,0.4,Tsunami majeur dans l'océan Indien,False,2005-12-31
+Tsunami Indonésie 2004,Tsunami,Indonésie,-3.2956,114.59,9.1,2004-12-26,5000000,0.4,Tsunami majeur dans l'océan Indien,False,2005-12-31
 Ouragan Katrina,Ouragan,États-Unis,29.9511,-90.0715,5.0,2005-08-29,1500000,0.7,Ouragan de catégorie 5,False,2005-12-31
 Inondation Pakistan 2010,Inondation,Pakistan,30.3753,69.3451,8.5,2010-07-28,20000000,0.5,Inondations massives,False,2011-12-31
-Séisme Népal 2015,Séisme,Népal,28.1470,84.7080,7.8,2015-04-25,8000000,0.4,Séisme majeur dans l'Himalaya,False,2016-12-31
+Séisme Népal 2015,Séisme,Népal,28.147,84.708,7.8,2015-04-25,8000000,0.4,Séisme majeur dans l'Himalaya,False,2016-12-31
 Famine Somalie 2011,Famine,Somalie,2.0469,45.3182,9.5,2011-07-20,12000000,0.2,Crise alimentaire majeure,False,2012-12-31
 Cyclone Idai,Cyclone,Mozambique,-19.3022,34.9079,4.5,2019-03-14,3000000,0.3,Cyclone tropical destructeur,False,2019-12-31
 Séisme Turquie 2023,Séisme,Turquie,37.1667,37.0333,7.8,2023-02-06,15000000,0.6,Séisme majeur en Turquie-Syrie,False,2023-12-31
-Inondation Bangladesh 2020,Inondation,Bangladesh,23.6850,90.3563,7.0,2020-07-01,5000000,0.5,Inondations saisonnières,False,2020-12-31
-Volcan Taal 2020,Éruption volcanique,Philippines,14.0101,121.0000,6.0,2020-01-12,500000,0.6,Éruption volcanique majeure,False,2020-12-31
+Inondation Bangladesh 2020,Inondation,Bangladesh,23.685,90.3563,7.0,2020-07-01,5000000,0.5,Inondations saisonnières,False,2020-12-31
+Volcan Taal 2020,Éruption volcanique,Philippines,14.0101,121.0,6.0,2020-01-12,500000,0.6,Éruption volcanique majeure,False,2020-12-31
 Incendie Australie 2019-2020,Incendie,Australie,-25.2744,133.7751,8.0,2019-09-01,25000000,0.7,Feux de brousse massifs,False,2020-03-31
 Séisme Chili 2010,Séisme,Chili,-35.8467,-72.7183,8.8,2010-02-27,2000000,0.6,Séisme majeur suivi d'un tsunami,False,2010-12-31
-Typhon Haiyan,Typhon,Philippines,11.2500,125.0000,5.0,2013-11-08,16000000,0.4,Typhon super destructeur,False,2014-12-31
+Typhon Haiyan,Typhon,Philippines,11.25,125.0,5.0,2013-11-08,16000000,0.4,Typhon super destructeur,False,2014-12-31
 Séisme Iran 2003,Séisme,Iran,26.8206,58.1956,6.6,2003-12-26,300000,0.5,Séisme destructeur,False,2004-12-31
 Inondation Allemagne 2021,Inondation,Allemagne,50.1109,7.1301,7.5,2021-07-14,200000,0.8,Inondations catastrophiques,False,2021-12-31
 Séisme Italie 2016,Séisme,Italie,42.7039,13.2228,6.2,2016-08-24,300000,0.7,Séisme dans les Apennins,False,2016-12-31
@@ -23,12 +23,426 @@ COVID-19 Pandémie,Pandémie,Mondial,30.5928,114.3055,10.0,2020-03-11,7800000000
 Grippe espagnole 1918,Pandémie,Mondial,40.4168,-3.7038,9.5,1918-03-01,2000000000,0.3,Pandémie de grippe la plus meurtrière,False,1920-12-31
 Guerre Ukraine 2022,Guerre,Ukraine,50.4501,30.5234,9.0,2022-02-24,44000000,0.4,Conflit armé majeur en Europe,True,
 Guerre Syrie 2011,Guerre,Syrie,33.5138,36.2765,8.5,2011-03-15,22000000,0.3,Guerre civile syrienne,True,
-Guerre Yémen 2015,Guerre,Yémen,15.3694,44.1910,8.0,2015-03-26,30000000,0.2,Conflit au Yémen,True,
-Seconde Guerre mondiale,Guerre,Mondial,52.5200,13.4050,10.0,1939-09-01,2000000000,0.5,Conflit mondial majeur,False,1945-09-02
+Guerre Yémen 2015,Guerre,Yémen,15.3694,44.191,8.0,2015-03-26,30000000,0.2,Conflit au Yémen,True,
+Seconde Guerre mondiale,Guerre,Mondial,52.52,13.405,10.0,1939-09-01,2000000000,0.5,Conflit mondial majeur,False,1945-09-02
 Inondation Pakistan 2024,Inondation,Pakistan,30.3753,69.3451,7.5,2024-08-01,15000000,0.4,Inondations saisonnières majeures,True,
 Séisme Maroc 2024,Séisme,Maroc,31.7917,-7.0926,6.8,2024-09-08,5000000,0.5,Séisme destructeur dans le Haut Atlas,True,
 Cyclone Biparjoy 2024,Cyclone,Inde,22.5726,88.3639,4.5,2024-06-15,8000000,0.5,Cyclone intense dans le golfe du Bengale,True,
 Famine Soudan 2024,Famine,Soudan,12.8628,30.2176,8.5,2024-04-15,12000000,0.2,Crise alimentaire majeure,True,
 Incendie Canada 2024,Incendie,Canada,56.1304,-106.3468,7.5,2024-05-01,10000000,0.6,Feux de forêt massifs,True,
-
-
+Séisme Afghanistan 2024,Séisme,Afghanistan,34.5553,69.2075,6.3,2024-10-07,8000000,0.3,Séisme destructeur dans le nord,True,
+Inondation Brésil 2024,Inondation,Brésil,-23.5505,-46.6333,8.0,2024-12-01,12000000,0.5,Inondations catastrophiques dans le sud,True,
+Typhon Doksuri 2024,Typhon,Philippines,14.5995,120.9842,5.5,2024-07-25,15000000,0.4,Typhon super destructeur,True,
+Famine Madagascar 2024,Famine,Madagascar,-18.7669,46.8691,7.5,2024-03-01,5000000,0.3,Crise alimentaire sévère,True,
+Séisme Taïwan 2024,Séisme,Taïwan,23.6978,120.9605,7.2,2024-04-03,6000000,0.7,Séisme majeur au large de Taïwan,True,
+Inondation Inde 2024,Inondation,Inde,28.7041,77.1025,7.8,2024-09-15,25000000,0.5,Inondations de mousson extrêmes,True,
+Cyclone Remal 2024,Cyclone,Bangladesh,23.685,90.3563,4.8,2024-05-26,10000000,0.4,Cyclone intense dans le golfe du Bengale,True,
+Guerre Gaza 2024,Guerre,Palestine,31.3547,34.3088,9.5,2024-10-07,2300000,0.2,Conflit armé majeur à Gaza,True,
+Éruption volcanique Islande 2024,Éruption volcanique,Islande,64.9631,-19.0208,6.5,2024-12-18,350000,0.7,Éruption volcanique majeure,True,
+Inondation Kenya 2024,Inondation,Kenya,-1.2921,36.8219,7.0,2024-11-15,8000000,0.4,Inondations saisonnières extrêmes,True,
+Séisme Papouasie 2024,Séisme,Indonésie,-4.2699,138.0804,6.8,2024-12-10,3000000,0.3,Séisme dans les hautes terres,True,
+Ouragan Égypte 1986,Ouragan,Égypte,26.0975,31.2357,8.3,1986-11-15,8286050,0.3,Ouragan de catégorie élevée,False,1988-11-04
+Tempête tropicale Turquie 2015,Ouragan,Turquie,38.9637,35.2433,5.2,2015-09-11,10687893,0.6,Ouragan de catégorie élevée,False,2016-02-08
+Raz-de-marée Russie 2020,Tsunami,Russie,61.524,105.3188,5.2,2020-12-25,3971397,0.2,Tsunami majeur,False,2021-12-20
+Cyclone Jamaïque 2018,Cyclone,Jamaïque,18.1096,-77.2975,5.3,2018-05-03,12304052,0.4,Cyclone tropical intense,False,2018-07-02
+Déluge Cuba 1988,Inondation,Cuba,21.5218,-77.7812,5.6,1988-04-06,6986071,0.5,Inondations massives,False,1989-08-29
+Tempête cyclonique États-Unis 1955,Cyclone,États-Unis,37.0902,-95.7129,6.0,1955-03-19,2158226,0.7,Cyclone tropical intense,False,1955-12-14
+Cyclone Honduras 1972,Cyclone,Honduras,15.2,-86.2419,5.9,1972-10-15,1963031,0.3,Cyclone tropical intense,False,1973-05-13
+Éruption Kenya 1974,Éruption volcanique,Kenya,-0.0236,37.9062,6.8,1974-11-24,4811459,0.5,Éruption volcanique majeure,False,1976-05-17
+Conflit armé Jamaïque 1999,Guerre,Jamaïque,18.1096,-77.2975,7.3,1999-09-01,16544515,0.4,Conflit armé majeur,False,2001-01-23
+Raz-de-marée Équateur 2007,Tsunami,Équateur,-1.8312,-78.1834,6.5,2007-11-01,12665917,0.4,Tsunami majeur,False,2009-05-24
+Incendie Nicaragua 1971,Incendie,Nicaragua,12.265,-85.2072,6.1,1971-09-23,2240500,0.4,Feux de forêt massifs,False,1972-02-20
+Crise alimentaire Honduras 2015,Famine,Honduras,15.2,-86.2419,9.6,2015-10-19,3510081,0.2,Crise alimentaire majeure,False,2015-11-18
+Éruption Tchad 1968,Éruption volcanique,Tchad,15.4542,18.7322,7.8,1968-04-03,4134746,0.7,Éruption volcanique majeure,False,1969-11-24
+Crise alimentaire Soudan du Sud 2005,Famine,Soudan du Sud,6.877,31.307,7.0,2005-03-24,2266406,0.8,Crise alimentaire majeure,False,2005-10-20
+Super typhon Égypte 2011,Typhon,Égypte,26.0975,31.2357,5.4,2011-03-24,8922196,0.3,Typhon super destructeur,False,2012-10-14
+Conflit armé Russie 1972,Guerre,Russie,61.524,105.3188,6.7,1972-11-07,6889533,0.6,Conflit armé majeur,False,1973-09-03
+Conflit armé États-Unis 1975,Guerre,États-Unis,37.0902,-95.7129,9.6,1975-03-16,27327373,0.3,Conflit armé majeur,False,1975-07-14
+Inondation Indonésie 2003,Inondation,Indonésie,-0.7893,113.9213,7.2,2003-06-24,2020193,0.6,Inondations massives,False,2005-02-13
+Tsunami Nicaragua 1954,Tsunami,Nicaragua,12.265,-85.2072,8.0,1954-06-23,1929832,0.4,Tsunami majeur,False,1956-02-13
+Cyclone Philippines 1960,Cyclone,Philippines,12.8797,121.774,8.0,1960-03-03,8205658,0.6,Cyclone tropical intense,False,1960-08-30
+Inondation États-Unis 2021,Inondation,États-Unis,37.0902,-95.7129,4.5,2021-09-03,6794257,0.3,Inondations massives,False,2022-06-30
+Cyclone Chili 2013,Cyclone,Chili,-35.6751,-71.543,5.4,2013-04-27,5232241,0.5,Cyclone tropical intense,False,2013-10-24
+Famine Pérou 1962,Famine,Pérou,-9.19,-75.0152,7.4,1962-06-10,11558312,0.3,Crise alimentaire majeure,False,1964-01-01
+Séisme majeur Nigeria 1956,Séisme,Nigeria,9.082,8.6753,5.6,1956-04-01,721978,0.7,Séisme destructeur,False,1956-12-27
+Déluge Guatemala 1972,Inondation,Guatemala,15.7835,-90.2308,6.9,1972-06-21,10865838,0.6,Inondations massives,False,1974-04-12
+Ouragan Pakistan 1987,Ouragan,Pakistan,30.3753,69.3451,5.5,1987-12-23,6347498,0.5,Ouragan de catégorie élevée,False,1989-03-17
+Incendie Irak 1993,Incendie,Irak,33.2232,43.6793,7.8,1993-06-02,13842442,0.5,Feux de forêt massifs,False,1994-07-27
+Pandémie Myanmar 2010,Pandémie,Myanmar,21.9162,95.956,8.5,2010-03-05,41572982,0.3,Pandémie mondiale,False,2012-01-24
+Ouragan Guatemala 1950,Ouragan,Guatemala,15.7835,-90.2308,4.7,1950-07-02,799050,0.6,Ouragan de catégorie élevée,False,1950-10-30
+Guerre civile Cuba 1965,Guerre,Cuba,21.5218,-77.7812,7.9,1965-04-02,15522765,0.4,Conflit armé majeur,False,1966-06-26
+Tsunami Pakistan 1971,Tsunami,Pakistan,30.3753,69.3451,7.0,1971-11-21,6017950,0.5,Tsunami majeur,False,1972-08-17
+Conflit armé Japon 1994,Guerre,Japon,36.2048,138.2529,6.6,1994-08-10,21313745,0.4,Conflit armé majeur,False,1996-02-01
+Éruption Tchad 1976,Éruption volcanique,Tchad,15.4542,18.7322,8.2,1976-12-02,4931258,0.5,Éruption volcanique majeure,False,1977-01-31
+Épidémie Côte d'Ivoire 1976,Pandémie,Côte d'Ivoire,7.54,-5.5471,6.7,1976-04-25,45896377,0.2,Pandémie mondiale,False,1976-09-22
+Crise alimentaire Argentine 1958,Famine,Argentine,-38.4161,-63.6167,8.4,1958-11-12,12098627,0.6,Crise alimentaire majeure,False,1959-01-11
+Conflit armé Bangladesh 1973,Guerre,Bangladesh,23.685,90.3563,7.8,1973-07-05,15031840,0.3,Conflit armé majeur,False,1975-03-27
+Tempête tropicale Éthiopie 1991,Ouragan,Éthiopie,9.145,38.7667,6.6,1991-06-12,169636,0.6,Ouragan de catégorie élevée,False,1993-05-02
+Super typhon Maroc 2014,Typhon,Maroc,31.7917,-7.0926,5.7,2014-01-10,928783,0.8,Typhon super destructeur,False,2015-01-05
+Conflit armé Afghanistan 1965,Guerre,Afghanistan,33.9391,67.71,6.1,1965-01-16,21788206,0.5,Conflit armé majeur,False,1965-03-17
+Sécheresse Chili 1986,Famine,Chili,-35.6751,-71.543,9.9,1986-05-17,9184834,0.4,Crise alimentaire majeure,False,1988-01-07
+Inondation Libye 1951,Inondation,Libye,26.3351,17.2283,6.9,1951-08-18,12570471,0.3,Inondations massives,False,1952-10-11
+Ouragan Guatemala 2011,Ouragan,Guatemala,15.7835,-90.2308,6.3,2011-08-06,14252213,0.6,Ouragan de catégorie élevée,False,2013-01-27
+Séisme Indonésie 1961,Séisme,Indonésie,-0.7893,113.9213,5.5,1961-12-22,6411530,0.8,Séisme destructeur,False,1963-01-16
+Séisme Brésil 1989,Séisme,Brésil,-14.235,-51.9253,8.3,1989-11-02,3766217,0.3,Séisme destructeur,False,1991-01-26
+Super typhon Colombie 1980,Typhon,Colombie,4.5709,-74.2973,4.8,1980-06-10,2344454,0.3,Typhon super destructeur,False,1981-05-06
+Crise alimentaire Japon 1959,Famine,Japon,36.2048,138.2529,7.8,1959-02-20,18024215,0.5,Crise alimentaire majeure,False,1960-09-12
+Éruption Ouganda 1987,Éruption volcanique,Ouganda,1.3733,32.2903,5.6,1987-09-18,3411250,0.6,Éruption volcanique majeure,False,1989-08-08
+Crise alimentaire Cuba 2007,Famine,Cuba,21.5218,-77.7812,8.8,2007-09-04,4708238,0.3,Crise alimentaire majeure,False,2008-03-02
+Guerre Équateur 1978,Guerre,Équateur,-1.8312,-78.1834,9.7,1978-03-03,28022396,0.3,Conflit armé majeur,False,1979-06-26
+Conflit armé Iran 1994,Guerre,Iran,32.4279,53.688,9.0,1994-12-06,22711334,0.4,Conflit armé majeur,False,1996-10-26
+Tempête cyclonique Irak 1964,Cyclone,Irak,33.2232,43.6793,6.6,1964-09-01,4232662,0.8,Cyclone tropical intense,False,1966-06-23
+Feux de forêt Maroc 2001,Incendie,Maroc,31.7917,-7.0926,5.1,2001-10-22,13792346,0.6,Feux de forêt massifs,False,2003-01-15
+Inondation Mali 1972,Inondation,Mali,17.5707,-3.9962,6.2,1972-03-09,10433412,0.6,Inondations massives,False,1974-01-28
+Tempête tropicale Équateur 2021,Ouragan,Équateur,-1.8312,-78.1834,6.6,2021-05-06,7873720,0.5,Ouragan de catégorie élevée,False,2022-04-01
+Tempête cyclonique Éthiopie 1984,Cyclone,Éthiopie,9.145,38.7667,4.3,1984-09-27,14146887,0.5,Cyclone tropical intense,False,1985-11-21
+Conflit armé Nigeria 2016,Guerre,Nigeria,9.082,8.6753,7.8,2016-12-28,10160149,0.4,Conflit armé majeur,False,2017-12-23
+Famine Brésil 1954,Famine,Brésil,-14.235,-51.9253,9.8,1954-05-14,14011197,0.3,Crise alimentaire majeure,False,1956-02-03
+Éruption Argentine 1960,Éruption volcanique,Argentine,-38.4161,-63.6167,5.5,1960-01-25,278031,0.4,Éruption volcanique majeure,False,1961-12-15
+Éruption Nigeria 1952,Éruption volcanique,Nigeria,9.082,8.6753,5.6,1952-07-24,10147900,0.5,Éruption volcanique majeure,False,1953-10-17
+Inondation Vietnam 2002,Inondation,Vietnam,14.0583,108.2772,7.1,2002-10-28,14846503,0.5,Inondations massives,False,2003-01-26
+Feux de forêt Venezuela 1989,Incendie,Venezuela,6.4238,-66.5897,8.0,1989-08-05,270985,0.4,Feux de forêt massifs,False,1991-05-27
+Raz-de-marée Cameroun 2006,Tsunami,Cameroun,7.3697,12.3547,8.7,2006-11-21,3998599,0.5,Tsunami majeur,False,2007-02-19
+Épidémie Inde 1987,Pandémie,Inde,20.5937,78.9629,9.5,1987-06-20,42705334,0.5,Pandémie mondiale,False,1988-05-15
+Crise alimentaire Japon 2000,Famine,Japon,36.2048,138.2529,6.6,2000-06-19,17489835,0.7,Crise alimentaire majeure,False,2000-08-18
+Typhon Vietnam 1976,Typhon,Vietnam,14.0583,108.2772,6.4,1976-11-19,3621793,0.4,Typhon super destructeur,False,1977-02-17
+Inondation Algérie 2021,Inondation,Algérie,28.0339,1.6596,7.0,2021-07-11,12050187,0.7,Inondations massives,False,2022-12-03
+Tempête tropicale Cuba 1958,Ouragan,Cuba,21.5218,-77.7812,6.7,1958-12-01,7162724,0.5,Ouragan de catégorie élevée,False,1959-11-26
+Raz-de-marée Venezuela 1970,Tsunami,Venezuela,6.4238,-66.5897,8.5,1970-08-10,12694398,0.6,Tsunami majeur,False,1971-11-03
+Crise alimentaire République centrafricaine 2013,Famine,République centrafricaine,6.6111,20.9394,9.4,2013-09-17,15398987,0.4,Crise alimentaire majeure,False,2014-10-12
+Tempête cyclonique Kenya 1955,Cyclone,Kenya,-0.0236,37.9062,8.1,1955-01-19,509995,0.7,Cyclone tropical intense,False,1956-02-13
+Sécheresse Kenya 1971,Famine,Kenya,-0.0236,37.9062,9.6,1971-08-18,15964563,0.3,Crise alimentaire majeure,False,1973-05-09
+Ouragan Thaïlande 1950,Ouragan,Thaïlande,15.87,100.9925,8.2,1950-09-07,2056349,0.4,Ouragan de catégorie élevée,False,1951-05-05
+Ouragan Tanzanie 1996,Ouragan,Tanzanie,-6.369,34.8888,7.7,1996-04-21,3401541,0.5,Ouragan de catégorie élevée,False,1997-05-16
+Ouragan Algérie 1976,Ouragan,Algérie,28.0339,1.6596,8.1,1976-01-06,2613838,0.5,Ouragan de catégorie élevée,False,1977-10-27
+Séisme Mexique 2000,Séisme,Mexique,23.6345,-102.5528,7.2,2000-06-13,14198728,0.7,Séisme destructeur,False,2001-02-08
+Raz-de-marée Inde 1979,Tsunami,Inde,20.5937,78.9629,9.0,1979-05-13,7235068,0.2,Tsunami majeur,False,1981-03-03
+Éruption Mauritanie 1955,Éruption volcanique,Mauritanie,21.0079,-10.9408,6.8,1955-11-04,253120,0.2,Éruption volcanique majeure,False,1957-02-26
+Épidémie Côte d'Ivoire 1999,Pandémie,Côte d'Ivoire,7.54,-5.5471,9.5,1999-04-28,40613855,0.3,Pandémie mondiale,False,2000-09-19
+Incendie Ghana 1981,Incendie,Ghana,7.9465,-1.0232,6.2,1981-02-02,13683796,0.3,Feux de forêt massifs,False,1982-07-27
+Feux de forêt Algérie 2006,Incendie,Algérie,28.0339,1.6596,7.4,2006-08-05,8669451,0.3,Feux de forêt massifs,False,2007-11-28
+Tempête tropicale Colombie 2013,Ouragan,Colombie,4.5709,-74.2973,4.9,2013-11-19,3340190,0.7,Ouragan de catégorie élevée,False,2014-11-14
+Raz-de-marée Égypte 2018,Tsunami,Égypte,26.0975,31.2357,5.3,2018-03-04,12255330,0.3,Tsunami majeur,False,2018-09-30
+Tremblement de terre Égypte 1996,Séisme,Égypte,26.0975,31.2357,8.4,1996-12-18,1597503,0.6,Séisme destructeur,False,1998-09-09
+Éruption volcanique Pakistan 1976,Éruption volcanique,Pakistan,30.3753,69.3451,5.5,1976-02-16,1047781,0.2,Éruption volcanique majeure,False,1977-10-08
+Conflit armé Sénégal 1991,Guerre,Sénégal,14.4974,-14.4524,9.7,1991-02-24,20181778,0.3,Conflit armé majeur,False,1992-09-16
+Guerre civile Mauritanie 2014,Guerre,Mauritanie,21.0079,-10.9408,9.6,2014-07-12,20113022,0.2,Conflit armé majeur,False,2015-07-07
+Déluge Turquie 1991,Inondation,Turquie,38.9637,35.2433,7.8,1991-07-11,984068,0.5,Inondations massives,False,1991-12-08
+Éruption volcanique Nicaragua 1968,Éruption volcanique,Nicaragua,12.265,-85.2072,4.5,1968-06-09,12953650,0.6,Éruption volcanique majeure,False,1969-05-05
+Conflit armé Tunisie 1988,Guerre,Tunisie,33.8869,9.5375,7.1,1988-05-24,4040141,0.6,Conflit armé majeur,False,1989-09-16
+Ouragan Vietnam 2001,Ouragan,Vietnam,14.0583,108.2772,6.0,2001-03-07,10551720,0.8,Ouragan de catégorie élevée,False,2002-03-02
+Guerre Indonésie 1971,Guerre,Indonésie,-0.7893,113.9213,7.6,1971-07-08,9855401,0.3,Conflit armé majeur,False,1971-12-05
+Cyclone Éthiopie 1995,Cyclone,Éthiopie,9.145,38.7667,6.7,1995-02-16,9193169,0.7,Cyclone tropical intense,False,1995-03-18
+Super typhon Libye 2013,Typhon,Libye,26.3351,17.2283,8.3,2013-05-17,6950010,0.6,Typhon super destructeur,False,2015-01-07
+Séisme majeur Venezuela 2006,Séisme,Venezuela,6.4238,-66.5897,5.3,2006-05-24,5801741,0.6,Séisme destructeur,False,2006-12-20
+Guerre civile Argentine 1979,Guerre,Argentine,-38.4161,-63.6167,7.9,1979-05-19,28127415,0.2,Conflit armé majeur,False,1980-07-12
+Sécheresse Bangladesh 2002,Famine,Bangladesh,23.685,90.3563,6.2,2002-05-20,10619632,0.5,Crise alimentaire majeure,False,2003-06-14
+Ouragan Honduras 1956,Ouragan,Honduras,15.2,-86.2419,5.2,1956-08-28,2252141,0.7,Ouragan de catégorie élevée,False,1957-06-24
+Incendie Brésil 2011,Incendie,Brésil,-14.235,-51.9253,7.9,2011-12-12,3152274,0.6,Feux de forêt massifs,False,2012-01-11
+Crise alimentaire Éthiopie 1986,Famine,Éthiopie,9.145,38.7667,9.5,1986-09-12,14762227,0.4,Crise alimentaire majeure,False,1988-03-05
+Sécheresse Tanzanie 1968,Famine,Tanzanie,-6.369,34.8888,8.9,1968-10-17,15205516,0.8,Crise alimentaire majeure,False,1969-10-12
+Pandémie Niger 1986,Pandémie,Niger,17.6078,8.0817,9.9,1986-06-25,37791005,0.7,Pandémie mondiale,False,1986-12-22
+Ouragan Algérie 1970,Ouragan,Algérie,28.0339,1.6596,4.4,1970-03-07,1318994,0.8,Ouragan de catégorie élevée,False,1971-05-01
+Sécheresse Nigeria 2007,Famine,Nigeria,9.082,8.6753,8.2,2007-07-06,12558513,0.6,Crise alimentaire majeure,False,2007-08-05
+Raz-de-marée Nicaragua 1976,Tsunami,Nicaragua,12.265,-85.2072,8.9,1976-03-25,4714902,0.3,Tsunami majeur,False,1976-10-21
+Tsunami Pérou 1992,Tsunami,Pérou,-9.19,-75.0152,6.3,1992-04-03,2134268,0.3,Tsunami majeur,False,1992-12-29
+Typhon Bangladesh 2009,Typhon,Bangladesh,23.685,90.3563,5.6,2009-11-06,11745972,0.8,Typhon super destructeur,False,2010-04-05
+Crues Égypte 1950,Inondation,Égypte,26.0975,31.2357,7.2,1950-05-09,2755354,0.3,Inondations massives,False,1952-01-29
+Déluge Nigeria 1963,Inondation,Nigeria,9.082,8.6753,6.5,1963-05-26,11977188,0.6,Inondations massives,False,1964-10-17
+Famine Bangladesh 2017,Famine,Bangladesh,23.685,90.3563,9.3,2017-12-20,4530221,0.5,Crise alimentaire majeure,False,2019-04-14
+Feux de forêt Russie 2008,Incendie,Russie,61.524,105.3188,6.8,2008-03-02,1506739,0.5,Feux de forêt massifs,False,2010-01-21
+Cyclone République centrafricaine 1983,Cyclone,République centrafricaine,6.6111,20.9394,4.7,1983-06-02,2832820,0.3,Cyclone tropical intense,False,1984-04-27
+Super typhon Inde 1983,Typhon,Inde,20.5937,78.9629,6.0,1983-02-01,14116215,0.2,Typhon super destructeur,False,1983-11-28
+Éruption volcanique Tunisie 1959,Éruption volcanique,Tunisie,33.8869,9.5375,7.5,1959-07-26,10329773,0.2,Éruption volcanique majeure,False,1960-04-21
+Tempête tropicale Tanzanie 2014,Ouragan,Tanzanie,-6.369,34.8888,4.1,2014-08-16,516616,0.5,Ouragan de catégorie élevée,False,2015-02-12
+Tsunami Soudan 1957,Tsunami,Soudan,12.8628,30.2176,8.2,1957-03-04,8824568,0.6,Tsunami majeur,False,1957-08-31
+Séisme Mexique 2012,Séisme,Mexique,23.6345,-102.5528,5.2,2012-07-16,6009649,0.4,Séisme destructeur,False,2014-03-08
+Tsunami Cameroun 1953,Tsunami,Cameroun,7.3697,12.3547,9.0,1953-11-12,8201894,0.3,Tsunami majeur,False,1954-11-07
+Tsunami Sénégal 1974,Tsunami,Sénégal,14.4974,-14.4524,7.5,1974-03-11,11091102,0.4,Tsunami majeur,False,1975-04-05
+Tempête tropicale Thaïlande 2013,Ouragan,Thaïlande,15.87,100.9925,5.1,2013-03-17,5516638,0.5,Ouragan de catégorie élevée,False,2013-10-13
+Épidémie Jamaïque 2003,Pandémie,Jamaïque,18.1096,-77.2975,6.3,2003-11-22,3484206,0.3,Pandémie mondiale,False,2004-09-17
+Épidémie Afghanistan 1973,Pandémie,Afghanistan,33.9391,67.71,8.1,1973-05-10,27311631,0.3,Pandémie mondiale,False,1975-04-30
+Famine Soudan du Sud 1993,Famine,Soudan du Sud,6.877,31.307,7.9,1993-08-07,7086069,0.6,Crise alimentaire majeure,False,1994-05-04
+Séisme majeur Turquie 1978,Séisme,Turquie,38.9637,35.2433,6.4,1978-02-05,6012790,0.5,Séisme destructeur,False,1979-01-01
+Tremblement de terre États-Unis 1956,Séisme,États-Unis,37.0902,-95.7129,7.8,1956-08-17,8541771,0.6,Séisme destructeur,False,1958-04-09
+Cyclone République dominicaine 2015,Cyclone,République dominicaine,18.7357,-70.1627,6.9,2015-07-09,504816,0.5,Cyclone tropical intense,False,2015-09-07
+Conflit armé Mauritanie 2008,Guerre,Mauritanie,21.0079,-10.9408,6.4,2008-07-22,1587111,0.6,Conflit armé majeur,False,2008-08-21
+Cyclone Cuba 1993,Cyclone,Cuba,21.5218,-77.7812,5.7,1993-01-11,1835972,0.7,Cyclone tropical intense,False,1993-12-07
+Inondation Sénégal 2004,Inondation,Sénégal,14.4974,-14.4524,5.3,2004-04-24,6510050,0.5,Inondations massives,False,2005-12-15
+Incendie Iran 1956,Incendie,Iran,32.4279,53.688,8.1,1956-04-16,1391862,0.5,Feux de forêt massifs,False,1957-07-10
+Tremblement de terre Argentine 1962,Séisme,Argentine,-38.4161,-63.6167,8.5,1962-02-11,3932942,0.7,Séisme destructeur,False,1963-03-08
+Tempête tropicale Cuba 1957,Ouragan,Cuba,21.5218,-77.7812,6.7,1957-05-04,3221551,0.3,Ouragan de catégorie élevée,False,1958-09-26
+Guerre Cameroun 2016,Guerre,Cameroun,7.3697,12.3547,10.0,2016-06-25,11347932,0.7,Conflit armé majeur,False,2017-05-21
+Tempête cyclonique Cuba 1984,Cyclone,Cuba,21.5218,-77.7812,7.7,1984-10-03,5884209,0.3,Cyclone tropical intense,False,1985-06-30
+Famine Vietnam 1981,Famine,Vietnam,14.0583,108.2772,8.1,1981-11-23,18842634,0.3,Crise alimentaire majeure,False,1981-12-23
+Guerre civile Pérou 1987,Guerre,Pérou,-9.19,-75.0152,7.7,1987-11-20,9725323,0.6,Conflit armé majeur,False,1988-04-18
+Conflit armé Thaïlande 1980,Guerre,Thaïlande,15.87,100.9925,9.5,1980-10-17,5458830,0.7,Conflit armé majeur,False,1982-09-07
+Famine Myanmar 2022,Famine,Myanmar,21.9162,95.956,7.6,2022-12-11,2983982,0.6,Crise alimentaire majeure,False,2023-10-07
+Éruption Algérie 1991,Éruption volcanique,Algérie,28.0339,1.6596,4.8,1991-09-14,5763645,0.7,Éruption volcanique majeure,False,1993-03-07
+Ouragan Algérie 2003,Ouragan,Algérie,28.0339,1.6596,5.8,2003-06-02,597484,0.4,Ouragan de catégorie élevée,False,2004-08-25
+Déluge Ghana 2005,Inondation,Ghana,7.9465,-1.0232,7.8,2005-05-06,13271831,0.7,Inondations massives,False,2006-09-28
+Pandémie Algérie 1970,Pandémie,Algérie,28.0339,1.6596,6.2,1970-01-16,47598156,0.7,Pandémie mondiale,False,1970-09-13
+Éruption Afghanistan 1992,Éruption volcanique,Afghanistan,33.9391,67.71,5.7,1992-05-13,5091418,0.5,Éruption volcanique majeure,False,1993-01-08
+Typhon Mali 2012,Typhon,Mali,17.5707,-3.9962,5.0,2012-04-08,6070540,0.2,Typhon super destructeur,False,2013-12-29
+Incendie République dominicaine 1997,Incendie,République dominicaine,18.7357,-70.1627,6.9,1997-01-18,2981913,0.7,Feux de forêt massifs,False,1997-12-14
+Séisme majeur Colombie 1981,Séisme,Colombie,4.5709,-74.2973,6.0,1981-10-02,2537396,0.8,Séisme destructeur,False,1982-01-30
+Séisme Ghana 2021,Séisme,Ghana,7.9465,-1.0232,7.7,2021-08-25,644661,0.6,Séisme destructeur,False,2022-12-18
+Tsunami Jamaïque 2006,Tsunami,Jamaïque,18.1096,-77.2975,7.5,2006-02-27,13065307,0.8,Tsunami majeur,False,2007-09-20
+Super typhon Éthiopie 1968,Typhon,Éthiopie,9.145,38.7667,8.1,1968-11-24,3212984,0.7,Typhon super destructeur,False,1969-04-23
+Cyclone Mali 1987,Cyclone,Mali,17.5707,-3.9962,5.2,1987-12-01,3728872,0.8,Cyclone tropical intense,False,1988-03-30
+Tempête tropicale Maroc 1987,Ouragan,Maroc,31.7917,-7.0926,7.4,1987-11-14,2148012,0.6,Ouragan de catégorie élevée,False,1988-02-12
+Super typhon Égypte 1983,Typhon,Égypte,26.0975,31.2357,6.4,1983-11-05,8127560,0.5,Typhon super destructeur,False,1984-10-30
+Ouragan États-Unis 1962,Ouragan,États-Unis,37.0902,-95.7129,4.3,1962-02-03,13673571,0.8,Ouragan de catégorie élevée,False,1963-09-26
+Éruption Ouganda 1999,Éruption volcanique,Ouganda,1.3733,32.2903,7.5,1999-02-17,5437231,0.6,Éruption volcanique majeure,False,2000-12-08
+Tempête tropicale Mauritanie 2013,Ouragan,Mauritanie,21.0079,-10.9408,4.4,2013-03-16,7077361,0.3,Ouragan de catégorie élevée,False,2014-01-10
+Famine Japon 1963,Famine,Japon,36.2048,138.2529,8.1,1963-11-05,18452382,0.6,Crise alimentaire majeure,False,1965-06-27
+Éruption Myanmar 1998,Éruption volcanique,Myanmar,21.9162,95.956,4.1,1998-06-09,8837784,0.3,Éruption volcanique majeure,False,2000-02-29
+Éruption Égypte 1955,Éruption volcanique,Égypte,26.0975,31.2357,5.9,1955-03-13,5960025,0.6,Éruption volcanique majeure,False,1956-12-02
+Typhon Japon 1972,Typhon,Japon,36.2048,138.2529,8.0,1972-12-21,11920060,0.2,Typhon super destructeur,False,1974-12-11
+Tsunami Sénégal 2008,Tsunami,Sénégal,14.4974,-14.4524,5.1,2008-04-27,4638711,0.3,Tsunami majeur,False,2009-03-23
+Sécheresse Équateur 1958,Famine,Équateur,-1.8312,-78.1834,7.7,1958-04-26,7029897,0.2,Crise alimentaire majeure,False,1960-03-16
+Conflit armé Mexique 1975,Guerre,Mexique,23.6345,-102.5528,7.4,1975-05-27,26648262,0.2,Conflit armé majeur,False,1975-08-25
+Pandémie Cameroun 2014,Pandémie,Cameroun,7.3697,12.3547,7.1,2014-06-14,15230762,0.6,Pandémie mondiale,False,2014-10-12
+Tremblement de terre Mauritanie 1992,Séisme,Mauritanie,21.0079,-10.9408,5.2,1992-03-23,8693363,0.6,Séisme destructeur,False,1992-09-19
+Feux de forêt Nicaragua 1978,Incendie,Nicaragua,12.265,-85.2072,8.3,1978-04-03,12463658,0.2,Feux de forêt massifs,False,1979-12-24
+Déluge Iran 1951,Inondation,Iran,32.4279,53.688,7.7,1951-03-21,6252021,0.6,Inondations massives,False,1952-12-10
+Incendie Honduras 1975,Incendie,Honduras,15.2,-86.2419,6.1,1975-11-04,6471833,0.4,Feux de forêt massifs,False,1977-05-27
+Incendie Brésil 2023,Incendie,Brésil,-14.235,-51.9253,5.2,2023-02-28,810110,0.6,Feux de forêt massifs,False,2023-06-28
+Cyclone Niger 1996,Cyclone,Niger,17.6078,8.0817,7.0,1996-10-27,1467374,0.7,Cyclone tropical intense,False,1998-09-17
+Feux de forêt Honduras 2023,Incendie,Honduras,15.2,-86.2419,4.3,2023-08-22,10545362,0.5,Feux de forêt massifs,False,2023-12-20
+Déluge Nicaragua 2022,Inondation,Nicaragua,12.265,-85.2072,4.9,2022-12-21,3720703,0.6,Inondations massives,False,2023-07-19
+Ouragan Mali 2021,Ouragan,Mali,17.5707,-3.9962,6.6,2021-08-21,8961867,0.7,Ouragan de catégorie élevée,False,2023-03-14
+Éruption volcanique Thaïlande 2011,Éruption volcanique,Thaïlande,15.87,100.9925,5.9,2011-09-11,9102091,0.5,Éruption volcanique majeure,False,2013-03-04
+Séisme majeur Tanzanie 1995,Séisme,Tanzanie,-6.369,34.8888,7.3,1995-07-25,4283264,0.7,Séisme destructeur,False,1996-06-19
+Feux de forêt Brésil 1992,Incendie,Brésil,-14.235,-51.9253,5.1,1992-10-08,3318500,0.4,Feux de forêt massifs,False,1994-04-01
+Crues Soudan 2017,Inondation,Soudan,12.8628,30.2176,6.4,2017-05-28,4843750,0.6,Inondations massives,False,2017-09-25
+Cyclone Mali 1977,Cyclone,Mali,17.5707,-3.9962,4.6,1977-07-08,752300,0.6,Cyclone tropical intense,False,1978-01-04
+Inondation Chili 2020,Inondation,Chili,-35.6751,-71.543,7.2,2020-12-22,9606214,0.8,Inondations massives,False,2022-08-14
+Tempête cyclonique Tchad 1990,Cyclone,Tchad,15.4542,18.7322,5.3,1990-10-07,1188160,0.2,Cyclone tropical intense,False,1991-08-03
+Cyclone Venezuela 1969,Cyclone,Venezuela,6.4238,-66.5897,4.3,1969-03-23,12307592,0.3,Cyclone tropical intense,False,1970-05-17
+Conflit armé Soudan 1959,Guerre,Soudan,12.8628,30.2176,8.8,1959-02-22,2339073,0.6,Conflit armé majeur,False,1960-11-13
+Séisme Nicaragua 1991,Séisme,Nicaragua,12.265,-85.2072,8.4,1991-03-20,9667507,0.4,Séisme destructeur,False,1992-02-13
+Épidémie Soudan du Sud 1952,Pandémie,Soudan du Sud,6.877,31.307,6.9,1952-11-24,39099988,0.7,Pandémie mondiale,False,1952-12-24
+Tremblement de terre République centrafricaine 1983,Séisme,République centrafricaine,6.6111,20.9394,8.7,1983-08-13,7153958,0.7,Séisme destructeur,False,1984-11-05
+Épidémie Philippines 1976,Pandémie,Philippines,12.8797,121.774,10.0,1976-01-14,40879529,0.2,Pandémie mondiale,False,1977-12-04
+Feux de forêt Cuba 1971,Incendie,Cuba,21.5218,-77.7812,7.9,1971-09-11,11623619,0.5,Feux de forêt massifs,False,1972-02-08
+Épidémie Équateur 1989,Pandémie,Équateur,-1.8312,-78.1834,6.9,1989-06-15,25255628,0.4,Pandémie mondiale,False,1990-11-07
+Incendie Libye 1972,Incendie,Libye,26.3351,17.2283,6.6,1972-07-02,3692209,0.2,Feux de forêt massifs,False,1973-09-25
+Crise alimentaire Iran 1976,Famine,Iran,32.4279,53.688,7.8,1976-04-11,8161940,0.4,Crise alimentaire majeure,False,1977-03-07
+Super typhon Égypte 2012,Typhon,Égypte,26.0975,31.2357,6.3,2012-05-20,643641,0.4,Typhon super destructeur,False,2012-08-18
+Sécheresse États-Unis 2015,Famine,États-Unis,37.0902,-95.7129,9.6,2015-05-27,10977554,0.2,Crise alimentaire majeure,False,2016-10-18
+Cyclone Maroc 2004,Cyclone,Maroc,31.7917,-7.0926,7.9,2004-07-26,9598269,0.5,Cyclone tropical intense,False,2005-09-19
+Cyclone États-Unis 1992,Cyclone,États-Unis,37.0902,-95.7129,8.0,1992-05-04,128332,0.3,Cyclone tropical intense,False,1994-02-23
+Tremblement de terre Vietnam 1970,Séisme,Vietnam,14.0583,108.2772,5.3,1970-12-04,5340085,0.6,Séisme destructeur,False,1971-06-02
+Ouragan Tchad 1994,Ouragan,Tchad,15.4542,18.7322,7.7,1994-08-25,1036385,0.3,Ouragan de catégorie élevée,False,1995-11-18
+Tempête cyclonique Pérou 1980,Cyclone,Pérou,-9.19,-75.0152,6.3,1980-03-26,13385186,0.6,Cyclone tropical intense,False,1982-02-14
+Tempête cyclonique Mexique 2007,Cyclone,Mexique,23.6345,-102.5528,6.6,2007-05-06,11077506,0.6,Cyclone tropical intense,False,2008-12-26
+Tremblement de terre Libye 2000,Séisme,Libye,26.3351,17.2283,5.6,2000-09-10,9175519,0.6,Séisme destructeur,False,2001-06-07
+Éruption Équateur 1988,Éruption volcanique,Équateur,-1.8312,-78.1834,4.0,1988-07-20,6901551,0.4,Éruption volcanique majeure,False,1989-12-12
+Tempête cyclonique Mauritanie 1959,Cyclone,Mauritanie,21.0079,-10.9408,6.3,1959-06-15,8875255,0.7,Cyclone tropical intense,False,1960-06-09
+Tempête tropicale Jamaïque 1972,Ouragan,Jamaïque,18.1096,-77.2975,8.0,1972-04-04,1603256,0.4,Ouragan de catégorie élevée,False,1973-07-28
+Tremblement de terre Philippines 1958,Séisme,Philippines,12.8797,121.774,8.7,1958-01-09,5170870,0.7,Séisme destructeur,False,1959-02-03
+Tempête cyclonique Nigeria 1966,Cyclone,Nigeria,9.082,8.6753,6.6,1966-09-11,12004699,0.6,Cyclone tropical intense,False,1967-08-07
+Cyclone Argentine 2015,Cyclone,Argentine,-38.4161,-63.6167,6.8,2015-05-15,13322365,0.6,Cyclone tropical intense,False,2015-11-11
+Épidémie Cuba 1985,Pandémie,Cuba,21.5218,-77.7812,6.8,1985-10-28,10209162,0.5,Pandémie mondiale,False,1986-12-22
+Tremblement de terre Colombie 1994,Séisme,Colombie,4.5709,-74.2973,9.4,1994-10-02,13566420,0.8,Séisme destructeur,False,1996-08-22
+Épidémie Pérou 1990,Pandémie,Pérou,-9.19,-75.0152,8.8,1990-04-26,1770219,0.7,Pandémie mondiale,False,1992-04-15
+Raz-de-marée Tanzanie 1978,Tsunami,Tanzanie,-6.369,34.8888,6.9,1978-07-19,12141095,0.5,Tsunami majeur,False,1978-10-17
+Épidémie Égypte 1967,Pandémie,Égypte,26.0975,31.2357,9.8,1967-12-11,30989633,0.6,Pandémie mondiale,False,1969-02-03
+Typhon Nigeria 2014,Typhon,Nigeria,9.082,8.6753,6.6,2014-09-22,5360030,0.2,Typhon super destructeur,False,2016-04-14
+Tremblement de terre Ghana 1951,Séisme,Ghana,7.9465,-1.0232,6.4,1951-09-27,1303402,0.2,Séisme destructeur,False,1952-01-25
+Ouragan Soudan 2003,Ouragan,Soudan,12.8628,30.2176,7.6,2003-05-05,12491620,0.2,Ouragan de catégorie élevée,False,2003-07-04
+Incendie Côte d'Ivoire 1967,Incendie,Côte d'Ivoire,7.54,-5.5471,5.1,1967-12-24,12788210,0.4,Feux de forêt massifs,False,1969-01-17
+Typhon Honduras 2008,Typhon,Honduras,15.2,-86.2419,5.6,2008-11-04,1874550,0.5,Typhon super destructeur,False,2009-04-03
+Sécheresse Tunisie 2008,Famine,Tunisie,33.8869,9.5375,8.3,2008-08-25,4793294,0.6,Crise alimentaire majeure,False,2009-05-22
+Typhon Nicaragua 1982,Typhon,Nicaragua,12.265,-85.2072,6.5,1982-08-02,2970047,0.7,Typhon super destructeur,False,1982-12-30
+Sécheresse Japon 2019,Famine,Japon,36.2048,138.2529,7.9,2019-03-08,3661164,0.5,Crise alimentaire majeure,False,2021-02-25
+Tremblement de terre Libye 1971,Séisme,Libye,26.3351,17.2283,5.6,1971-07-05,14085152,0.6,Séisme destructeur,False,1972-12-26
+Famine Indonésie 2022,Famine,Indonésie,-0.7893,113.9213,8.5,2022-02-20,4016553,0.6,Crise alimentaire majeure,False,2022-09-18
+Séisme majeur Jamaïque 2014,Séisme,Jamaïque,18.1096,-77.2975,8.1,2014-11-01,4136571,0.7,Séisme destructeur,False,2015-01-30
+Tempête cyclonique Inde 1956,Cyclone,Inde,20.5937,78.9629,7.2,1956-08-02,7082702,0.6,Cyclone tropical intense,False,1957-02-28
+Crues États-Unis 1959,Inondation,États-Unis,37.0902,-95.7129,5.9,1959-11-23,14258703,0.3,Inondations massives,False,1960-09-18
+Tempête tropicale Ghana 1966,Ouragan,Ghana,7.9465,-1.0232,4.6,1966-03-28,14156053,0.6,Ouragan de catégorie élevée,False,1966-04-27
+Crues Tunisie 1992,Inondation,Tunisie,33.8869,9.5375,8.3,1992-11-07,2816694,0.7,Inondations massives,False,1994-05-31
+Inondation Thaïlande 1967,Inondation,Thaïlande,15.87,100.9925,5.7,1967-03-25,14859002,0.7,Inondations massives,False,1968-09-15
+Tempête cyclonique Vietnam 1982,Cyclone,Vietnam,14.0583,108.2772,6.1,1982-05-17,8969338,0.4,Cyclone tropical intense,False,1983-09-09
+Inondation Kenya 2005,Inondation,Kenya,-0.0236,37.9062,6.5,2005-07-15,741691,0.7,Inondations massives,False,2005-12-12
+Incendie Iran 1987,Incendie,Iran,32.4279,53.688,4.3,1987-05-05,4192513,0.6,Feux de forêt massifs,False,1987-12-31
+Guerre civile Tanzanie 1961,Guerre,Tanzanie,-6.369,34.8888,9.8,1961-03-15,20913432,0.4,Conflit armé majeur,False,1961-12-10
+Super typhon Algérie 1983,Typhon,Algérie,28.0339,1.6596,6.7,1983-05-06,8325902,0.7,Typhon super destructeur,False,1983-08-04
+Épidémie Brésil 1989,Pandémie,Brésil,-14.235,-51.9253,9.9,1989-02-13,47227409,0.7,Pandémie mondiale,False,1989-07-13
+Inondation Guatemala 1998,Inondation,Guatemala,15.7835,-90.2308,7.6,1998-04-27,12039731,0.3,Inondations massives,False,1998-09-24
+Crues République dominicaine 1960,Inondation,République dominicaine,18.7357,-70.1627,4.5,1960-06-28,5015819,0.3,Inondations massives,False,1961-11-20
+Guerre civile Guatemala 2003,Guerre,Guatemala,15.7835,-90.2308,7.0,2003-02-03,10607070,0.4,Conflit armé majeur,False,2004-11-24
+Cyclone Honduras 1984,Cyclone,Honduras,15.2,-86.2419,5.8,1984-05-13,8989805,0.4,Cyclone tropical intense,False,1985-09-05
+Raz-de-marée République centrafricaine 1989,Tsunami,République centrafricaine,6.6111,20.9394,8.8,1989-04-13,3012802,0.6,Tsunami majeur,False,1989-07-12
+Épidémie Éthiopie 1998,Pandémie,Éthiopie,9.145,38.7667,6.9,1998-03-26,13731158,0.8,Pandémie mondiale,False,1998-11-21
+Guerre civile Colombie 1968,Guerre,Colombie,4.5709,-74.2973,6.1,1968-06-19,25918712,0.5,Conflit armé majeur,False,1969-12-11
+Ouragan Mauritanie 1963,Ouragan,Mauritanie,21.0079,-10.9408,4.5,1963-07-01,383075,0.8,Ouragan de catégorie élevée,False,1963-11-28
+Pandémie Indonésie 2001,Pandémie,Indonésie,-0.7893,113.9213,9.1,2001-08-13,41906514,0.4,Pandémie mondiale,False,2002-02-09
+Déluge Soudan du Sud 1962,Inondation,Soudan du Sud,6.877,31.307,8.1,1962-09-17,10079526,0.6,Inondations massives,False,1964-05-09
+Crues Pérou 1971,Inondation,Pérou,-9.19,-75.0152,7.2,1971-01-16,8452401,0.5,Inondations massives,False,1971-07-15
+Typhon Mexique 2016,Typhon,Mexique,23.6345,-102.5528,5.8,2016-04-03,7576037,0.6,Typhon super destructeur,False,2017-02-27
+Éruption Côte d'Ivoire 1986,Éruption volcanique,Côte d'Ivoire,7.54,-5.5471,8.3,1986-09-03,7428980,0.2,Éruption volcanique majeure,False,1988-06-24
+Tremblement de terre Irak 2013,Séisme,Irak,33.2232,43.6793,6.0,2013-05-19,11353976,0.6,Séisme destructeur,False,2014-01-14
+Crues Chili 2007,Inondation,Chili,-35.6751,-71.543,4.8,2007-05-05,7868990,0.7,Inondations massives,False,2007-12-01
+Épidémie Russie 2013,Pandémie,Russie,61.524,105.3188,7.6,2013-05-19,21884409,0.7,Pandémie mondiale,False,2013-11-15
+Séisme Tanzanie 1961,Séisme,Tanzanie,-6.369,34.8888,5.4,1961-04-18,5074614,0.2,Séisme destructeur,False,1962-04-13
+Conflit armé Mexique 2006,Guerre,Mexique,23.6345,-102.5528,8.4,2006-05-03,15422865,0.6,Conflit armé majeur,False,2007-09-25
+Tempête cyclonique Égypte 1975,Cyclone,Égypte,26.0975,31.2357,7.7,1975-12-22,8347231,0.4,Cyclone tropical intense,False,1977-11-11
+Feux de forêt Thaïlande 2003,Incendie,Thaïlande,15.87,100.9925,5.0,2003-12-09,166291,0.6,Feux de forêt massifs,False,2005-08-30
+Crues Philippines 2004,Inondation,Philippines,12.8797,121.774,7.5,2004-09-09,12517358,0.3,Inondations massives,False,2005-11-03
+Tempête tropicale Bangladesh 1998,Ouragan,Bangladesh,23.685,90.3563,8.0,1998-04-10,13203774,0.3,Ouragan de catégorie élevée,False,1998-06-09
+Incendie Afghanistan 1951,Incendie,Afghanistan,33.9391,67.71,5.8,1951-10-10,13896402,0.4,Feux de forêt massifs,False,1953-03-03
+Incendie Algérie 1995,Incendie,Algérie,28.0339,1.6596,5.7,1995-08-22,2390052,0.2,Feux de forêt massifs,False,1997-01-13
+Ouragan Bangladesh 1984,Ouragan,Bangladesh,23.685,90.3563,6.0,1984-03-09,14926504,0.3,Ouragan de catégorie élevée,False,1985-10-30
+Déluge Venezuela 1970,Inondation,Venezuela,6.4238,-66.5897,5.7,1970-12-07,3133311,0.6,Inondations massives,False,1972-06-29
+Déluge Myanmar 1960,Inondation,Myanmar,21.9162,95.956,7.0,1960-03-14,6654231,0.8,Inondations massives,False,1961-04-08
+Éruption Japon 2020,Éruption volcanique,Japon,36.2048,138.2529,8.3,2020-05-18,12323641,0.6,Éruption volcanique majeure,False,2020-07-17
+Éruption Irak 2000,Éruption volcanique,Irak,33.2232,43.6793,4.2,2000-02-17,8669267,0.4,Éruption volcanique majeure,False,2000-10-14
+Tempête cyclonique Venezuela 2010,Cyclone,Venezuela,6.4238,-66.5897,7.4,2010-10-21,14429516,0.2,Cyclone tropical intense,False,2011-04-19
+Pandémie Jamaïque 2014,Pandémie,Jamaïque,18.1096,-77.2975,9.7,2014-03-28,12599967,0.7,Pandémie mondiale,False,2015-07-21
+Pandémie Chili 1985,Pandémie,Chili,-35.6751,-71.543,6.3,1985-07-24,15331207,0.7,Pandémie mondiale,False,1987-04-15
+Cyclone Tanzanie 1989,Cyclone,Tanzanie,-6.369,34.8888,4.3,1989-10-23,505310,0.5,Cyclone tropical intense,False,1991-07-15
+Cyclone Maroc 2018,Cyclone,Maroc,31.7917,-7.0926,4.1,2018-06-21,3728300,0.3,Cyclone tropical intense,False,2019-06-16
+Tsunami Égypte 1969,Tsunami,Égypte,26.0975,31.2357,6.6,1969-06-25,9479814,0.7,Tsunami majeur,False,1970-10-18
+Typhon Irak 1988,Typhon,Irak,33.2232,43.6793,8.2,1988-06-27,3120499,0.4,Typhon super destructeur,False,1989-06-22
+Épidémie Colombie 1974,Pandémie,Colombie,4.5709,-74.2973,8.6,1974-12-15,22608865,0.2,Pandémie mondiale,False,1975-09-11
+Incendie Cuba 2020,Incendie,Cuba,21.5218,-77.7812,4.1,2020-07-22,1517031,0.3,Feux de forêt massifs,False,2021-11-14
+Pandémie Tchad 1970,Pandémie,Tchad,15.4542,18.7322,6.1,1970-05-08,19329843,0.3,Pandémie mondiale,False,1971-12-29
+Épidémie Jamaïque 1967,Pandémie,Jamaïque,18.1096,-77.2975,7.6,1967-03-18,4912125,0.7,Pandémie mondiale,False,1968-02-11
+Inondation Niger 2016,Inondation,Niger,17.6078,8.0817,4.5,2016-02-06,14103121,0.4,Inondations massives,False,2016-09-03
+Éruption volcanique Afghanistan 1976,Éruption volcanique,Afghanistan,33.9391,67.71,7.1,1976-03-25,3772070,0.3,Éruption volcanique majeure,False,1978-01-14
+Crues Argentine 1967,Inondation,Argentine,-38.4161,-63.6167,4.5,1967-02-27,1259204,0.7,Inondations massives,False,1967-04-28
+Tremblement de terre Sénégal 1975,Séisme,Sénégal,14.4974,-14.4524,5.4,1975-01-10,1669679,0.2,Séisme destructeur,False,1975-05-10
+Ouragan Philippines 1972,Ouragan,Philippines,12.8797,121.774,8.2,1972-07-10,4941028,0.6,Ouragan de catégorie élevée,False,1973-06-05
+Tempête cyclonique République centrafricaine 1974,Cyclone,République centrafricaine,6.6111,20.9394,4.4,1974-09-26,11836490,0.4,Cyclone tropical intense,False,1975-08-22
+Sécheresse Chili 1980,Famine,Chili,-35.6751,-71.543,7.0,1980-10-28,12750167,0.4,Crise alimentaire majeure,False,1982-09-18
+Tsunami Kenya 1995,Tsunami,Kenya,-0.0236,37.9062,6.3,1995-05-20,13407331,0.7,Tsunami majeur,False,1997-02-08
+Tempête tropicale République dominicaine 2000,Ouragan,République dominicaine,18.7357,-70.1627,8.4,2000-10-03,5738837,0.6,Ouragan de catégorie élevée,False,2002-08-24
+Épidémie Côte d'Ivoire 1957,Pandémie,Côte d'Ivoire,7.54,-5.5471,6.7,1957-03-03,6814774,0.5,Pandémie mondiale,False,1958-04-27
+Raz-de-marée Guatemala 2010,Tsunami,Guatemala,15.7835,-90.2308,8.8,2010-06-28,12054526,0.2,Tsunami majeur,False,2012-06-17
+Famine Chili 1968,Famine,Chili,-35.6751,-71.543,8.6,1968-08-17,17544420,0.4,Crise alimentaire majeure,False,1969-06-13
+Super typhon Turquie 1994,Typhon,Turquie,38.9637,35.2433,7.8,1994-06-07,8280046,0.6,Typhon super destructeur,False,1994-09-05
+Raz-de-marée Inde 2014,Tsunami,Inde,20.5937,78.9629,5.1,2014-02-15,7757681,0.8,Tsunami majeur,False,2014-07-15
+Sécheresse Tchad 2011,Famine,Tchad,15.4542,18.7322,10.0,2011-09-18,11534272,0.5,Crise alimentaire majeure,False,2012-03-16
+Déluge Vietnam 1960,Inondation,Vietnam,14.0583,108.2772,8.5,1960-03-07,1176447,0.7,Inondations massives,False,1960-10-03
+Feux de forêt Argentine 1963,Incendie,Argentine,-38.4161,-63.6167,4.4,1963-04-13,13637383,0.2,Feux de forêt massifs,False,1965-03-03
+Pandémie Inde 1956,Pandémie,Inde,20.5937,78.9629,7.3,1956-05-04,10597870,0.7,Pandémie mondiale,False,1957-10-26
+Épidémie Thaïlande 2017,Pandémie,Thaïlande,15.87,100.9925,8.9,2017-11-04,34868260,0.4,Pandémie mondiale,False,2018-08-01
+Crues Iran 1997,Inondation,Iran,32.4279,53.688,4.8,1997-11-04,9835571,0.2,Inondations massives,False,1998-09-30
+Tsunami Mexique 1968,Tsunami,Mexique,23.6345,-102.5528,8.8,1968-10-27,14286746,0.7,Tsunami majeur,False,1969-07-24
+Tsunami Russie 1974,Tsunami,Russie,61.524,105.3188,7.1,1974-01-02,1464143,0.6,Tsunami majeur,False,1975-05-27
+Éruption Cameroun 1958,Éruption volcanique,Cameroun,7.3697,12.3547,4.6,1958-02-17,10437901,0.6,Éruption volcanique majeure,False,1958-10-15
+Épidémie Colombie 2000,Pandémie,Colombie,4.5709,-74.2973,9.2,2000-04-09,41896329,0.6,Pandémie mondiale,False,2001-12-30
+Crise alimentaire Turquie 1976,Famine,Turquie,38.9637,35.2433,7.9,1976-09-16,18797889,0.8,Crise alimentaire majeure,False,1978-03-10
+Ouragan Venezuela 1968,Ouragan,Venezuela,6.4238,-66.5897,4.7,1968-10-03,10310372,0.2,Ouragan de catégorie élevée,False,1969-03-02
+Ouragan Venezuela 2006,Ouragan,Venezuela,6.4238,-66.5897,4.0,2006-03-27,4466929,0.4,Ouragan de catégorie élevée,False,2007-11-17
+Incendie Tunisie 1990,Incendie,Tunisie,33.8869,9.5375,5.5,1990-09-15,4615844,0.8,Feux de forêt massifs,False,1991-05-13
+Séisme majeur Pérou 1959,Séisme,Pérou,-9.19,-75.0152,6.3,1959-10-15,608882,0.7,Séisme destructeur,False,1960-02-12
+Tremblement de terre Japon 2022,Séisme,Japon,36.2048,138.2529,6.9,2022-07-06,1124321,0.5,Séisme destructeur,False,2023-01-02
+Guerre Pérou 2012,Guerre,Pérou,-9.19,-75.0152,9.8,2012-01-25,6476483,0.8,Conflit armé majeur,False,2014-01-14
+Tremblement de terre Indonésie 1956,Séisme,Indonésie,-0.7893,113.9213,8.8,1956-12-12,12418077,0.5,Séisme destructeur,False,1958-05-06
+Éruption volcanique Algérie 1987,Éruption volcanique,Algérie,28.0339,1.6596,8.4,1987-03-08,1637404,0.5,Éruption volcanique majeure,False,1987-04-07
+Typhon Nicaragua 1975,Typhon,Nicaragua,12.265,-85.2072,6.1,1975-04-06,5209383,0.3,Typhon super destructeur,False,1975-08-04
+Super typhon Afghanistan 1960,Typhon,Afghanistan,33.9391,67.71,7.2,1960-11-19,10857786,0.6,Typhon super destructeur,False,1962-04-13
+Typhon Algérie 1959,Typhon,Algérie,28.0339,1.6596,5.6,1959-02-28,6969377,0.8,Typhon super destructeur,False,1960-01-24
+Tempête tropicale Iran 1995,Ouragan,Iran,32.4279,53.688,8.2,1995-12-25,11697501,0.8,Ouragan de catégorie élevée,False,1997-07-17
+Ouragan Vietnam 2014,Ouragan,Vietnam,14.0583,108.2772,5.9,2014-03-09,4982808,0.4,Ouragan de catégorie élevée,False,2014-06-07
+Guerre Maroc 1999,Guerre,Maroc,31.7917,-7.0926,8.5,1999-06-20,13007103,0.7,Conflit armé majeur,False,2000-09-12
+Épidémie Tanzanie 1957,Pandémie,Tanzanie,-6.369,34.8888,6.0,1957-05-20,36904028,0.3,Pandémie mondiale,False,1958-08-13
+Tempête cyclonique Indonésie 1954,Cyclone,Indonésie,-0.7893,113.9213,5.4,1954-12-15,6797150,0.3,Cyclone tropical intense,False,1956-05-08
+Éruption volcanique Cameroun 1973,Éruption volcanique,Cameroun,7.3697,12.3547,4.2,1973-03-20,8251804,0.5,Éruption volcanique majeure,False,1974-01-14
+Tsunami Ghana 2008,Tsunami,Ghana,7.9465,-1.0232,6.4,2008-06-23,4773007,0.6,Tsunami majeur,False,2010-05-14
+Tempête tropicale Maroc 1979,Ouragan,Maroc,31.7917,-7.0926,6.8,1979-12-22,3483514,0.6,Ouragan de catégorie élevée,False,1980-04-20
+Raz-de-marée Tunisie 1980,Tsunami,Tunisie,33.8869,9.5375,9.0,1980-12-09,7967531,0.7,Tsunami majeur,False,1981-11-04
+Super typhon Brésil 1974,Typhon,Brésil,-14.235,-51.9253,7.4,1974-09-08,3416180,0.4,Typhon super destructeur,False,1975-10-03
+Famine Nigeria 1997,Famine,Nigeria,9.082,8.6753,6.8,1997-03-23,17015384,0.7,Crise alimentaire majeure,False,1998-09-14
+Ouragan Nicaragua 1972,Ouragan,Nicaragua,12.265,-85.2072,4.1,1972-10-20,11386926,0.3,Ouragan de catégorie élevée,False,1974-07-12
+Cyclone Libye 1958,Cyclone,Libye,26.3351,17.2283,5.6,1958-08-05,8302966,0.4,Cyclone tropical intense,False,1959-02-01
+Séisme Irak 2014,Séisme,Irak,33.2232,43.6793,7.9,2014-06-03,13804645,0.4,Séisme destructeur,False,2016-05-23
+Tremblement de terre Philippines 2006,Séisme,Philippines,12.8797,121.774,7.1,2006-07-28,928416,0.8,Séisme destructeur,False,2007-12-20
+Guerre civile Équateur 1954,Guerre,Équateur,-1.8312,-78.1834,9.3,1954-03-18,25541256,0.5,Conflit armé majeur,False,1954-09-14
+Séisme majeur Sénégal 1976,Séisme,Sénégal,14.4974,-14.4524,8.0,1976-01-04,1978243,0.5,Séisme destructeur,False,1977-04-28
+Pandémie Honduras 2022,Pandémie,Honduras,15.2,-86.2419,6.9,2022-01-24,14276296,0.6,Pandémie mondiale,False,2023-07-18
+Guerre Thaïlande 1967,Guerre,Thaïlande,15.87,100.9925,7.6,1967-07-17,14481408,0.6,Conflit armé majeur,False,1968-03-13
+Cyclone République centrafricaine 1968,Cyclone,République centrafricaine,6.6111,20.9394,7.0,1968-08-12,1728194,0.3,Cyclone tropical intense,False,1969-12-05
+Raz-de-marée États-Unis 2016,Tsunami,États-Unis,37.0902,-95.7129,8.5,2016-01-11,3573005,0.6,Tsunami majeur,False,2017-08-03
+Feux de forêt Éthiopie 1996,Incendie,Éthiopie,9.145,38.7667,6.8,1996-03-04,8135569,0.3,Feux de forêt massifs,False,1996-05-03
+Épidémie Turquie 1987,Pandémie,Turquie,38.9637,35.2433,7.4,1987-10-13,37618171,0.5,Pandémie mondiale,False,1989-02-04
+Pandémie Maroc 1953,Pandémie,Maroc,31.7917,-7.0926,6.6,1953-05-17,13927651,0.3,Pandémie mondiale,False,1953-07-16
+Pandémie Indonésie 1999,Pandémie,Indonésie,-0.7893,113.9213,7.5,1999-08-13,1940698,0.7,Pandémie mondiale,False,2000-05-09
+Déluge Russie 1989,Inondation,Russie,61.524,105.3188,7.1,1989-12-27,8908833,0.3,Inondations massives,False,1990-08-24
+Éruption volcanique Colombie 1970,Éruption volcanique,Colombie,4.5709,-74.2973,7.0,1970-09-06,1827948,0.3,Éruption volcanique majeure,False,1971-05-04
+Tempête cyclonique Chine 1996,Cyclone,Chine,35.8617,104.1954,6.4,1996-07-16,13139766,0.3,Cyclone tropical intense,False,1998-02-06
+Tempête cyclonique Turquie 1953,Cyclone,Turquie,38.9637,35.2433,7.6,1953-11-24,9063574,0.7,Cyclone tropical intense,False,1954-03-24
+Feux de forêt Mali 1968,Incendie,Mali,17.5707,-3.9962,4.8,1968-04-17,7804495,0.7,Feux de forêt massifs,False,1969-05-12
+Typhon Niger 1987,Typhon,Niger,17.6078,8.0817,5.7,1987-09-04,6415694,0.5,Typhon super destructeur,False,1988-12-27
+Éruption volcanique Guatemala 1986,Éruption volcanique,Guatemala,15.7835,-90.2308,4.7,1986-02-16,11462982,0.4,Éruption volcanique majeure,False,1987-05-12
+Famine Iran 2008,Famine,Iran,32.4279,53.688,9.9,2008-10-04,17956704,0.4,Crise alimentaire majeure,False,2010-01-27
+Guerre Tanzanie 1976,Guerre,Tanzanie,-6.369,34.8888,6.5,1976-09-14,27717457,0.8,Conflit armé majeur,False,1978-04-07
+Typhon Libye 2016,Typhon,Libye,26.3351,17.2283,7.2,2016-06-24,6461629,0.5,Typhon super destructeur,False,2017-02-19
+Crues Philippines 2000,Inondation,Philippines,12.8797,121.774,6.4,2000-04-27,13328539,0.7,Inondations massives,False,2001-01-22
+Épidémie Égypte 1997,Pandémie,Égypte,26.0975,31.2357,9.4,1997-10-14,3026114,0.3,Pandémie mondiale,False,1999-03-08
+Ouragan Irak 1959,Ouragan,Irak,33.2232,43.6793,4.6,1959-07-18,9492991,0.8,Ouragan de catégorie élevée,False,1959-11-15
+Déluge Inde 2000,Inondation,Inde,20.5937,78.9629,7.4,2000-02-04,9003782,0.5,Inondations massives,False,2000-06-03
+Tempête cyclonique Thaïlande 1962,Cyclone,Thaïlande,15.87,100.9925,4.6,1962-11-01,3744426,0.5,Cyclone tropical intense,False,1963-12-26
+Guerre civile Pakistan 2013,Guerre,Pakistan,30.3753,69.3451,8.5,2013-07-12,6607161,0.3,Conflit armé majeur,False,2015-06-02
+Guerre civile Myanmar 1994,Guerre,Myanmar,21.9162,95.956,7.9,1994-10-04,17625589,0.6,Conflit armé majeur,False,1995-05-02
+Typhon États-Unis 2011,Typhon,États-Unis,37.0902,-95.7129,5.4,2011-12-10,3968202,0.7,Typhon super destructeur,False,2012-05-08
+Raz-de-marée Colombie 1995,Tsunami,Colombie,4.5709,-74.2973,8.2,1995-02-14,10167886,0.5,Tsunami majeur,False,1995-08-13
+Crise alimentaire Soudan du Sud 2017,Famine,Soudan du Sud,6.877,31.307,6.9,2017-01-10,16096289,0.5,Crise alimentaire majeure,False,2018-12-01
+Tempête cyclonique Chili 1967,Cyclone,Chili,-35.6751,-71.543,6.5,1967-01-06,12919798,0.3,Cyclone tropical intense,False,1967-11-02
+Inondation Algérie 1984,Inondation,Algérie,28.0339,1.6596,6.7,1984-06-01,2883758,0.2,Inondations massives,False,1985-04-27
+Inondation Libye 2018,Inondation,Libye,26.3351,17.2283,4.4,2018-05-22,11078220,0.5,Inondations massives,False,2019-04-17
+Pandémie Colombie 2008,Pandémie,Colombie,4.5709,-74.2973,9.2,2008-08-17,33088743,0.2,Pandémie mondiale,False,2010-07-08
+Tempête tropicale Cameroun 1957,Ouragan,Cameroun,7.3697,12.3547,4.3,1957-12-11,12529663,0.6,Ouragan de catégorie élevée,False,1958-01-10
+Incendie Jamaïque 2009,Incendie,Jamaïque,18.1096,-77.2975,8.2,2009-03-22,3902655,0.3,Feux de forêt massifs,False,2010-01-16
+Tremblement de terre Russie 2009,Séisme,Russie,61.524,105.3188,8.6,2009-07-21,5964864,0.6,Séisme destructeur,False,2010-02-16
+Séisme Égypte 2014,Séisme,Égypte,26.0975,31.2357,7.7,2014-06-19,2156553,0.4,Séisme destructeur,False,2014-12-16
+Éruption Irak 1971,Éruption volcanique,Irak,33.2232,43.6793,6.5,1971-08-15,6300802,0.3,Éruption volcanique majeure,False,1972-12-07
+Ouragan Pérou 1995,Ouragan,Pérou,-9.19,-75.0152,5.4,1995-07-26,251869,0.6,Ouragan de catégorie élevée,False,1996-01-22
+Éruption Soudan du Sud 1995,Éruption volcanique,Soudan du Sud,6.877,31.307,7.7,1995-09-04,10365954,0.7,Éruption volcanique majeure,False,1996-03-02
+Typhon Mauritanie 2013,Typhon,Mauritanie,21.0079,-10.9408,6.6,2013-06-20,6208777,0.8,Typhon super destructeur,False,2014-01-16
+Incendie Chine 1980,Incendie,Chine,35.8617,104.1954,4.8,1980-12-24,440256,0.3,Feux de forêt massifs,False,1981-01-23
+Épidémie Kenya 1998,Pandémie,Kenya,-0.0236,37.9062,9.2,1998-07-15,14438017,0.4,Pandémie mondiale,False,2000-07-04
+Sécheresse Égypte 2019,Famine,Égypte,26.0975,31.2357,6.1,2019-12-28,14140255,0.5,Crise alimentaire majeure,False,2021-02-20
+Raz-de-marée Pérou 2009,Tsunami,Pérou,-9.19,-75.0152,7.8,2009-09-01,1271847,0.7,Tsunami majeur,False,2011-04-24
+Crise alimentaire Algérie 1993,Famine,Algérie,28.0339,1.6596,9.0,1993-02-15,6493410,0.7,Crise alimentaire majeure,False,1994-12-07
+Pandémie Afghanistan 1953,Pandémie,Afghanistan,33.9391,67.71,9.3,1953-09-25,48145471,0.6,Pandémie mondiale,False,1955-08-16
+Conflit armé Niger 1978,Guerre,Niger,17.6078,8.0817,9.8,1978-12-17,26916452,0.3,Conflit armé majeur,False,1980-12-06
+Tempête cyclonique Cuba 1991,Cyclone,Cuba,21.5218,-77.7812,4.2,1991-01-15,12871627,0.4,Cyclone tropical intense,False,1991-06-14
+Cyclone Kenya 1979,Cyclone,Kenya,-0.0236,37.9062,8.3,1979-05-23,3470568,0.8,Cyclone tropical intense,False,1979-10-20
+Tempête cyclonique Colombie 1966,Cyclone,Colombie,4.5709,-74.2973,7.3,1966-06-13,5294590,0.3,Cyclone tropical intense,False,1966-08-12
+Tsunami Afghanistan 2009,Tsunami,Afghanistan,33.9391,67.71,6.9,2009-01-10,12401358,0.3,Tsunami majeur,False,2009-09-07
+Tsunami Kenya 1975,Tsunami,Kenya,-0.0236,37.9062,7.9,1975-07-12,13450050,0.3,Tsunami majeur,False,1976-02-07
+Tempête cyclonique Afghanistan 1983,Cyclone,Afghanistan,33.9391,67.71,8.2,1983-11-26,10392874,0.3,Cyclone tropical intense,False,1984-04-24
+Épidémie Mauritanie 2020,Pandémie,Mauritanie,21.0079,-10.9408,9.9,2020-02-21,43886394,0.3,Pandémie mondiale,False,2020-03-22
+Inondation Algérie 2008,Inondation,Algérie,28.0339,1.6596,5.8,2008-08-07,12151563,0.2,Inondations massives,False,2010-06-28
+Éruption volcanique République dominicaine 1959,Éruption volcanique,République dominicaine,18.7357,-70.1627,7.7,1959-01-26,10109076,0.5,Éruption volcanique majeure,False,1959-12-22
+Typhon Iran 2016,Typhon,Iran,32.4279,53.688,4.9,2016-06-03,7145753,0.3,Typhon super destructeur,False,2017-04-29
+Feux de forêt Myanmar 1959,Incendie,Myanmar,21.9162,95.956,6.1,1959-08-13,10658662,0.7,Feux de forêt massifs,False,1959-11-11
+Guerre Sénégal 2023,Guerre,Sénégal,14.4974,-14.4524,9.4,2023-08-05,2600118,0.5,Conflit armé majeur,False,2024-05-01
+Éruption volcanique Brésil 1950,Éruption volcanique,Brésil,-14.235,-51.9253,7.8,1950-05-22,4939177,0.6,Éruption volcanique majeure,False,1951-10-14
+Cyclone Indonésie 1951,Cyclone,Indonésie,-0.7893,113.9213,4.6,1951-05-10,7104795,0.8,Cyclone tropical intense,False,1951-06-09
+Tempête cyclonique Sénégal 2007,Cyclone,Sénégal,14.4974,-14.4524,5.0,2007-09-28,4382049,0.5,Cyclone tropical intense,False,2007-10-28
+Éruption Soudan 1973,Éruption volcanique,Soudan,12.8628,30.2176,8.2,1973-08-28,13086376,0.8,Éruption volcanique majeure,False,1975-03-21
+Incendie Maroc 1991,Incendie,Maroc,31.7917,-7.0926,8.0,1991-05-22,10016980,0.6,Feux de forêt massifs,False,1993-02-10
+Ouragan Afghanistan 1981,Ouragan,Afghanistan,33.9391,67.71,7.1,1981-10-09,13379473,0.7,Ouragan de catégorie élevée,False,1982-07-06
+Éruption volcanique Indonésie 2021,Éruption volcanique,Indonésie,-0.7893,113.9213,4.5,2021-06-02,6444386,0.6,Éruption volcanique majeure,False,2021-08-01
+Guerre civile Russie 1981,Guerre,Russie,61.524,105.3188,6.1,1981-02-10,29896866,0.6,Conflit armé majeur,False,1982-03-07
+Feux de forêt Chine 1995,Incendie,Chine,35.8617,104.1954,4.9,1995-08-06,1486588,0.4,Feux de forêt massifs,False,1997-07-26
+Sécheresse Niger 2000,Famine,Niger,17.6078,8.0817,7.9,2000-05-22,19468301,0.4,Crise alimentaire majeure,False,2002-02-11
+Inondation Jamaïque 1972,Inondation,Jamaïque,18.1096,-77.2975,7.0,1972-10-19,6879311,0.3,Inondations massives,False,1973-02-16
+Inondation Équateur 1951,Inondation,Équateur,-1.8312,-78.1834,7.7,1951-06-04,3063792,0.4,Inondations massives,False,1952-11-25
+Crise alimentaire Kenya 2001,Famine,Kenya,-0.0236,37.9062,8.4,2001-10-27,7222922,0.3,Crise alimentaire majeure,False,2002-05-25
+Séisme Maroc 1969,Séisme,Maroc,31.7917,-7.0926,9.1,1969-07-05,5211321,0.3,Séisme destructeur,False,1970-05-01
+Raz-de-marée Libye 1991,Tsunami,Libye,26.3351,17.2283,9.2,1991-12-08,6427676,0.4,Tsunami majeur,False,1992-03-07
+Éruption Niger 1997,Éruption volcanique,Niger,17.6078,8.0817,8.5,1997-11-26,13856131,0.4,Éruption volcanique majeure,False,1998-11-21
+Éruption volcanique Libye 1986,Éruption volcanique,Libye,26.3351,17.2283,4.9,1986-01-26,2932912,0.3,Éruption volcanique majeure,False,1987-03-22
+Déluge Afghanistan 1974,Inondation,Afghanistan,33.9391,67.71,8.0,1974-01-07,6544974,0.7,Inondations massives,False,1974-07-06
+Séisme Japon 2025,Séisme,Japon,36.2048,138.2529,7.5,2025-01-15,8000000,0.7,Séisme destructeur,True,
+Inondation Bangladesh 2025,Inondation,Bangladesh,23.685,90.3563,8.0,2025-02-20,12000000,0.4,Inondations massives,True,
+Cyclone Philippines 2025,Cyclone,Philippines,12.8797,121.774,5.5,2025-03-10,15000000,0.4,Cyclone tropical intense,True,
+Famine Éthiopie 2025,Famine,Éthiopie,9.145,38.7667,8.5,2025-04-05,10000000,0.3,Crise alimentaire majeure,True,
+Éruption volcanique Indonésie 2025,Éruption volcanique,Indonésie,-0.7893,113.9213,6.8,2025-05-12,5000000,0.5,Éruption volcanique majeure,True,

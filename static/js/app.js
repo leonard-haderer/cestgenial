@@ -4,6 +4,7 @@ let currentSection = 'dashboard';
 let paysData = null;
 let typesRisques = [];
 let toutesCrises = [];
+let typesCrisesDisponibles = [];
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', function() {
@@ -80,6 +81,9 @@ async function loadCrises() {
         
         if (result.success) {
             toutesCrises = result.data;
+            // Extrait les types de crises uniques
+            typesCrisesDisponibles = [...new Set(toutesCrises.map(c => c.type_crise))].sort();
+            chargerTypesCrises();
             afficherCrises(toutesCrises);
         }
     } catch (error) {
@@ -87,12 +91,36 @@ async function loadCrises() {
     }
 }
 
+// Charge les types de crises dans le filtre
+function chargerTypesCrises() {
+    const select = document.getElementById('filter-type-crise');
+    select.innerHTML = '<option value="">Tous les types</option>';
+    typesCrisesDisponibles.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        select.appendChild(option);
+    });
+}
+
 // Affiche les crises dans le tableau
 function afficherCrises(crises) {
     const tbody = document.querySelector('#table-crises tbody');
     tbody.innerHTML = '';
     
-    crises.forEach(crise => {
+    // Filtre par type si sélectionné
+    const typeFiltre = document.getElementById('filter-type-crise').value;
+    let crisesFiltrees = crises;
+    if (typeFiltre) {
+        crisesFiltrees = crises.filter(c => c.type_crise === typeFiltre);
+    }
+    
+    if (crisesFiltrees.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" class="text-center">Aucune crise trouvée</td></tr>';
+        return;
+    }
+    
+    crisesFiltrees.forEach(crise => {
         const row = tbody.insertRow();
         const enCours = crise.en_cours ? '<span class="badge bg-danger">Actuelle</span>' : '<span class="badge bg-secondary">Passée</span>';
         row.innerHTML = `
@@ -112,6 +140,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterCheckbox = document.getElementById('filter-actuelles');
     if (filterCheckbox) {
         filterCheckbox.addEventListener('change', loadCrises);
+    }
+    
+    const filterType = document.getElementById('filter-type-crise');
+    if (filterType) {
+        filterType.addEventListener('change', function() {
+            afficherCrises(toutesCrises);
+        });
     }
 });
 
@@ -335,7 +370,8 @@ async function genererCarte() {
     const includeAllocation = document.getElementById('include-allocation').checked;
     
     try {
-        const response = await fetch(`/api/carte?allocation=${includeAllocation}`);
+        // La carte n'affiche que les crises actuelles
+        const response = await fetch(`/api/carte?allocation=${includeAllocation}&actuelles=true`);
         const result = await response.json();
         
         if (result.success) {
@@ -355,6 +391,76 @@ async function genererCarte() {
     } catch (error) {
         console.error('Erreur:', error);
         alert('Erreur lors de la génération');
+    }
+}
+
+// Génère la carte avec heatmap de probabilité
+async function genererCarteHeatmap() {
+    const typeCrise = document.getElementById('heatmap-type-crise').value;
+    const intensite = parseFloat(document.getElementById('heatmap-intensite').value);
+    const resolution = parseFloat(document.getElementById('heatmap-resolution').value);
+    
+    if (!typeCrise) {
+        alert('Veuillez sélectionner un type de crise');
+        return;
+    }
+    
+    if (isNaN(intensite) || intensite < 0 || intensite > 10) {
+        alert('L\'intensité doit être entre 0 et 10');
+        return;
+    }
+    
+    if (isNaN(resolution) || resolution < 1 || resolution > 5) {
+        alert('La résolution doit être entre 1 et 5 degrés');
+        return;
+    }
+    
+    const container = document.getElementById('carte-heatmap-container');
+    container.innerHTML = `
+        <div class="alert alert-info">
+            <i class="fas fa-spinner fa-spin"></i> Calcul de la carte de probabilité en cours... 
+            Cela peut prendre quelques instants selon la résolution choisie.
+        </div>
+    `;
+    
+    try {
+        const response = await fetch(
+            `/api/carte-heatmap?type_crise=${encodeURIComponent(typeCrise)}&intensite=${intensite}&resolution=${resolution}`
+        );
+        const result = await response.json();
+        
+        if (result.success) {
+            container.innerHTML = `
+                <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> Carte de probabilité générée avec succès!
+                    <a href="${result.url}" target="_blank" class="btn btn-danger btn-sm ms-2">
+                        <i class="fas fa-external-link-alt"></i> Ouvrir la carte
+                    </a>
+                </div>
+                <div class="alert alert-warning">
+                    <i class="fas fa-info-circle"></i> 
+                    <strong>Légende:</strong> 
+                    <span style="color: #00ff00;">Vert clair</span> = Probabilité faible (0-20%), 
+                    <span style="color: #ffff00;">Jaune</span> = Probabilité modérée (40-60%), 
+                    <span style="color: #ff8000;">Orange</span> = Probabilité élevée (60-80%), 
+                    <span style="color: #8b0000;">Rouge foncé</span> = Probabilité très élevée (80-100%)
+                </div>
+                <iframe src="${result.url}" width="100%" height="700" style="border: none; border-radius: 10px;"></iframe>
+            `;
+        } else {
+            container.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Erreur: ${result.error}
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Erreur:', error);
+        container.innerHTML = `
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle"></i> Erreur lors de la génération: ${error.message}
+            </div>
+        `;
     }
 }
 
@@ -406,6 +512,13 @@ async function rechercherPays() {
                     </div>
                 </div>
             `;
+            // Affiche la population totale du pays et pré-remplit le champ population touchée
+            document.getElementById('population-pays-info').textContent = paysData.population.toLocaleString('fr-FR');
+            const populationInput = document.getElementById('population-touchee');
+            if (!populationInput.value) {
+                // Pré-remplit avec 10% de la population totale par défaut
+                populationInput.value = Math.round(paysData.population * 0.1);
+            }
             document.getElementById('prediction-form').style.display = 'block';
         } else {
             alert('Pays non trouvé: ' + result.error);
@@ -425,10 +538,21 @@ async function calculerPrediction() {
     
     const typeRisque = document.getElementById('type-risque').value;
     const intensite = parseFloat(document.getElementById('intensite').value);
+    const populationTouchee = parseFloat(document.getElementById('population-touchee').value);
     const budget = parseFloat(document.getElementById('budget').value);
     
     if (!typeRisque) {
         alert('Veuillez sélectionner un type de risque');
+        return;
+    }
+    
+    if (!populationTouchee || populationTouchee <= 0) {
+        alert('Veuillez entrer une population touchée valide');
+        return;
+    }
+    
+    if (populationTouchee > paysData.population) {
+        alert('La population touchée ne peut pas être supérieure à la population totale du pays');
         return;
     }
     
@@ -440,6 +564,7 @@ async function calculerPrediction() {
                 pays: paysData.pays,
                 type_risque: typeRisque,
                 intensite: intensite,
+                population_touchee: populationTouchee,
                 budget: budget
             })
         });
@@ -470,6 +595,17 @@ function afficherResultatsPrediction(result) {
                 <h3>${result.probabilite.probabilite}%</h3>
                 <p><strong>Niveau:</strong> <span class="badge bg-warning">${result.probabilite.niveau}</span></p>
                 <p><small>${result.probabilite.explication}</small></p>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header bg-primary text-white">
+                <i class="fas fa-users"></i> Informations sur la Population
+            </div>
+            <div class="card-body">
+                <p><strong>Population totale du pays:</strong> ${result.pays.population.toLocaleString('fr-FR')} habitants</p>
+                <p><strong>Population touchée par la crise:</strong> <span class="badge bg-danger">${(result.population_touchee || result.pays.population).toLocaleString('fr-FR')} habitants</span></p>
+                <p><strong>Pourcentage de la population touchée:</strong> ${(((result.population_touchee || result.pays.population) / result.pays.population) * 100).toFixed(2)}%</p>
             </div>
         </div>
         

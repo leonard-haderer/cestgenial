@@ -219,11 +219,21 @@
                     <i class="fas fa-list"></i> Liste des Crises
                 </div>
                 <div class="card-body">
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="filter-actuelles" checked>
-                        <label class="form-check-label" for="filter-actuelles">
-                            Afficher uniquement les crises actuelles
-                        </label>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="filter-actuelles" checked>
+                                <label class="form-check-label" for="filter-actuelles">
+                                    Afficher uniquement les crises actuelles
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Filtrer par type de crise:</label>
+                            <select class="form-select" id="filter-type-crise">
+                                <option value="">Tous les types</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover" id="table-crises">
@@ -269,9 +279,11 @@
         <!-- Section Carte -->
         <div id="carte-section" class="section" style="display: none;">
             <h2 class="section-title">Carte Interactive</h2>
-            <div class="card">
+            
+            <!-- Carte des crises -->
+            <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fas fa-map-marked-alt"></i> Visualisation Géographique
+                    <i class="fas fa-map-marked-alt"></i> Visualisation Géographique des Crises
                 </div>
                 <div class="card-body">
                     <div class="form-check mb-3">
@@ -281,9 +293,53 @@
                         </label>
                     </div>
                     <button class="btn btn-primary btn-lg w-100" onclick="genererCarte()">
-                        <i class="fas fa-map"></i> Générer la Carte
+                        <i class="fas fa-map"></i> Générer la Carte des Crises
                     </button>
                     <div id="carte-container" class="mt-4"></div>
+                </div>
+            </div>
+            
+            <!-- Carte de probabilité (heatmap) -->
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-fire"></i> Carte de Probabilité de Crise (Heatmap)
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> 
+                        Cette carte montre les zones où la probabilité qu'une crise se produise est élevée (rouge foncé) ou faible (vert clair).
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Type de crise:</label>
+                            <select class="form-select" id="heatmap-type-crise">
+                                <option value="Séisme">Séisme</option>
+                                <option value="Tsunami">Tsunami</option>
+                                <option value="Ouragan">Ouragan</option>
+                                <option value="Inondation">Inondation</option>
+                                <option value="Famine">Famine</option>
+                                <option value="Cyclone">Cyclone</option>
+                                <option value="Éruption volcanique">Éruption volcanique</option>
+                                <option value="Incendie">Incendie</option>
+                                <option value="Typhon">Typhon</option>
+                                <option value="Pandémie">Pandémie</option>
+                                <option value="Guerre">Guerre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Intensité (0-10):</label>
+                            <input type="number" class="form-control" id="heatmap-intensite" min="0" max="10" step="0.1" value="7.0">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Résolution de la grille (degrés):</label>
+                        <input type="number" class="form-control" id="heatmap-resolution" min="1" max="5" step="0.5" value="3.0">
+                        <small class="form-text text-muted">Plus petit = plus précis mais plus lent (recommandé: 3.0)</small>
+                    </div>
+                    <button class="btn btn-danger btn-lg w-100" onclick="genererCarteHeatmap()">
+                        <i class="fas fa-fire"></i> Générer la Carte de Probabilité
+                    </button>
+                    <div id="carte-heatmap-container" class="mt-4"></div>
                 </div>
             </div>
         </div>
@@ -315,15 +371,20 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">Type de risque</label>
                                 <select class="form-select" id="type-risque"></select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="form-label">Intensité (0-10)</label>
                                 <input type="number" class="form-control" id="intensite" min="0" max="10" step="0.1" value="7.0">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="form-label">Population touchée</label>
+                                <input type="number" class="form-control" id="population-touchee" min="1" step="1000" placeholder="Ex: 1000000">
+                                <small class="text-muted">Population totale du pays: <span id="population-pays-info">-</span></small>
+                            </div>
+                            <div class="col-md-3">
                                 <label class="form-label">Budget (€)</label>
                                 <input type="number" class="form-control" id="budget" value="100000000">
                             </div>

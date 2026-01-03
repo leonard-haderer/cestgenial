@@ -274,6 +274,50 @@ def api_carte():
         return jsonify({'success': False, 'error': str(e)}), 500
 
 
+@app.route('/api/carte-heatmap')
+def api_carte_heatmap():
+    """API pour générer la carte avec heatmap de probabilité"""
+    try:
+        from src.visualisation_carte import creer_carte_avec_heatmap, exporter_carte_html
+        
+        type_crise = request.args.get('type_crise', 'Séisme')
+        intensite = float(request.args.get('intensite', 7.0))
+        resolution = float(request.args.get('resolution', 3.0))  # Résolution de la grille
+        
+        # Charge toutes les crises historiques pour le calcul de probabilité
+        crises = charger_crises(seulement_actuelles=False)
+        
+        # Crée la carte avec heatmap
+        carte = creer_carte_avec_heatmap(
+            crises, 
+            type_crise=type_crise, 
+            intensite=intensite,
+            resolution=resolution,
+            titre="Carte de Probabilité de Crise"
+        )
+        
+        # Sauvegarde la carte
+        dossier_maps = dossier_projet / 'maps'
+        dossier_maps.mkdir(exist_ok=True)
+        nom_fichier = f"carte_heatmap_{type_crise.replace(' ', '_')}_{intensite}.html"
+        chemin_html = exporter_carte_html(carte, str(dossier_maps / nom_fichier))
+        
+        # Copie aussi dans static pour l'accès web
+        dossier_static_maps = dossier_projet / 'static' / 'maps'
+        dossier_static_maps.mkdir(exist_ok=True, parents=True)
+        import shutil
+        shutil.copy(chemin_html, str(dossier_static_maps / nom_fichier))
+        
+        return jsonify({
+            'success': True,
+            'url': f'/static/maps/{nom_fichier}'
+        })
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+
 @app.route('/api/pays')
 def api_pays():
     """API pour rechercher un pays"""
@@ -312,6 +356,7 @@ def api_prediction():
         nom_pays = data.get('pays')
         type_risque = data.get('type_risque')
         intensite = float(data.get('intensite', 7.0))
+        population_touchee = data.get('population_touchee')
         budget = float(data.get('budget', 100000000))
         
         # Charge les données
@@ -324,6 +369,15 @@ def api_prediction():
         if not donnees_pays:
             return jsonify({'success': False, 'error': 'Pays non trouvé'}), 404
         
+        # Utilise la population touchée fournie, sinon utilise la population totale du pays
+        if population_touchee is None:
+            population_touchee = donnees_pays['population']
+        else:
+            population_touchee = float(population_touchee)
+            # Vérifie que la population touchée ne dépasse pas la population totale
+            if population_touchee > donnees_pays['population']:
+                return jsonify({'success': False, 'error': 'La population touchée ne peut pas être supérieure à la population totale du pays'}), 400
+        
         # Calcule la probabilité
         probabilite = calculer_probabilite_evenement(
             donnees_pays['latitude'],
@@ -333,11 +387,11 @@ def api_prediction():
             df_crises
         )
         
-        # Calcule les besoins
+        # Calcule les besoins en utilisant la population touchée
         besoins = calculer_besoins_ressources(
             type_risque,
             intensite,
-            donnees_pays['population'],
+            population_touchee,
             df_besoins
         )
         
@@ -369,6 +423,7 @@ def api_prediction():
         return jsonify({
             'success': True,
             'pays': donnees_pays,
+            'population_touchee': int(population_touchee),
             'probabilite': probabilite,
             'ressources': ressources,
             'cout_total': couts['cout_total'],

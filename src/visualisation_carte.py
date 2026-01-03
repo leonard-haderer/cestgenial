@@ -6,6 +6,7 @@ Auteur: Projet CGénial 2025
 import folium
 from folium import plugins
 import pandas as pd
+import numpy as np
 from pathlib import Path
 
 
@@ -80,7 +81,12 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
         # Indicateur si la crise est actuelle
         en_cours = ''
         if 'en_cours' in crise and crise['en_cours']:
-            en_cours = '<p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>'
+            # Vérifie si c'est une crise de 2025 pour un indicateur spécial
+            date_crise = pd.to_datetime(crise['date'])
+            if date_crise.year == 2025:
+                en_cours = '<p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>'
+            else:
+                en_cours = '<p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>'
         
         # Crée le texte du popup avec les informations de la crise
         popup_html = f"""
@@ -111,12 +117,23 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
         popup_html += "</div>"
         
         # Crée l'icône du marqueur
-        icon_marker = folium.Icon(
-            icon=icone,
-            prefix='fa',
-            color='white',
-            icon_color=couleur
-        )
+        # Pour les crises de 2025, utilise une couleur plus vive
+        date_crise = pd.to_datetime(crise['date'])
+        if 'en_cours' in crise and crise['en_cours'] and date_crise.year == 2025:
+            # Crises de 2025 : couleur plus vive et icône différente
+            icon_marker = folium.Icon(
+                icon=icone,
+                prefix='fa',
+                color='red',  # Fond rouge pour les crises 2025
+                icon_color='white'  # Icône blanche pour contraste
+            )
+        else:
+            icon_marker = folium.Icon(
+                icon=icone,
+                prefix='fa',
+                color='white',
+                icon_color=couleur
+            )
         
         # Crée le marqueur
         marqueur = folium.Marker(
@@ -538,6 +555,272 @@ def creer_carte_filtree(df_crises, type_crise=None, pays=None, date_min=None, da
     # Crée la carte avec les données filtrées
     titre = f"Crises filtrées ({len(df_filtre)} crises)"
     carte = creer_carte_interactive(df_filtre, titre=titre)
+    
+    return carte
+
+
+def est_sur_continent(lat, lon):
+    """
+    Vérifie si un point géographique est sur un continent (approximation)
+    Exclut les grandes zones océaniques connues
+    
+    Args:
+        lat (float): Latitude
+        lon (float): Longitude
+    
+    Returns:
+        bool: True si sur continent, False si dans l'océan
+    """
+    # Zones océaniques principales à exclure (approximation basée sur les coordonnées)
+    
+    # Océan Arctique (exclut complètement au-dessus de 70°N)
+    if lat > 70:
+        return False
+    
+    # Océan Antarctique (exclut complètement en-dessous de 60°S)
+    if lat < -60:
+        return False
+    
+    # Océan Pacifique central (zones sans terres)
+    # Zone 1: Pacifique Nord-Central
+    if (10 <= lat <= 50 and -180 <= lon <= -120):
+        # Exclut les îles (Hawaii, etc.)
+        if not (18 <= lat <= 22 and -160 <= lon <= -154):  # Hawaii
+            return False
+    
+    # Zone 2: Pacifique Sud-Central
+    if (-50 <= lat <= 10 and -180 <= lon <= -120):
+        # Exclut les îles
+        if not (-25 <= lat <= -15 and -180 <= lon <= -150):  # Polynésie
+            return False
+    
+    # Zone 3: Pacifique Ouest (mais garde l'Asie)
+    if (-10 <= lat <= 50 and 120 <= lon <= 180):
+        # Garde l'Asie, l'Indonésie, les Philippines, le Japon
+        if (20 <= lat <= 50 and 120 <= lon <= 150):  # Asie de l'Est
+            return True
+        if (-10 <= lat <= 10 and 95 <= lon <= 141):  # Indonésie
+            return True
+        if (5 <= lat <= 20 and 115 <= lon <= 130):  # Philippines
+            return True
+        # Sinon, probablement océan
+        return False
+    
+    # Océan Atlantique central
+    if (-50 <= lat <= 60 and -80 <= lon <= -20):
+        # Garde les continents
+        if (-35 <= lat <= 15 and -80 <= lon <= -35):  # Amérique du Sud (côte ouest)
+            return True
+        if (25 <= lat <= 50 and -100 <= lon <= -50):  # Amérique du Nord (côte est)
+            return True
+        if (35 <= lat <= 60 and -10 <= lon <= 40):  # Europe
+            return True
+        if (-35 <= lat <= 35 and -20 <= lon <= 50):  # Afrique
+            return True
+        # Garde les îles importantes
+        if (10 <= lat <= 25 and -80 <= lon <= -60):  # Caraïbes
+            return True
+        if (50 <= lat <= 70 and -60 <= lon <= -10):  # Groenland/Islande
+            return True
+        # Sinon, probablement océan
+        return False
+    
+    # Océan Indien
+    if (-50 <= lat <= 30 and 20 <= lon <= 120):
+        # Garde les continents
+        if (-35 <= lat <= 35 and 20 <= lon <= 50):  # Afrique (Est)
+            return True
+        if (-10 <= lat <= 30 and 70 <= lon <= 100):  # Inde
+            return True
+        if (-10 <= lat <= 10 and 95 <= lon <= 120):  # Indonésie/Malaisie
+            return True
+        if (-25 <= lat <= -10 and 110 <= lon <= 155):  # Australie
+            return True
+        # Sinon, probablement océan
+        return False
+    
+    # Par défaut, considère que c'est sur un continent
+    # (cela inclut l'Europe, l'Asie, l'Afrique, l'Amérique, etc.)
+    return True
+
+
+def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, resolution=3.0):
+    """
+    Ajoute une carte de chaleur (heatmap) montrant la probabilité qu'une crise se produise
+    à différents endroits du globe (uniquement sur les continents)
+    
+    Args:
+        carte (folium.Map): Carte Folium à modifier
+        df_crises (pandas.DataFrame): DataFrame des crises historiques
+        type_crise (str): Type de crise à analyser
+        intensite (float): Intensité de la crise (0-10)
+        resolution (float): Résolution de la grille en degrés (plus petit = plus précis mais plus lent)
+    
+    Returns:
+        folium.Map: Carte avec la heatmap ajoutée
+    """
+    from src.prediction_crises import calculer_probabilite_evenement
+    
+    print(f"Calcul de la heatmap de probabilité pour {type_crise} (intensité {intensite})...")
+    print("Filtrage des zones océaniques...")
+    
+    # Crée une grille de points géographiques
+    # Limites du globe
+    lat_min, lat_max = -60, 80  # Exclut les pôles
+    lon_min, lon_max = -180, 180
+    
+    # Génère les points de la grille
+    points_heatmap = []
+    total_points = 0
+    points_filtres = 0
+    
+    for lat in np.arange(lat_min, lat_max, resolution):
+        for lon in np.arange(lon_min, lon_max, resolution):
+            total_points += 1
+            
+            # Vérifie si le point est sur un continent
+            if not est_sur_continent(lat, lon):
+                points_filtres += 1
+                continue
+            
+            # Calcule la probabilité pour ce point
+            resultat = calculer_probabilite_evenement(lat, lon, type_crise, intensite, df_crises)
+            probabilite = resultat['probabilite']
+            
+            # Ajoute le point avec son poids (probabilité)
+            # Le poids est normalisé entre 0 et 1 pour la heatmap
+            poids = probabilite / 100.0  # Normalise entre 0 et 1
+            points_heatmap.append([lat, lon, poids])
+    
+    print(f"✓ {total_points} points analysés, {points_filtres} points océaniques exclus, {len(points_heatmap)} points continentaux calculés")
+    
+    if not points_heatmap:
+        print("⚠ Aucun point à afficher")
+        return carte
+    
+    # Crée la heatmap avec un gradient de couleurs personnalisé
+    # Vert clair (faible probabilité) -> Jaune -> Orange -> Rouge foncé (haute probabilité)
+    gradient = {
+        0.0: '#00ff00',  # Vert clair (0%)
+        0.2: '#80ff00',  # Vert-jaune (20%)
+        0.4: '#ffff00',  # Jaune (40%)
+        0.6: '#ff8000',  # Orange (60%)
+        0.8: '#ff4000',  # Orange-rouge (80%)
+        1.0: '#8b0000'   # Rouge foncé (100%)
+    }
+    
+    # Ajoute la heatmap à la carte
+    plugins.HeatMap(
+        points_heatmap,
+        min_opacity=0.3,
+        max_zoom=18,
+        radius=15,
+        blur=10,
+        gradient=gradient,
+        name=f'Probabilité {type_crise}'
+    ).add_to(carte)
+    
+    print(f"✓ Heatmap ajoutée à la carte (uniquement sur les continents)")
+    
+    return carte
+
+
+def creer_carte_avec_heatmap(df_crises, type_crise, intensite=7.0, resolution=3.0, titre="Carte de Probabilité de Crise"):
+    """
+    Crée une carte interactive avec une heatmap de probabilité pour un type de crise
+    
+    Args:
+        df_crises (pandas.DataFrame): DataFrame des crises historiques
+        type_crise (str): Type de crise à analyser
+        intensite (float): Intensité de la crise (0-10)
+        resolution (float): Résolution de la grille en degrés
+        titre (str): Titre de la carte
+    
+    Returns:
+        folium.Map: Carte avec heatmap
+    """
+    # Calcule le centre de la carte
+    centre_lat = df_crises['latitude'].mean()
+    centre_lon = df_crises['longitude'].mean()
+    
+    # Crée la carte
+    carte = folium.Map(
+        location=[centre_lat, centre_lon],
+        zoom_start=2,
+        tiles='OpenStreetMap'
+    )
+    
+    # Ajoute une couche de tuiles satellite
+    folium.TileLayer('CartoDB positron').add_to(carte)
+    
+    # Ajoute la heatmap de probabilité
+    ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite, resolution)
+    
+    # Ajoute les crises historiques du même type comme marqueurs
+    crises_type = df_crises[df_crises['type_crise'] == type_crise].copy()
+    if not crises_type.empty:
+        for idx, crise in crises_type.iterrows():
+            couleur = COULEURS_CRISES.get(type_crise, 'gray')
+            icone = ICONES_CRISES.get(type_crise, 'info-sign')
+            
+            popup_html = f"""
+            <div style="width: 200px;">
+                <h5>{crise['nom_crise']}</h5>
+                <p><b>Type:</b> {type_crise}</p>
+                <p><b>Pays:</b> {crise['pays']}</p>
+                <p><b>Date:</b> {crise['date']}</p>
+                <p><b>Intensité:</b> {crise['intensite']}</p>
+            </div>
+            """
+            
+            icon_marker = folium.Icon(
+                icon=icone,
+                prefix='fa',
+                color='white',
+                icon_color=couleur
+            )
+            
+            folium.Marker(
+                location=[crise['latitude'], crise['longitude']],
+                popup=folium.Popup(popup_html, max_width=250),
+                tooltip=f"{crise['nom_crise']}",
+                icon=icon_marker
+            ).add_to(carte)
+    
+    # Ajoute le contrôle des couches
+    folium.LayerControl().add_to(carte)
+    
+    # Ajoute une légende pour la heatmap
+    legende_html = f"""
+    <div style="position: fixed; 
+                bottom: 50px; right: 50px; width: 200px; height: auto; 
+                background-color: white; z-index:9999; 
+                border:2px solid grey; padding: 10px;
+                font-size: 12px;">
+        <h5 style="margin-top: 0;">Probabilité {type_crise}</h5>
+        <div style="height: 20px; background: linear-gradient(to right, #00ff00, #80ff00, #ffff00, #ff8000, #ff4000, #8b0000); 
+                    border: 1px solid #ccc; margin-bottom: 5px;"></div>
+        <div style="display: flex; justify-content: space-between; font-size: 10px;">
+            <span>0%</span>
+            <span>50%</span>
+            <span>100%</span>
+        </div>
+        <p style="margin-top: 10px; font-size: 10px;"><small>Intensité: {intensite}/10</small></p>
+    </div>
+    """
+    carte.get_root().html.add_child(folium.Element(legende_html))
+    
+    # Ajoute un titre
+    titre_html = f"""
+    <div style="position: fixed; 
+                top: 10px; left: 50px; width: 400px; height: 60px; 
+                background-color: white; z-index:9999; 
+                border:2px solid grey; padding: 10px;
+                font-size: 16px; font-weight: bold;">
+        {titre} - {type_crise}
+    </div>
+    """
+    carte.get_root().html.add_child(folium.Element(titre_html))
     
     return carte
 
