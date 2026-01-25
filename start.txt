@@ -8,5 +8,6 @@ virt\Scripts\activate.bat
 python.exe -m pip install --upgrade pip
 pip install -r requirements.txt
 
+python ajouter_plus_crises.py
 python run_web.py
 "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" http://localhost:8080

@@ -128,3 +128,6 @@ print(f"✓ {5} crises actuelles de 2025 ajoutées")
 print(f"✓ Total: {len(df_combine)} crises dans le fichier")
 print(f"✓ Crises actuelles: {df_combine['en_cours'].sum()}")
 
+
+
+

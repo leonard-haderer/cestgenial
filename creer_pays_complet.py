@@ -229,3 +229,6 @@ df_pays.to_csv(chemin_fichier, index=False, encoding='utf-8')
 print(f"✓ {len(df_pays)} pays créés dans {chemin_fichier}")
 print(f"✓ Premiers pays: {', '.join(df_pays['pays'].head(10).tolist())}")
 
+
+
+
