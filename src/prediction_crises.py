@@ -581,17 +581,45 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
     
     # Facteur 1: Proximité géographique
     # Plus il y a de crises proches, plus la probabilité est élevée
+    # Au-delà de 1000 km, l'impact devient négligeable
     if distances:
         distance_min = min(distances)
         distance_moyenne = np.mean(distances)
         
-        # Probabilité basée sur la distance (plus proche = plus probable)
-        # Normalise entre 0 et 1 (distance de 0-5000 km)
-        facteur_proximite = max(0, 1 - (distance_min / 5000))
+        # Calcule le facteur de proximité avec une décroissance rapide
+        # Impact maximal pour crises très proches (< 100 km)
+        # Décroissance rapide entre 100 et 1000 km
+        # Impact nul au-delà de 1000 km
+        
+        if distance_min <= 100:
+            # Crises très proches : impact maximal (1.0)
+            facteur_proximite = 1.0
+        elif distance_min <= 500:
+            # Crises moyennement proches : décroissance linéaire de 1.0 à 0.3
+            facteur_proximite = 1.0 - ((distance_min - 100) / 400) * 0.7
+        elif distance_min <= 1000:
+            # Crises éloignées : décroissance rapide de 0.3 à 0.0
+            facteur_proximite = 0.3 * (1 - (distance_min - 500) / 500)
+        else:
+            # Au-delà de 1000 km : impact nul
+            facteur_proximite = 0.0
+        
+        # Ajuste également selon le nombre de crises proches
+        # Compte les crises à moins de 500 km
+        nb_crises_proches_500 = sum(1 for d in distances if d < 500)
+        nb_crises_proches_1000 = sum(1 for d in distances if d < 1000)
+        
+        # Bonus si plusieurs crises proches (mais limité)
+        if nb_crises_proches_500 >= 3:
+            facteur_proximite = min(1.0, facteur_proximite * 1.2)
+        elif nb_crises_proches_1000 >= 5:
+            facteur_proximite = min(1.0, facteur_proximite * 1.1)
     else:
-        facteur_proximite = 0.1
+        facteur_proximite = 0.05  # Impact très faible si aucune crise historique
         distance_min = 10000
         distance_moyenne = 10000
+        nb_crises_proches_500 = 0
+        nb_crises_proches_1000 = 0
     
     # Facteur 2: Fréquence du type de crise
     frequence_type = len(crises_meme_type) / len(df_crises)
@@ -628,12 +656,24 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
         niveau = 'Très faible'
     
     # Crée l'explication
-    nb_crises_proches = sum(1 for d in distances if d < 1000)
+    if distances:
+        nb_crises_proches_100 = sum(1 for d in distances if d < 100)
+        nb_crises_proches_500 = sum(1 for d in distances if d < 500)
+        nb_crises_proches_1000 = sum(1 for d in distances if d < 1000)
+    else:
+        nb_crises_proches_100 = 0
+        nb_crises_proches_500 = 0
+        nb_crises_proches_1000 = 0
+    
     explication = f"{len(crises_meme_type)} crise(s) de type {type_crise} dans l historique"
     if distance_min < 1000:
-        explication += f", {nb_crises_proches} crise(s) à moins de 1000 km"
-    else:
+        if nb_crises_proches_100 > 0:
+            explication += f", {nb_crises_proches_100} crise(s) à moins de 100 km"
+        if nb_crises_proches_500 > 0:
+            explication += f", {nb_crises_proches_500} crise(s) à moins de 500 km"
         explication += f", crise la plus proche à {distance_min:.0f} km"
+    else:
+        explication += f", crise la plus proche à {distance_min:.0f} km (au-delà de 1000 km, impact négligeable)"
     
     if intensites_proches:
         explication += f", {len(intensites_proches)} crise(s) d intensite similaire"
@@ -644,7 +684,9 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
         'explication': explication,
         'distance_min': round(distance_min, 0),
         'nb_crises_historiques': len(crises_meme_type),
-        'nb_crises_proches': nb_crises_proches
+        'nb_crises_proches_100': nb_crises_proches_100 if distances else 0,
+        'nb_crises_proches_500': nb_crises_proches_500 if distances else 0,
+        'nb_crises_proches_1000': nb_crises_proches_1000 if distances else 0
     }
 
 

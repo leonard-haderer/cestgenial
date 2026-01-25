@@ -20,5 +20,6 @@ flask>=2.0.0
 
 # Géospatial (optionnel, pour analyses avancées)
 # geopandas>=0.10.0  # Décommenter si nécessaire
+geopy>=2.3.0  # Pour détecter si un point est sur terre ou dans l'eau (reverse geocoding)
 
 

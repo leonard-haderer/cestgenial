@@ -561,6 +561,82 @@ def creer_carte_filtree(df_crises, type_crise=None, pays=None, date_min=None, da
 
 def est_sur_continent(lat, lon):
     """
+    Vérifie si un point géographique est sur un continent (terre) ou dans l'océan
+    Utilise geopy avec Nominatim (OpenStreetMap) pour une détection précise
+    
+    Args:
+        lat (float): Latitude
+        lon (float): Longitude
+    
+    Returns:
+        bool: True si sur continent, False si dans l'océan
+    """
+    try:
+        from geopy.geocoders import Nominatim
+        from geopy.exc import GeocoderTimedOut, GeocoderServiceError
+        
+        # Utilise un cache pour éviter les appels répétés à l'API
+        if not hasattr(est_sur_continent, '_geocoder'):
+            est_sur_continent._geocoder = Nominatim(user_agent="crisis_prediction_app", timeout=5)
+        
+        if not hasattr(est_sur_continent, '_cache'):
+            est_sur_continent._cache = {}
+        
+        # Vérifie le cache d'abord (arrondi à 2 décimales pour le cache)
+        cache_key = (round(lat, 2), round(lon, 2))
+        if cache_key in est_sur_continent._cache:
+            return est_sur_continent._cache[cache_key]
+        
+        # Fait le reverse geocoding
+        location = est_sur_continent._geocoder.reverse((lat, lon), exactly_one=True, timeout=5)
+        
+        if location:
+            # Vérifie si on a des informations de pays ou de continent
+            address = location.raw.get('address', {})
+            
+            # Si on trouve un pays, c'est sur terre
+            if 'country' in address or 'country_code' in address:
+                est_sur_continent._cache[cache_key] = True
+                return True
+            
+            # Si on trouve un continent ou une région terrestre
+            if any(key in address for key in ['continent', 'state', 'region', 'city', 'town', 'village']):
+                est_sur_continent._cache[cache_key] = True
+                return True
+            
+            # Si l'adresse contient "Ocean" ou "Sea", c'est dans l'eau
+            display_name = location.raw.get('display_name', '').lower()
+            if 'ocean' in display_name or 'sea' in display_name:
+                est_sur_continent._cache[cache_key] = False
+                return False
+        
+        # Si pas d'informations claires, on considère que c'est dans l'eau par défaut
+        est_sur_continent._cache[cache_key] = False
+        return False
+        
+    except ImportError:
+        # Si geopy n'est pas installé, utilise la méthode approximative
+        if not hasattr(est_sur_continent, '_warning_printed'):
+            print("⚠ geopy non disponible, utilisation de la méthode approximative")
+            est_sur_continent._warning_printed = True
+        return est_sur_continent_approximatif(lat, lon)
+    except (GeocoderTimedOut, GeocoderServiceError) as e:
+        # En cas d'erreur réseau ou timeout, utilise la méthode approximative
+        if not hasattr(est_sur_continent, '_timeout_printed'):
+            print(f"⚠ Erreur réseau avec geopy: {e}, utilisation de la méthode approximative")
+            est_sur_continent._timeout_printed = True
+        return est_sur_continent_approximatif(lat, lon)
+    except Exception as e:
+        # En cas d'autre erreur, utilise la méthode approximative
+        if not hasattr(est_sur_continent, '_error_printed'):
+            print(f"⚠ Erreur avec geopy: {e}, utilisation de la méthode approximative")
+            est_sur_continent._error_printed = True
+        return est_sur_continent_approximatif(lat, lon)
+
+
+def est_sur_continent_approximatif(lat, lon):
+    """
+    Méthode approximative de détection (fallback si reverse-geocoding échoue)
     Vérifie si un point géographique est sur un continent (approximation)
     Exclut les grandes zones océaniques connues
     
@@ -649,6 +725,12 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
     Ajoute une carte de chaleur (heatmap) montrant la probabilité qu'une crise se produise
     à différents endroits du globe (uniquement sur les continents)
     
+    Utilise la même logique que calculer_probabilite_evenement() avec :
+    - Impact maximal pour crises historiques < 100 km
+    - Décroissance rapide entre 100-500 km et 500-1000 km
+    - Impact nul au-delà de 1000 km
+    - Prise en compte de la fréquence du type, intensité similaire, etc.
+    
     Args:
         carte (folium.Map): Carte Folium à modifier
         df_crises (pandas.DataFrame): DataFrame des crises historiques
@@ -662,6 +744,7 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
     from src.prediction_crises import calculer_probabilite_evenement
     
     print(f"Calcul de la heatmap de probabilité pour {type_crise} (intensité {intensite})...")
+    print("Utilisation de la logique de calcul de probabilité avec décroissance rapide de la distance...")
     print("Filtrage des zones océaniques...")
     
     # Crée une grille de points géographiques
@@ -683,14 +766,16 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
                 points_filtres += 1
                 continue
             
-            # Calcule la probabilité pour ce point
+            # Calcule la probabilité pour ce point en utilisant la fonction calculer_probabilite_evenement
+            # Cette fonction utilise la nouvelle logique avec décroissance rapide de la distance :
+            # - Impact maximal < 100 km
+            # - Décroissance 100-500 km et 500-1000 km
+            # - Impact nul > 1000 km
             resultat = calculer_probabilite_evenement(lat, lon, type_crise, intensite, df_crises)
             probabilite = resultat['probabilite']
             
-            # Ajoute le point avec son poids (probabilité)
-            # Le poids est normalisé entre 0 et 1 pour la heatmap
-            poids = probabilite / 100.0  # Normalise entre 0 et 1
-            points_heatmap.append([lat, lon, poids])
+            # Stocke le point avec sa probabilité réelle (0-100)
+            points_heatmap.append([lat, lon, probabilite])
     
     print(f"✓ {total_points} points analysés, {points_filtres} points océaniques exclus, {len(points_heatmap)} points continentaux calculés")
     
@@ -698,29 +783,85 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
         print("⚠ Aucun point à afficher")
         return carte
     
-    # Crée la heatmap avec un gradient de couleurs personnalisé
-    # Vert clair (faible probabilité) -> Jaune -> Orange -> Rouge foncé (haute probabilité)
-    gradient = {
-        0.0: '#00ff00',  # Vert clair (0%)
-        0.2: '#80ff00',  # Vert-jaune (20%)
-        0.4: '#ffff00',  # Jaune (40%)
-        0.6: '#ff8000',  # Orange (60%)
-        0.8: '#ff4000',  # Orange-rouge (80%)
-        1.0: '#8b0000'   # Rouge foncé (100%)
-    }
+    # Définit les seuils de probabilité avec des couleurs fixes
+    # Ces seuils sont absolus et ne dépendent pas des valeurs min/max
+    def obtenir_couleur_probabilite(prob):
+        """
+        Retourne la couleur en fonction de la probabilité absolue
+        Utilise des seuils fixes pour garantir la cohérence visuelle
+        """
+        if prob < 15:
+            return '#00ff00'  # Vert clair - Très faible probabilité
+        elif prob < 30:
+            return '#80ff00'  # Vert-jaune - Faible probabilité
+        elif prob < 50:
+            return '#ffff00'  # Jaune - Probabilité modérée
+        elif prob < 70:
+            return '#ff8000'  # Orange - Probabilité élevée
+        else:
+            return '#8b0000'  # Rouge foncé - Très élevée probabilité
     
-    # Ajoute la heatmap à la carte
-    plugins.HeatMap(
-        points_heatmap,
-        min_opacity=0.3,
-        max_zoom=18,
-        radius=15,
-        blur=10,
-        gradient=gradient,
-        name=f'Probabilité {type_crise}'
-    ).add_to(carte)
+    def obtenir_opacite_probabilite(prob):
+        """
+        Retourne l'opacité en fonction de la probabilité
+        Plus la probabilité est élevée, plus l'opacité est forte
+        """
+        # Opacité minimale de 0.2 pour les faibles probabilités
+        # Opacité maximale de 0.8 pour les hautes probabilités
+        return min(0.8, max(0.2, prob / 100.0 * 0.6 + 0.2))
     
-    print(f"✓ Heatmap ajoutée à la carte (uniquement sur les continents)")
+    def obtenir_rayon_probabilite(prob):
+        """
+        Retourne le rayon du cercle en fonction de la probabilité
+        Plus la probabilité est élevée, plus le cercle est grand
+        """
+        # Rayon minimal de 3 pixels, maximal de 12 pixels
+        return min(12, max(3, prob / 100.0 * 9 + 3))
+    
+    # Crée un FeatureGroup pour les cercles de probabilité
+    groupe_probabilite = folium.FeatureGroup(name=f'Probabilité {type_crise}')
+    
+    # Ajoute chaque point comme un cercle coloré
+    for lat, lon, prob in points_heatmap:
+        couleur = obtenir_couleur_probabilite(prob)
+        opacite = obtenir_opacite_probabilite(prob)
+        rayon = obtenir_rayon_probabilite(prob)
+        
+        # Crée un cercle pour ce point
+        cercle = folium.CircleMarker(
+            location=[lat, lon],
+            radius=rayon,
+            popup=f"Probabilité: {prob:.1f}%",
+            tooltip=f"Probabilité: {prob:.1f}%",
+            color=couleur,
+            fillColor=couleur,
+            fillOpacity=opacite,
+            weight=1,
+            opacity=opacite
+        )
+        cercle.add_to(groupe_probabilite)
+    
+    # Ajoute le groupe à la carte
+    groupe_probabilite.add_to(carte)
+    
+    # Ajoute une légende pour les probabilités
+    legende_prob_html = f"""
+    <div style="position: fixed; 
+                bottom: 50px; left: 50px; width: 200px; height: auto; 
+                background-color: white; z-index:9999; 
+                border:2px solid grey; padding: 10px;
+                font-size: 11px;">
+        <h4 style="margin-top: 0; font-size: 12px;">Probabilité {type_crise}</h4>
+        <p style="margin: 2px 0;"><span style="color: #00ff00;">●</span> &lt; 15% (Très faible)</p>
+        <p style="margin: 2px 0;"><span style="color: #80ff00;">●</span> 15-30% (Faible)</p>
+        <p style="margin: 2px 0;"><span style="color: #ffff00;">●</span> 30-50% (Modérée)</p>
+        <p style="margin: 2px 0;"><span style="color: #ff8000;">●</span> 50-70% (Élevée)</p>
+        <p style="margin: 2px 0;"><span style="color: #8b0000;">●</span> &gt; 70% (Très élevée)</p>
+    </div>
+    """
+    carte.get_root().html.add_child(folium.Element(legende_prob_html))
+    
+    print(f"✓ {len(points_heatmap)} cercles de probabilité ajoutés à la carte (uniquement sur les continents)")
     
     return carte
 
