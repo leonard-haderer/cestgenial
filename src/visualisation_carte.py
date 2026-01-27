@@ -559,79 +559,149 @@ def creer_carte_filtree(df_crises, type_crise=None, pays=None, date_min=None, da
     return carte
 
 
-def est_sur_continent(lat, lon):
+def generer_matrice_terre_mer(resolution, lat_min=-60, lat_max=80, lon_min=-180, lon_max=180):
     """
-    Vérifie si un point géographique est sur un continent (terre) ou dans l'océan
-    Utilise geopy avec Nominatim (OpenStreetMap) pour une détection précise
+    Génère une matrice binaire (1=terre, 0=mer) à partir de l'image mapmonde.jpg
+    La matrice est adaptée à la résolution spécifiée
+    
+    Args:
+        resolution (float): Résolution de la grille en degrés
+        lat_min (float): Latitude minimale (défaut: -60)
+        lat_max (float): Latitude maximale (défaut: 80)
+        lon_min (float): Longitude minimale (défaut: -180)
+        lon_max (float): Longitude maximale (défaut: 180)
+    
+    Returns:
+        numpy.ndarray: Matrice 2D de 1 (terre) et 0 (mer), dimensions (nb_lat, nb_lon)
+        dict: Dictionnaire avec les informations de la grille (lat_min, lat_max, lon_min, lon_max, resolution)
+    """
+    from PIL import Image
+    import numpy as np
+    from pathlib import Path
+    
+    # Chemin vers l'image
+    chemin_image = Path(__file__).parent.parent / 'data' / 'mapmonde.jpg'
+    
+    if not chemin_image.exists():
+        raise FileNotFoundError(f"Image non trouvée: {chemin_image}")
+    
+    # Charge l'image
+    img = Image.open(chemin_image)
+    img_array = np.array(img)
+    
+    # Convertit en niveaux de gris si nécessaire
+    if len(img_array.shape) == 3:
+        # Prend la moyenne des canaux RGB pour obtenir un niveau de gris
+        img_gray = np.mean(img_array, axis=2)
+    else:
+        img_gray = img_array
+    
+    # Normalise entre 0 et 1
+    img_gray = img_gray / 255.0
+    
+    # Seuil pour déterminer terre/mer
+    # Les pixels sombres (océans) < 0.5, les pixels clairs (terres) >= 0.5
+    # On inverse car généralement les océans sont bleus (sombre) et les terres sont claires
+    seuil = 0.5
+    matrice_binaire = (img_gray > seuil).astype(int)
+    
+    # Calcule les dimensions de la grille pour la résolution donnée
+    nb_lat = int((lat_max - lat_min) / resolution) + 1
+    nb_lon = int((lon_max - lon_min) / resolution) + 1
+    
+    # Obtient les dimensions de l'image originale
+    img_width, img_height = img.size
+    ratio_original = img_width / img_height
+    
+    # Calcule les dimensions cibles en préservant le ratio d'origine
+    # On choisit la dimension qui limite pour préserver les proportions
+    ratio_cible = nb_lon / nb_lat
+    
+    if ratio_original > ratio_cible:
+        # L'image est plus large que la grille, on limite par la largeur
+        target_width = nb_lon
+        target_height = int(nb_lon / ratio_original)
+    else:
+        # L'image est plus haute que la grille, on limite par la hauteur
+        target_height = nb_lat
+        target_width = int(nb_lat * ratio_original)
+    
+    # Redimensionne l'image en préservant les proportions
+    from PIL import Image as PILImage
+    img_resized = img.resize((target_width, target_height), PILImage.LANCZOS)
+    img_resized_array = np.array(img_resized)
+    
+    # Convertit en niveaux de gris si nécessaire
+    if len(img_resized_array.shape) == 3:
+        img_resized_gray = np.mean(img_resized_array, axis=2)
+    else:
+        img_resized_gray = img_resized_array
+    
+    # Normalise et applique le seuil
+    img_resized_gray = img_resized_gray / 255.0
+    matrice_intermediaire = (img_resized_gray > seuil).astype(int)
+    
+    # Étire la matrice pour correspondre exactement aux dimensions de la grille
+    # En ajoutant des lignes/colonnes par interpolation
+    if matrice_intermediaire.shape[0] != nb_lat or matrice_intermediaire.shape[1] != nb_lon:
+        # Crée une matrice de la taille cible
+        matrice_redimensionnee = np.zeros((nb_lat, nb_lon), dtype=int)
+        
+        # Calcule les indices pour étirer la matrice
+        for i in range(nb_lat):
+            for j in range(nb_lon):
+                # Mappe les indices de la grille vers les indices de l'image redimensionnée
+                src_i = int(i * matrice_intermediaire.shape[0] / nb_lat)
+                src_j = int(j * matrice_intermediaire.shape[1] / nb_lon)
+                
+                # Assure que les indices sont dans les limites
+                src_i = min(src_i, matrice_intermediaire.shape[0] - 1)
+                src_j = min(src_j, matrice_intermediaire.shape[1] - 1)
+                
+                matrice_redimensionnee[i, j] = matrice_intermediaire[src_i, src_j]
+    else:
+        matrice_redimensionnee = matrice_intermediaire
+    
+    # Inverse la matrice verticalement (pôle nord en haut, pôle sud en bas)
+    # Les images sont généralement stockées avec le nord en haut, mais les matrices numpy
+    # peuvent avoir besoin d'être inversées selon la convention de coordonnées
+    matrice_redimensionnee = np.flipud(matrice_redimensionnee)
+    
+    info_grille = {
+        'lat_min': lat_min,
+        'lat_max': lat_max,
+        'lon_min': lon_min,
+        'lon_max': lon_max,
+        'resolution': resolution,
+        'nb_lat': nb_lat,
+        'nb_lon': nb_lon
+    }
+    
+    return matrice_redimensionnee, info_grille
+
+
+def obtenir_valeur_terre_mer(lat, lon, matrice, info_grille):
+    """
+    Obtient la valeur terre/mer (1 ou 0) pour des coordonnées données
     
     Args:
         lat (float): Latitude
         lon (float): Longitude
+        matrice (numpy.ndarray): Matrice binaire terre/mer
+        info_grille (dict): Informations sur la grille
     
     Returns:
-        bool: True si sur continent, False si dans l'océan
+        int: 1 si terre, 0 si mer
     """
-    try:
-        from geopy.geocoders import Nominatim
-        from geopy.exc import GeocoderTimedOut, GeocoderServiceError
-        
-        # Utilise un cache pour éviter les appels répétés à l'API
-        if not hasattr(est_sur_continent, '_geocoder'):
-            est_sur_continent._geocoder = Nominatim(user_agent="crisis_prediction_app", timeout=5)
-        
-        if not hasattr(est_sur_continent, '_cache'):
-            est_sur_continent._cache = {}
-        
-        # Vérifie le cache d'abord (arrondi à 2 décimales pour le cache)
-        cache_key = (round(lat, 2), round(lon, 2))
-        if cache_key in est_sur_continent._cache:
-            return est_sur_continent._cache[cache_key]
-        
-        # Fait le reverse geocoding
-        location = est_sur_continent._geocoder.reverse((lat, lon), exactly_one=True, timeout=5)
-        
-        if location:
-            # Vérifie si on a des informations de pays ou de continent
-            address = location.raw.get('address', {})
-            
-            # Si on trouve un pays, c'est sur terre
-            if 'country' in address or 'country_code' in address:
-                est_sur_continent._cache[cache_key] = True
-                return True
-            
-            # Si on trouve un continent ou une région terrestre
-            if any(key in address for key in ['continent', 'state', 'region', 'city', 'town', 'village']):
-                est_sur_continent._cache[cache_key] = True
-                return True
-            
-            # Si l'adresse contient "Ocean" ou "Sea", c'est dans l'eau
-            display_name = location.raw.get('display_name', '').lower()
-            if 'ocean' in display_name or 'sea' in display_name:
-                est_sur_continent._cache[cache_key] = False
-                return False
-        
-        # Si pas d'informations claires, on considère que c'est dans l'eau par défaut
-        est_sur_continent._cache[cache_key] = False
-        return False
-        
-    except ImportError:
-        # Si geopy n'est pas installé, utilise la méthode approximative
-        if not hasattr(est_sur_continent, '_warning_printed'):
-            print("⚠ geopy non disponible, utilisation de la méthode approximative")
-            est_sur_continent._warning_printed = True
-        return est_sur_continent_approximatif(lat, lon)
-    except (GeocoderTimedOut, GeocoderServiceError) as e:
-        # En cas d'erreur réseau ou timeout, utilise la méthode approximative
-        if not hasattr(est_sur_continent, '_timeout_printed'):
-            print(f"⚠ Erreur réseau avec geopy: {e}, utilisation de la méthode approximative")
-            est_sur_continent._timeout_printed = True
-        return est_sur_continent_approximatif(lat, lon)
-    except Exception as e:
-        # En cas d'autre erreur, utilise la méthode approximative
-        if not hasattr(est_sur_continent, '_error_printed'):
-            print(f"⚠ Erreur avec geopy: {e}, utilisation de la méthode approximative")
-            est_sur_continent._error_printed = True
-        return est_sur_continent_approximatif(lat, lon)
+    # Convertit les coordonnées en indices de la matrice
+    lat_idx = int((lat - info_grille['lat_min']) / info_grille['resolution'])
+    lon_idx = int((lon - info_grille['lon_min']) / info_grille['resolution'])
+    
+    # Vérifie les limites
+    lat_idx = max(0, min(lat_idx, matrice.shape[0] - 1))
+    lon_idx = max(0, min(lon_idx, matrice.shape[1] - 1))
+    
+    return int(matrice[lat_idx, lon_idx])
 
 
 def est_sur_continent_approximatif(lat, lon):
@@ -745,12 +815,22 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
     
     print(f"Calcul de la heatmap de probabilité pour {type_crise} (intensité {intensite})...")
     print("Utilisation de la logique de calcul de probabilité avec décroissance rapide de la distance...")
-    print("Filtrage des zones océaniques...")
+    print("Génération de la matrice terre/mer à partir de l'image...")
     
     # Crée une grille de points géographiques
     # Limites du globe
     lat_min, lat_max = -60, 80  # Exclut les pôles
     lon_min, lon_max = -180, 180
+    
+    # Génère la matrice terre/mer pour cette résolution
+    try:
+        matrice_terre_mer, info_grille = generer_matrice_terre_mer(resolution, lat_min, lat_max, lon_min, lon_max)
+        print(f"✓ Matrice terre/mer générée: {matrice_terre_mer.shape[0]}x{matrice_terre_mer.shape[1]}")
+    except Exception as e:
+        print(f"⚠ Erreur lors de la génération de la matrice: {e}")
+        print("⚠ Utilisation de la méthode approximative")
+        matrice_terre_mer = None
+        info_grille = None
     
     # Génère les points de la grille
     points_heatmap = []
@@ -761,8 +841,15 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
         for lon in np.arange(lon_min, lon_max, resolution):
             total_points += 1
             
-            # Vérifie si le point est sur un continent
-            if not est_sur_continent(lat, lon):
+            # Obtient la valeur terre/mer (1 ou 0) depuis la matrice
+            if matrice_terre_mer is not None:
+                valeur_terre_mer = obtenir_valeur_terre_mer(lat, lon, matrice_terre_mer, info_grille)
+            else:
+                # Fallback vers la méthode approximative
+                valeur_terre_mer = 1 if est_sur_continent_approximatif(lat, lon) else 0
+            
+            # Si c'est la mer (0), on ignore ce point
+            if valeur_terre_mer == 0:
                 points_filtres += 1
                 continue
             
@@ -774,8 +861,17 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
             resultat = calculer_probabilite_evenement(lat, lon, type_crise, intensite, df_crises)
             probabilite = resultat['probabilite']
             
+            # Multiplie la probabilité par la valeur terre/mer (1 pour terre, 0 pour mer)
+            # Cela garantit que les zones marines ont une probabilité de 0
+            probabilite_finale = probabilite * valeur_terre_mer
+            
+            # Si la probabilité finale est 0 (mer), on n'ajoute pas le point
+            if probabilite_finale == 0:
+                points_filtres += 1
+                continue
+            
             # Stocke le point avec sa probabilité réelle (0-100)
-            points_heatmap.append([lat, lon, probabilite])
+            points_heatmap.append([lat, lon, probabilite_finale])
     
     print(f"✓ {total_points} points analysés, {points_filtres} points océaniques exclus, {len(points_heatmap)} points continentaux calculés")
     
