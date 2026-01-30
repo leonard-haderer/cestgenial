@@ -11,6 +11,30 @@ document.addEventListener('DOMContentLoaded', function() {
     loadDashboard();
     loadStockInputs();
     loadTypesRisques();
+    
+    // Ajoute les event listeners pour vérifier l'existence de la heatmap
+    setTimeout(() => {
+        const heatmapTypeCrise = document.getElementById('heatmap-type-crise');
+        const heatmapIntensite = document.getElementById('heatmap-intensite');
+        const heatmapResolution = document.getElementById('heatmap-resolution');
+        
+        if (heatmapTypeCrise) {
+            heatmapTypeCrise.addEventListener('change', verifierHeatmapExistante);
+        }
+        if (heatmapIntensite) {
+            heatmapIntensite.addEventListener('input', verifierHeatmapExistante);
+            heatmapIntensite.addEventListener('change', verifierHeatmapExistante);
+        }
+        if (heatmapResolution) {
+            heatmapResolution.addEventListener('input', verifierHeatmapExistante);
+            heatmapResolution.addEventListener('change', verifierHeatmapExistante);
+        }
+        
+        // Vérifie l'existence au chargement si on est sur la section carte
+        if (currentSection === 'carte') {
+            verifierHeatmapExistante();
+        }
+    }, 500);
 });
 
 // Navigation entre sections
@@ -24,6 +48,11 @@ function showSection(section) {
         loadDashboard();
     } else if (section === 'crises') {
         loadCrises();
+    } else if (section === 'carte') {
+        // Vérifie l'existence de la heatmap quand on arrive sur la section carte
+        setTimeout(() => {
+            verifierHeatmapExistante();
+        }, 100);
     }
 }
 
@@ -394,6 +423,125 @@ async function genererCarte() {
     }
 }
 
+// Vérifie si une heatmap existe pour les paramètres actuels
+async function verifierHeatmapExistante() {
+    const typeCrise = document.getElementById('heatmap-type-crise').value;
+    const intensiteInput = document.getElementById('heatmap-intensite').value;
+    const resolutionInput = document.getElementById('heatmap-resolution').value;
+    const btnCharger = document.getElementById('btn-charger-heatmap');
+    
+    if (!typeCrise || !intensiteInput || !resolutionInput) {
+        btnCharger.disabled = true;
+        // Remet la classe grise quand désactivé
+        btnCharger.className = 'btn btn-secondary btn-lg w-100';
+        return;
+    }
+    
+    const intensite = parseFloat(intensiteInput);
+    const resolution = parseFloat(resolutionInput);
+    
+    if (isNaN(intensite) || isNaN(resolution)) {
+        btnCharger.disabled = true;
+        // Remet la classe grise quand désactivé
+        btnCharger.className = 'btn btn-secondary btn-lg w-100';
+        return;
+    }
+    
+    // Construit le nom du fichier selon le format utilisé dans app_web.py
+    // Utilise les valeurs brutes pour préserver le format (ex: 7.0 au lieu de 7)
+    const nomFichier = `carte_heatmap_${typeCrise.replace(' ', '_')}_${intensiteInput}_${resolutionInput}.html`;
+    const url = `/static/maps/${nomFichier}`;
+    
+    console.log('Vérification de la heatmap:', nomFichier, url);
+    
+    // Vérifie si le fichier existe
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        console.log('Réponse HEAD:', response.status, response.ok);
+        if (response.ok) {
+            btnCharger.disabled = false;
+            // Change la classe pour rendre le bouton plus coloré (btn-success = vert)
+            btnCharger.className = 'btn btn-success btn-lg w-100';
+            console.log('Bouton activé');
+        } else {
+            btnCharger.disabled = true;
+            // Remet la classe grise quand désactivé
+            btnCharger.className = 'btn btn-secondary btn-lg w-100';
+            console.log('Bouton désactivé - fichier non trouvé');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la vérification:', error);
+        btnCharger.disabled = true;
+        // Remet la classe grise en cas d'erreur
+        btnCharger.className = 'btn btn-secondary btn-lg w-100';
+    }
+}
+
+// Charge une heatmap existante
+async function chargerHeatmapExistante() {
+    const typeCrise = document.getElementById('heatmap-type-crise').value;
+    const intensiteInput = document.getElementById('heatmap-intensite').value;
+    const resolutionInput = document.getElementById('heatmap-resolution').value;
+    
+    if (!typeCrise || !intensiteInput || !resolutionInput) {
+        alert('Veuillez remplir tous les champs');
+        return;
+    }
+    
+    const intensite = parseFloat(intensiteInput);
+    const resolution = parseFloat(resolutionInput);
+    
+    if (isNaN(intensite) || isNaN(resolution)) {
+        alert('Veuillez remplir tous les champs avec des valeurs valides');
+        return;
+    }
+    
+    // Construit le nom du fichier selon le format utilisé dans app_web.py
+    // Utilise les valeurs brutes pour préserver le format (ex: 7.0 au lieu de 7)
+    const nomFichier = `carte_heatmap_${typeCrise.replace(' ', '_')}_${intensiteInput}_${resolutionInput}.html`;
+    const url = `/static/maps/${nomFichier}`;
+    
+    console.log('Chargement de la heatmap:', nomFichier, url);
+    
+    const container = document.getElementById('carte-heatmap-container');
+    
+    // Vérifie d'abord si le fichier existe
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (!response.ok) {
+            alert('La carte demandée n\'existe pas encore. Veuillez la générer d\'abord.');
+            return;
+        }
+    } catch (error) {
+        alert('Erreur lors de la vérification de la carte: ' + error.message);
+        return;
+    }
+    
+    // Affiche la carte existante
+    container.innerHTML = `
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i> Chargement de la carte existante...
+        </div>
+        <div class="alert alert-warning">
+            <i class="fas fa-info-circle"></i> 
+            <strong>Légende:</strong> 
+            <span style="color: #00ff00;">Vert clair</span> = Probabilité faible (0-20%), 
+            <span style="color: #ffff00;">Jaune</span> = Probabilité modérée (40-60%), 
+            <span style="color: #ff8000;">Orange</span> = Probabilité élevée (60-80%), 
+            <span style="color: #8b0000;">Rouge foncé</span> = Probabilité très élevée (80-100%)
+        </div>
+        <iframe src="${url}" width="100%" height="700" style="border: none; border-radius: 10px;"></iframe>
+    `;
+    
+    // Scroll vers le bas pour afficher la carte
+    setTimeout(() => {
+        container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
+    
+    // Met à jour le bouton après chargement
+    verifierHeatmapExistante();
+}
+
 // Génère la carte avec heatmap de probabilité
 async function genererCarteHeatmap() {
     const typeCrise = document.getElementById('heatmap-type-crise').value;
@@ -447,6 +595,14 @@ async function genererCarteHeatmap() {
                 </div>
                 <iframe src="${result.url}" width="100%" height="700" style="border: none; border-radius: 10px;"></iframe>
             `;
+            
+            // Scroll vers le bas pour afficher la carte
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }, 100);
+            
+            // Met à jour le bouton après génération
+            verifierHeatmapExistante();
         } else {
             container.innerHTML = `
                 <div class="alert alert-danger">

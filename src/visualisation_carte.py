@@ -8,7 +8,7 @@ from folium import plugins
 import pandas as pd
 import numpy as np
 from pathlib import Path
-
+import math
 
 # Dictionnaire des couleurs et icônes par type de crise
 COULEURS_CRISES = {
@@ -521,51 +521,12 @@ def exporter_carte_html(carte, chemin_fichier=None):
     
     return chemin_fichier
 
-
-def creer_carte_filtree(df_crises, type_crise=None, pays=None, date_min=None, date_max=None):
-    """
-    Crée une carte filtrée selon des critères spécifiques
-    
-    Args:
-        df_crises (pandas.DataFrame): DataFrame des crises
-        type_crise (str): Filtrer par type de crise (optionnel)
-        pays (str): Filtrer par pays (optionnel)
-        date_min (str): Date minimale (format 'YYYY-MM-DD', optionnel)
-        date_max (str): Date maximale (format 'YYYY-MM-DD', optionnel)
-    
-    Returns:
-        folium.Map: Carte filtrée
-    """
-    # Crée une copie du DataFrame pour ne pas modifier l'original
-    df_filtre = df_crises.copy()
-    
-    # Applique les filtres
-    if type_crise:
-        df_filtre = df_filtre[df_filtre['type_crise'] == type_crise]
-    
-    if pays:
-        df_filtre = df_filtre[df_filtre['pays'] == pays]
-    
-    if date_min:
-        df_filtre = df_filtre[df_filtre['date'] >= pd.to_datetime(date_min)]
-    
-    if date_max:
-        df_filtre = df_filtre[df_filtre['date'] <= pd.to_datetime(date_max)]
-    
-    # Crée la carte avec les données filtrées
-    titre = f"Crises filtrées ({len(df_filtre)} crises)"
-    carte = creer_carte_interactive(df_filtre, titre=titre)
-    
-    return carte
-
-
-def generer_matrice_terre_mer(resolution, lat_min=-60, lat_max=80, lon_min=-180, lon_max=180):
+def generer_matrice_terre_mer(points_grille, lat_min=-60, lat_max=80, lon_min=-180, lon_max=180):
     """
     Génère une matrice binaire (1=terre, 0=mer) à partir de l'image mapmonde.jpg
-    La matrice est adaptée à la résolution spécifiée
     
     Args:
-        resolution (float): Résolution de la grille en degrés
+        points_grille (matrice 2 dimensions): Liste de points de la grille
         lat_min (float): Latitude minimale (défaut: -60)
         lat_max (float): Latitude maximale (défaut: 80)
         lon_min (float): Longitude minimale (défaut: -180)
@@ -601,194 +562,89 @@ def generer_matrice_terre_mer(resolution, lat_min=-60, lat_max=80, lon_min=-180,
     
     # Seuil pour déterminer terre/mer
     # Les pixels sombres (océans) < 0.5, les pixels clairs (terres) >= 0.5
-    # On inverse car généralement les océans sont bleus (sombre) et les terres sont claires
     seuil = 0.5
     matrice_binaire = (img_gray > seuil).astype(int)
     
     # Calcule les dimensions de la grille pour la résolution donnée
-    nb_lat = int((lat_max - lat_min) / resolution) + 1
-    nb_lon = int((lon_max - lon_min) / resolution) + 1
+    nb_lat = len(points_grille)
+    nb_lon = len(points_grille[0])
     
     # Obtient les dimensions de l'image originale
     img_width, img_height = img.size
-    ratio_original = img_width / img_height
-    
-    # Calcule les dimensions cibles en préservant le ratio d'origine
-    # On choisit la dimension qui limite pour préserver les proportions
-    ratio_cible = nb_lon / nb_lat
-    
-    if ratio_original > ratio_cible:
-        # L'image est plus large que la grille, on limite par la largeur
-        target_width = nb_lon
-        target_height = int(nb_lon / ratio_original)
-    else:
-        # L'image est plus haute que la grille, on limite par la hauteur
-        target_height = nb_lat
-        target_width = int(nb_lat * ratio_original)
-    
-    # Redimensionne l'image en préservant les proportions
-    from PIL import Image as PILImage
-    img_resized = img.resize((target_width, target_height), PILImage.LANCZOS)
-    img_resized_array = np.array(img_resized)
-    
-    # Convertit en niveaux de gris si nécessaire
-    if len(img_resized_array.shape) == 3:
-        img_resized_gray = np.mean(img_resized_array, axis=2)
-    else:
-        img_resized_gray = img_resized_array
-    
-    # Normalise et applique le seuil
-    img_resized_gray = img_resized_gray / 255.0
-    matrice_intermediaire = (img_resized_gray > seuil).astype(int)
-    
-    # Étire la matrice pour correspondre exactement aux dimensions de la grille
-    # En ajoutant des lignes/colonnes par interpolation
-    if matrice_intermediaire.shape[0] != nb_lat or matrice_intermediaire.shape[1] != nb_lon:
-        # Crée une matrice de la taille cible
-        matrice_redimensionnee = np.zeros((nb_lat, nb_lon), dtype=int)
-        
-        # Calcule les indices pour étirer la matrice
-        for i in range(nb_lat):
-            for j in range(nb_lon):
-                # Mappe les indices de la grille vers les indices de l'image redimensionnée
-                src_i = int(i * matrice_intermediaire.shape[0] / nb_lat)
-                src_j = int(j * matrice_intermediaire.shape[1] / nb_lon)
-                
-                # Assure que les indices sont dans les limites
-                src_i = min(src_i, matrice_intermediaire.shape[0] - 1)
-                src_j = min(src_j, matrice_intermediaire.shape[1] - 1)
-                
-                matrice_redimensionnee[i, j] = matrice_intermediaire[src_i, src_j]
-    else:
-        matrice_redimensionnee = matrice_intermediaire
-    
+  
+    # Calcule la valeur du pixels pour chaque point de la grille
+    step_lat = img_height / nb_lat
+    step_lon = img_width / nb_lon
+    matrice_terre_mer = []
+    for i in range(nb_lat):
+        matrice_terre_mer.append([])
+        for j in range(nb_lon):
+            matrice_terre_mer[i].append(matrice_binaire[int(i*step_lat), int(j*step_lon)])
+
     # Inverse la matrice verticalement (pôle nord en haut, pôle sud en bas)
-    # Les images sont généralement stockées avec le nord en haut, mais les matrices numpy
-    # peuvent avoir besoin d'être inversées selon la convention de coordonnées
-    matrice_redimensionnee = np.flipud(matrice_redimensionnee)
-    
-    info_grille = {
-        'lat_min': lat_min,
-        'lat_max': lat_max,
-        'lon_min': lon_min,
-        'lon_max': lon_max,
-        'resolution': resolution,
-        'nb_lat': nb_lat,
-        'nb_lon': nb_lon
-    }
-    
-    return matrice_redimensionnee, info_grille
+    return np.flipud(matrice_terre_mer)
 
-
-def obtenir_valeur_terre_mer(lat, lon, matrice, info_grille):
+def decalage_latitude_mecrator(latitude_actuelle_degres, delta_y, R=1):
     """
-    Obtient la valeur terre/mer (1 ou 0) pour des coordonnées données
+    Calcule la nouvelle latitude après un déplacement fixe vers le sud sur une carte Mercator.
+
+    :param latitude_actuelle_degres: Latitude actuelle en degrés.
+    :param delta_y: Distance fixe à parcourir vers le sud sur la carte (en % de la carte).
+    :param R: Rayon ou facteur d'échelle (par défaut 1).
+    :return: Nouvelle latitude en degrés.
+    """
+    # Convertir la latitude en radians
+    phi = math.radians(latitude_actuelle_degres)
+    # Calculer y pour la latitude actuelle
+    y = R * math.log(math.tan(phi / 2 + math.pi / 4))
+    # Calculer la nouvelle position y
+    y_nouveau = y + delta_y / 100
+    # Résoudre pour la nouvelle latitude
+    phi_nouveau = 2 * math.atan(math.exp(y_nouveau / R)) - math.pi / 2
+    # Convertir en degrés
+    return math.degrees(phi_nouveau) - latitude_actuelle_degres
+
+def decalage_latitude(lat, resolution):
+    """
+    Calcul le decalage en latitude en fonction de la latitude pour que l'espacement reste constant sur la carte
+    Utilisation d'un fonction lineaire croissante jusqu'a "decalage_latitude(0) = 3 * resolution" puis decroissante
+    """
+    if (lat < 0):
+        return min(0.5, (1/32 * lat + 3) * resolution)
+    else:
+        return min(0.5, (-1/32 * lat + 3) * resolution)
+
+def generer_grille_de_points(lat_min, lat_max, lon_min, lon_max, resolution):
+    """
+    Génère une grille de points régulièrement espacés sur la carte
     
     Args:
-        lat (float): Latitude
-        lon (float): Longitude
-        matrice (numpy.ndarray): Matrice binaire terre/mer
-        info_grille (dict): Informations sur la grille
+        lat_min, lat_max: Limites de latitude
+        lon_min, lon_max: Limites de longitude
+        espacement_km: Espacement entre les points en kilomètres
     
     Returns:
-        int: 1 si terre, 0 si mer
+        list: Liste de tuples (lat, lon) pour chaque point de la grille
     """
-    # Convertit les coordonnées en indices de la matrice
-    lat_idx = int((lat - info_grille['lat_min']) / info_grille['resolution'])
-    lon_idx = int((lon - info_grille['lon_min']) / info_grille['resolution'])
-    
-    # Vérifie les limites
-    lat_idx = max(0, min(lat_idx, matrice.shape[0] - 1))
-    lon_idx = max(0, min(lon_idx, matrice.shape[1] - 1))
-    
-    return int(matrice[lat_idx, lon_idx])
+    points = []
 
+    # Le decalage en longitude est constant et vaut le decalage en latitude pour latitude = 0
+    espacement_lon = decalage_latitude_mecrator(0, 2 * resolution)
 
-def est_sur_continent_approximatif(lat, lon):
-    """
-    Méthode approximative de détection (fallback si reverse-geocoding échoue)
-    Vérifie si un point géographique est sur un continent (approximation)
-    Exclut les grandes zones océaniques connues
+    # Génère les latitudes et les latitudes
+    lat = lat_min
+    while lat <= lat_max:
+        print(f"latitude: {lat}")
+        points.append([])
+        lon = lon_min
+        while lon <= lon_max:
+            points[-1].append((lat, lon))
+            lon += espacement_lon
+        
+        espacement_lat = decalage_latitude_mecrator(lat, 2 * resolution)
+        lat += espacement_lat
     
-    Args:
-        lat (float): Latitude
-        lon (float): Longitude
-    
-    Returns:
-        bool: True si sur continent, False si dans l'océan
-    """
-    # Zones océaniques principales à exclure (approximation basée sur les coordonnées)
-    
-    # Océan Arctique (exclut complètement au-dessus de 70°N)
-    if lat > 70:
-        return False
-    
-    # Océan Antarctique (exclut complètement en-dessous de 60°S)
-    if lat < -60:
-        return False
-    
-    # Océan Pacifique central (zones sans terres)
-    # Zone 1: Pacifique Nord-Central
-    if (10 <= lat <= 50 and -180 <= lon <= -120):
-        # Exclut les îles (Hawaii, etc.)
-        if not (18 <= lat <= 22 and -160 <= lon <= -154):  # Hawaii
-            return False
-    
-    # Zone 2: Pacifique Sud-Central
-    if (-50 <= lat <= 10 and -180 <= lon <= -120):
-        # Exclut les îles
-        if not (-25 <= lat <= -15 and -180 <= lon <= -150):  # Polynésie
-            return False
-    
-    # Zone 3: Pacifique Ouest (mais garde l'Asie)
-    if (-10 <= lat <= 50 and 120 <= lon <= 180):
-        # Garde l'Asie, l'Indonésie, les Philippines, le Japon
-        if (20 <= lat <= 50 and 120 <= lon <= 150):  # Asie de l'Est
-            return True
-        if (-10 <= lat <= 10 and 95 <= lon <= 141):  # Indonésie
-            return True
-        if (5 <= lat <= 20 and 115 <= lon <= 130):  # Philippines
-            return True
-        # Sinon, probablement océan
-        return False
-    
-    # Océan Atlantique central
-    if (-50 <= lat <= 60 and -80 <= lon <= -20):
-        # Garde les continents
-        if (-35 <= lat <= 15 and -80 <= lon <= -35):  # Amérique du Sud (côte ouest)
-            return True
-        if (25 <= lat <= 50 and -100 <= lon <= -50):  # Amérique du Nord (côte est)
-            return True
-        if (35 <= lat <= 60 and -10 <= lon <= 40):  # Europe
-            return True
-        if (-35 <= lat <= 35 and -20 <= lon <= 50):  # Afrique
-            return True
-        # Garde les îles importantes
-        if (10 <= lat <= 25 and -80 <= lon <= -60):  # Caraïbes
-            return True
-        if (50 <= lat <= 70 and -60 <= lon <= -10):  # Groenland/Islande
-            return True
-        # Sinon, probablement océan
-        return False
-    
-    # Océan Indien
-    if (-50 <= lat <= 30 and 20 <= lon <= 120):
-        # Garde les continents
-        if (-35 <= lat <= 35 and 20 <= lon <= 50):  # Afrique (Est)
-            return True
-        if (-10 <= lat <= 30 and 70 <= lon <= 100):  # Inde
-            return True
-        if (-10 <= lat <= 10 and 95 <= lon <= 120):  # Indonésie/Malaisie
-            return True
-        if (-25 <= lat <= -10 and 110 <= lon <= 155):  # Australie
-            return True
-        # Sinon, probablement océan
-        return False
-    
-    # Par défaut, considère que c'est sur un continent
-    # (cela inclut l'Europe, l'Asie, l'Afrique, l'Amérique, etc.)
-    return True
-
+    return points
 
 def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, resolution=3.0):
     """
@@ -806,7 +662,7 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
         df_crises (pandas.DataFrame): DataFrame des crises historiques
         type_crise (str): Type de crise à analyser
         intensite (float): Intensité de la crise (0-10)
-        resolution (float): Résolution de la grille en degrés (plus petit = plus précis mais plus lent)
+        resolution (float): Résolution abstraite de la grille (1-5, où 1=peu de points, 5=beaucoup de points)
     
     Returns:
         folium.Map: Carte avec la heatmap ajoutée
@@ -815,41 +671,35 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
     
     print(f"Calcul de la heatmap de probabilité pour {type_crise} (intensité {intensite})...")
     print("Utilisation de la logique de calcul de probabilité avec décroissance rapide de la distance...")
-    print("Génération de la matrice terre/mer à partir de l'image...")
+    print("Génération de la grille avec espacement régulier sur la carte mercator ...")
     
     # Crée une grille de points géographiques
     # Limites du globe
     lat_min, lat_max = -60, 80  # Exclut les pôles
     lon_min, lon_max = -180, 180
+        
+    # Génère une grille régulièrement espacée en distance sur la carte mercator
+    points_grille = generer_grille_de_points(lat_min, lat_max, lon_min, lon_max, resolution)
+    print(f"✓ {len(points_grille) * len(points_grille[0])} points générés dans la grille")
     
-    # Génère la matrice terre/mer pour cette résolution
-    try:
-        matrice_terre_mer, info_grille = generer_matrice_terre_mer(resolution, lat_min, lat_max, lon_min, lon_max)
-        print(f"✓ Matrice terre/mer générée: {matrice_terre_mer.shape[0]}x{matrice_terre_mer.shape[1]}")
-    except Exception as e:
-        print(f"⚠ Erreur lors de la génération de la matrice: {e}")
-        print("⚠ Utilisation de la méthode approximative")
-        matrice_terre_mer = None
-        info_grille = None
+    # Génère la matrice terre/mer pour la détection
+    # On utilise la grille de points deja creee
+    matrice_terre_mer = generer_matrice_terre_mer(points_grille, lat_min, lat_max, lon_min, lon_max)
+    print(f"✓ Matrice terre/mer générée: {len(matrice_terre_mer)}x{len(matrice_terre_mer[0])}")
     
-    # Génère les points de la grille
+    # Génère les points de la heatmap
     points_heatmap = []
     total_points = 0
     points_filtres = 0
     
-    for lat in np.arange(lat_min, lat_max, resolution):
-        for lon in np.arange(lon_min, lon_max, resolution):
+    for i in range(len(points_grille)):
+        for j in range(len(points_grille[i])):
+            lat, lon = points_grille[i][j]
             total_points += 1
-            
-            # Obtient la valeur terre/mer (1 ou 0) depuis la matrice
-            if matrice_terre_mer is not None:
-                valeur_terre_mer = obtenir_valeur_terre_mer(lat, lon, matrice_terre_mer, info_grille)
-            else:
-                # Fallback vers la méthode approximative
-                valeur_terre_mer = 1 if est_sur_continent_approximatif(lat, lon) else 0
-            
+            print(f"Point {total_points} : {lat}, {lon}")
+
             # Si c'est la mer (0), on ignore ce point
-            if valeur_terre_mer == 0:
+            if matrice_terre_mer[i][j] == 0:
                 points_filtres += 1
                 continue
             
@@ -863,7 +713,7 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
             
             # Multiplie la probabilité par la valeur terre/mer (1 pour terre, 0 pour mer)
             # Cela garantit que les zones marines ont une probabilité de 0
-            probabilite_finale = probabilite * valeur_terre_mer
+            probabilite_finale = probabilite * matrice_terre_mer[i][j]
             
             # Si la probabilité finale est 0 (mer), on n'ajoute pas le point
             if probabilite_finale == 0:
@@ -872,7 +722,7 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
             
             # Stocke le point avec sa probabilité réelle (0-100)
             points_heatmap.append([lat, lon, probabilite_finale])
-    
+        
     print(f"✓ {total_points} points analysés, {points_filtres} points océaniques exclus, {len(points_heatmap)} points continentaux calculés")
     
     if not points_heatmap:
@@ -927,8 +777,8 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
         cercle = folium.CircleMarker(
             location=[lat, lon],
             radius=rayon,
-            popup=f"Probabilité: {prob:.1f}%",
-            tooltip=f"Probabilité: {prob:.1f}%",
+            popup=f"Probabilité: {prob:.1f}% lat {lat:.4f} lon {lon:.4f}",
+            tooltip=f"Probabilité: {prob:.1f}% lat {lat:.4f} lon {lon:.4f}",
             color=couleur,
             fillColor=couleur,
             fillOpacity=opacite,

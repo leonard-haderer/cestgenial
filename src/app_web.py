@@ -299,7 +299,7 @@ def api_carte_heatmap():
         # Sauvegarde la carte
         dossier_maps = dossier_projet / 'maps'
         dossier_maps.mkdir(exist_ok=True)
-        nom_fichier = f"carte_heatmap_{type_crise.replace(' ', '_')}_{intensite}.html"
+        nom_fichier = f"carte_heatmap_{type_crise.replace(' ', '_')}_{intensite}_{resolution}.html"
         chemin_html = exporter_carte_html(carte, str(dossier_maps / nom_fichier))
         
         # Copie aussi dans static pour l'accès web
