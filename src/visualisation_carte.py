@@ -117,22 +117,25 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
         popup_html += "</div>"
         
         # Crée l'icône du marqueur
-        # Pour les crises de 2025, utilise une couleur plus vive
-        date_crise = pd.to_datetime(crise['date'])
-        if 'en_cours' in crise and crise['en_cours'] and date_crise.year == 2025:
-            # Crises de 2025 : couleur plus vive et icône différente
+        # Utilise la couleur du type de crise (comme dans la légende) pour toutes les crises
+        est_actuelle = 'en_cours' in crise and crise['en_cours']
+        
+        if est_actuelle:
+            # Crises actuelles : fond rouge vif avec icône de la couleur du type de crise
+            # Cela permet de voir la couleur du type tout en distinguant les crises actuelles
             icon_marker = folium.Icon(
                 icon=icone,
                 prefix='fa',
-                color='red',  # Fond rouge pour les crises 2025
-                icon_color='white'  # Icône blanche pour contraste
+                color='red',  # Fond rouge vif pour distinguer les crises actuelles
+                icon_color=couleur  # Icône avec la couleur du type de crise (comme dans la légende)
             )
         else:
+            # Crises passées : couleur normale selon le type (comme dans la légende)
             icon_marker = folium.Icon(
                 icon=icone,
                 prefix='fa',
                 color='white',
-                icon_color=couleur
+                icon_color=couleur  # Couleur du type de crise (comme dans la légende)
             )
         
         # Crée le marqueur
@@ -843,36 +846,7 @@ def creer_carte_avec_heatmap(df_crises, type_crise, intensite=7.0, resolution=3.
     # Ajoute la heatmap de probabilité
     ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite, resolution)
     
-    # Ajoute les crises historiques du même type comme marqueurs
-    crises_type = df_crises[df_crises['type_crise'] == type_crise].copy()
-    if not crises_type.empty:
-        for idx, crise in crises_type.iterrows():
-            couleur = COULEURS_CRISES.get(type_crise, 'gray')
-            icone = ICONES_CRISES.get(type_crise, 'info-sign')
-            
-            popup_html = f"""
-            <div style="width: 200px;">
-                <h5>{crise['nom_crise']}</h5>
-                <p><b>Type:</b> {type_crise}</p>
-                <p><b>Pays:</b> {crise['pays']}</p>
-                <p><b>Date:</b> {crise['date']}</p>
-                <p><b>Intensité:</b> {crise['intensite']}</p>
-            </div>
-            """
-            
-            icon_marker = folium.Icon(
-                icon=icone,
-                prefix='fa',
-                color='white',
-                icon_color=couleur
-            )
-            
-            folium.Marker(
-                location=[crise['latitude'], crise['longitude']],
-                popup=folium.Popup(popup_html, max_width=250),
-                tooltip=f"{crise['nom_crise']}",
-                icon=icon_marker
-            ).add_to(carte)
+    # Les marqueurs avec icônes des crises historiques ont été retirés pour mieux voir les couleurs de la heatmap
     
     # Ajoute le contrôle des couches
     folium.LayerControl().add_to(carte)

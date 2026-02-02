@@ -9,13 +9,14 @@ from pathlib import Path
 from datetime import datetime
 
 
-def charger_crises(chemin_fichier=None, seulement_actuelles=False):
+def charger_crises(chemin_fichier=None, seulement_actuelles=False, seulement_passees=False):
     """
     Charge les données des crises depuis un fichier CSV
     
     Args:
         chemin_fichier (str): Chemin vers le fichier CSV. Si None, utilise le fichier par défaut.
         seulement_actuelles (bool): Si True, ne charge que les crises en cours (en_cours=True)
+        seulement_passees (bool): Si True, ne charge que les crises passées (en_cours=False)
     
     Returns:
         pandas.DataFrame: DataFrame contenant les données des crises
@@ -52,10 +53,20 @@ def charger_crises(chemin_fichier=None, seulement_actuelles=False):
             # Si pas de colonne en_cours, filtre par date (crises récentes)
             date_limite = datetime.now() - pd.Timedelta(days=365)
             df_crises = df_crises[df_crises['date'] >= date_limite].copy()
+    # Filtre les crises passées si demandé
+    elif seulement_passees:
+        if 'en_cours' in df_crises.columns:
+            df_crises = df_crises[df_crises['en_cours'] == False].copy()
+        else:
+            # Si pas de colonne en_cours, filtre par date (crises anciennes)
+            date_limite = datetime.now() - pd.Timedelta(days=365)
+            df_crises = df_crises[df_crises['date'] < date_limite].copy()
     
     # Affiche un message de confirmation
     if seulement_actuelles:
         print(f"✓ {len(df_crises)} crises actuelles chargées depuis {chemin_fichier}")
+    elif seulement_passees:
+        print(f"✓ {len(df_crises)} crises passées chargées depuis {chemin_fichier}")
     else:
         print(f"✓ {len(df_crises)} crises chargées depuis {chemin_fichier}")
     

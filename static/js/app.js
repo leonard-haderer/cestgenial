@@ -398,16 +398,28 @@ function toggleCriseDetails(idx) {
 async function genererCarte() {
     const includeAllocation = document.getElementById('include-allocation').checked;
     
+    // Détermine le type de crises à afficher
+    const typeCrises = document.querySelector('input[name="carte-type-crises"]:checked').value;
+    let urlParams = `allocation=${includeAllocation}`;
+    
+    if (typeCrises === 'actuelles') {
+        urlParams += '&actuelles=true';
+    } else if (typeCrises === 'passees') {
+        urlParams += '&passees=true';
+    }
+    // Si typeCrises === 'toutes', on n'ajoute aucun paramètre
+    
     try {
-        // La carte n'affiche que les crises actuelles
-        const response = await fetch(`/api/carte?allocation=${includeAllocation}&actuelles=true`);
+        const response = await fetch(`/api/carte?${urlParams}`);
         const result = await response.json();
         
         if (result.success) {
             const container = document.getElementById('carte-container');
+            const typeLabel = typeCrises === 'actuelles' ? 'Crises Actuelles' : 
+                             typeCrises === 'passees' ? 'Crises Passées' : 'Toutes les Crises';
             container.innerHTML = `
                 <div class="alert alert-success">
-                    <i class="fas fa-check-circle"></i> Carte générée avec succès!
+                    <i class="fas fa-check-circle"></i> Carte générée avec succès (${typeLabel})!
                     <a href="${result.url}" target="_blank" class="btn btn-primary btn-sm ms-2">
                         <i class="fas fa-external-link-alt"></i> Ouvrir la carte
                     </a>

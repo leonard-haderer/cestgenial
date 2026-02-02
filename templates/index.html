@@ -286,6 +286,25 @@
                     <i class="fas fa-map-marked-alt"></i> Visualisation Géographique des Crises
                 </div>
                 <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Type de crises à afficher:</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-actuelles" value="actuelles" checked>
+                            <label class="btn btn-outline-primary" for="carte-actuelles">
+                                <i class="fas fa-exclamation-triangle"></i> Crises Actuelles
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-passees" value="passees">
+                            <label class="btn btn-outline-secondary" for="carte-passees">
+                                <i class="fas fa-history"></i> Crises Passées
+                            </label>
+                            
+                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-toutes" value="toutes">
+                            <label class="btn btn-outline-info" for="carte-toutes">
+                                <i class="fas fa-globe"></i> Toutes les Crises
+                            </label>
+                        </div>
+                    </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="include-allocation">
                         <label class="form-check-label" for="include-allocation">

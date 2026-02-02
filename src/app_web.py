@@ -235,7 +235,8 @@ def api_carte():
     """API pour générer la carte interactive"""
     try:
         seulement_actuelles = request.args.get('actuelles', 'false') == 'true'
-        crises = charger_crises(seulement_actuelles=seulement_actuelles)
+        seulement_passees = request.args.get('passees', 'false') == 'true'
+        crises = charger_crises(seulement_actuelles=seulement_actuelles, seulement_passees=seulement_passees)
         allocation = None
         
         # Vérifie si on doit inclure les allocations
@@ -255,7 +256,15 @@ def api_carte():
             }
             allocation, _, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
         
-        carte = creer_carte_interactive(crises, allocation)
+        # Détermine le titre selon le type de crises affichées
+        if seulement_passees:
+            titre = "Crises Passées"
+        elif seulement_actuelles:
+            titre = "Crises Actuelles"
+        else:
+            titre = "Crises et Allocation de Ressources"
+        
+        carte = creer_carte_interactive(crises, allocation, titre=titre)
         dossier_maps = dossier_projet / 'maps'
         dossier_maps.mkdir(exist_ok=True)
         chemin_html = exporter_carte_html(carte, str(dossier_maps / "carte_crises_web.html"))
