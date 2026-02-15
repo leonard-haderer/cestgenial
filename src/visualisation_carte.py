@@ -102,17 +102,36 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
         """
         
         # Si des données d'allocation sont disponibles, les ajoute au popup
-        if df_allocation is not None and idx < len(df_allocation):
-            allocation = df_allocation.iloc[idx]
-            popup_html += "<hr><h5>Allocation de ressources:</h5>"
-            
-            # Liste les ressources allouées
-            colonnes_allocation = [col for col in allocation.index if col.startswith('allocation_')]
-            for col in colonnes_allocation:
-                ressource = col.replace('allocation_', '').replace('_', ' ').title()
-                quantite = allocation[col]
-                if quantite > 0:
-                    popup_html += f"<p><b>{ressource}:</b> {quantite:,}</p>"
+        if df_allocation is not None and 'nom_crise' in df_allocation.columns:
+            # Recherche l'allocation correspondante par nom de crise
+            match = df_allocation[df_allocation['nom_crise'] == crise['nom_crise']]
+            if len(match) > 0:
+                allocation = match.iloc[0]
+                popup_html += "<hr><h5>📦 Allocation de ressources:</h5>"
+                
+                # Liste les ressources allouées
+                colonnes_allocation = [col for col in allocation.index if col.startswith('allocation_')]
+                has_allocation = False
+                for col in colonnes_allocation:
+                    ressource = col.replace('allocation_', '').replace('_', ' ').title()
+                    quantite = allocation[col]
+                    if quantite > 0:
+                        has_allocation = True
+                        # Affiche aussi le pourcentage satisfait si disponible
+                        ressource_key = col.replace('allocation_', '')
+                        pourcentage_col = f'pourcentage_satisfait_{ressource_key}'
+                        pourcentage_str = ""
+                        if pourcentage_col in allocation.index and allocation[pourcentage_col] > 0:
+                            pourcentage_str = f" <small>({allocation[pourcentage_col]:.1f}% du besoin)</small>"
+                        popup_html += f"<p><b>{ressource}:</b> {quantite:,.0f}{pourcentage_str}</p>"
+                
+                if not has_allocation:
+                    popup_html += "<p><i>Aucune ressource allouée</i></p>"
+                
+                # Affiche le score d'urgence si disponible
+                if 'score_urgence_normalise' in allocation.index:
+                    score = allocation['score_urgence_normalise']
+                    popup_html += f"<p><b>Score d'urgence:</b> {score:.2f}%</p>"
         
         popup_html += "</div>"
         
@@ -184,18 +203,26 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
 
 def creer_legende_html():
     """
-    Crée le code HTML pour la légende de la carte
+    Crée le code HTML pour la légende de la carte (avec bouton fermer/ouvrir)
     
     Returns:
         str: Code HTML de la légende
     """
     legende_html = """
-    <div style="position: fixed; 
+    <!-- Panneau de legende (masquable) -->
+    <div id="legende-panel" style="position: fixed; 
                 bottom: 50px; right: 50px; width: 250px; height: auto; 
                 background-color: white; z-index:9999; 
                 border:2px solid grey; padding: 10px;
                 font-size: 12px;">
-        <h4 style="margin-top: 0;">Légende</h4>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4 style="margin: 0;">Légende</h4>
+            <button type="button" onclick="toggleLegende(false)" 
+                    style="background: none; border: none; font-size: 16px; cursor: pointer; color: #999; padding: 0 5px;"
+                    title="Fermer la legende">
+                ✕
+            </button>
+        </div>
     """
     
     # Ajoute chaque type de crise avec sa couleur
@@ -211,6 +238,32 @@ def creer_legende_html():
         <hr>
         <p><small>Cliquez sur les marqueurs pour plus d'informations</small></p>
     </div>
+    
+    <!-- Bouton pour reouvrir la legende (visible quand la legende est fermee) -->
+    <div id="open-legende-btn" style="display: none; position: fixed; 
+                bottom: 50px; right: 50px; z-index:9999;">
+        <button type="button" onclick="toggleLegende(true)"
+                style="background-color: white; color: #333; border: 2px solid grey; 
+                       border-radius: 5px; padding: 8px 12px; cursor: pointer;
+                       box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: bold; font-size: 13px;"
+                title="Ouvrir la legende">
+            📋 Légende
+        </button>
+    </div>
+    
+    <script>
+        function toggleLegende(show) {
+            var panel = document.getElementById('legende-panel');
+            var openBtn = document.getElementById('open-legende-btn');
+            if (show) {
+                panel.style.display = '';
+                openBtn.style.display = 'none';
+            } else {
+                panel.style.display = 'none';
+                openBtn.style.display = '';
+            }
+        }
+    </script>
     """
     
     return legende_html
@@ -229,12 +282,20 @@ def ajouter_recherche_coordonnees(carte):
     
     # Code HTML et JavaScript pour le champ de recherche
     recherche_html = f"""
-    <div id="search-panel" style="position: fixed; 
+    <!-- Panneau de recherche de coordonnees (masquable) -->
+    <div id="search-panel-{map_id}" style="position: fixed; 
                 top: 80px; left: 50px; width: 300px; 
                 background-color: white; z-index:10000; 
                 border:2px solid #007bff; padding: 15px;
                 border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-        <h4 style="margin-top: 0; color: #007bff;">🔍 Recherche de coordonnees</h4>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <h4 style="margin: 0; color: #007bff;">🔍 Coordonnees</h4>
+            <button type="button" id="close-search-{map_id}" 
+                    style="background: none; border: none; font-size: 18px; cursor: pointer; color: #999; padding: 0 5px;"
+                    title="Fermer le panneau de recherche">
+                ✕
+            </button>
+        </div>
         <form id="search-form" onsubmit="return false;">
             <div style="margin-bottom: 10px;">
                 <label for="lat-input-{map_id}" style="display: block; margin-bottom: 5px; font-weight: bold;">
@@ -266,6 +327,18 @@ def ajouter_recherche_coordonnees(carte):
             </button>
         </form>
         <div id="search-result-{map_id}" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
+    </div>
+    
+    <!-- Bouton pour reouvrir le panneau de recherche (visible quand le panneau est ferme) -->
+    <div id="open-search-btn-{map_id}" style="display: none; position: fixed; 
+                top: 80px; left: 50px; z-index:10000;">
+        <button type="button" 
+                style="background-color: #007bff; color: white; border: none; 
+                       border-radius: 5px; padding: 10px 15px; cursor: pointer;
+                       box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: bold; font-size: 14px;"
+                title="Ouvrir la recherche de coordonnees">
+            🔍
+        </button>
     </div>
     
     <script>
@@ -453,6 +526,19 @@ def ajouter_recherche_coordonnees(carte):
             }}
         }}
         
+        // Fonction pour masquer/afficher le panneau de recherche
+        function toggleSearchPanel_{map_id}(show) {{
+            var panel = document.getElementById('search-panel-{map_id}');
+            var openBtn = document.getElementById('open-search-btn-{map_id}');
+            if (show) {{
+                panel.style.display = '';
+                openBtn.style.display = 'none';
+            }} else {{
+                panel.style.display = 'none';
+                openBtn.style.display = '';
+            }}
+        }}
+        
         // Initialise les event listeners une fois le DOM charge
         (function() {{
             function initSearch_{map_id}() {{
@@ -460,6 +546,8 @@ def ajouter_recherche_coordonnees(carte):
                 var clearBtn = document.getElementById('clear-btn-{map_id}');
                 var latInput = document.getElementById('lat-input-{map_id}');
                 var lonInput = document.getElementById('lon-input-{map_id}');
+                var closeBtn = document.getElementById('close-search-{map_id}');
+                var openBtn = document.getElementById('open-search-btn-{map_id}');
                 
                 if (searchBtn) {{
                     searchBtn.addEventListener('click', rechercherCoordonnees_{map_id});
@@ -467,6 +555,20 @@ def ajouter_recherche_coordonnees(carte):
                 
                 if (clearBtn) {{
                     clearBtn.addEventListener('click', effacerMarqueur_{map_id});
+                }}
+                
+                // Bouton fermer le panneau
+                if (closeBtn) {{
+                    closeBtn.addEventListener('click', function() {{
+                        toggleSearchPanel_{map_id}(false);
+                    }});
+                }}
+                
+                // Bouton reouvrir le panneau
+                if (openBtn) {{
+                    openBtn.addEventListener('click', function() {{
+                        toggleSearchPanel_{map_id}(true);
+                    }});
                 }}
                 
                 if (latInput) {{

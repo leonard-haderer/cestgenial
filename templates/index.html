@@ -156,6 +156,11 @@
                             <i class="fas fa-crystal-ball"></i> Prédiction
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('infos')">
+                            <i class="fas fa-info-circle"></i> Infos
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -203,9 +208,9 @@
 
             <div class="card">
                 <div class="card-header">
-                    <i class="fas fa-chart-pie"></i> Répartition par Type de Crise
+                    <i class="fas fa-chart-bar"></i> Répartition par Type de Crise
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="height: 75vh; min-height: 500px;">
                     <canvas id="chart-types"></canvas>
                 </div>
             </div>
@@ -282,38 +287,50 @@
             
             <!-- Carte des crises -->
             <div class="card mb-4">
-                <div class="card-header">
-                    <i class="fas fa-map-marked-alt"></i> Visualisation Géographique des Crises
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-map-marked-alt"></i> Visualisation Géographique des Crises</span>
+                    <button class="btn btn-sm btn-outline-light" id="btn-toggle-controls" onclick="toggleCarteControls()" title="Masquer/Afficher les contrôles">
+                        <i class="fas fa-chevron-up" id="icon-toggle-controls"></i>
+                    </button>
                 </div>
                 <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label">Type de crises à afficher:</label>
-                        <div class="btn-group w-100" role="group">
-                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-actuelles" value="actuelles" checked>
-                            <label class="btn btn-outline-primary" for="carte-actuelles">
-                                <i class="fas fa-exclamation-triangle"></i> Crises Actuelles
-                            </label>
-                            
-                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-passees" value="passees">
-                            <label class="btn btn-outline-secondary" for="carte-passees">
-                                <i class="fas fa-history"></i> Crises Passées
-                            </label>
-                            
-                            <input type="radio" class="btn-check" name="carte-type-crises" id="carte-toutes" value="toutes">
-                            <label class="btn btn-outline-info" for="carte-toutes">
-                                <i class="fas fa-globe"></i> Toutes les Crises
+                    <!-- Panneau de contrôle (masquable) -->
+                    <div id="carte-controls-panel">
+                        <div class="mb-3">
+                            <label class="form-label">Type de crises à afficher:</label>
+                            <div class="btn-group w-100" role="group">
+                                <input type="radio" class="btn-check" name="carte-type-crises" id="carte-actuelles" value="actuelles" checked>
+                                <label class="btn btn-outline-primary" for="carte-actuelles">
+                                    <i class="fas fa-exclamation-triangle"></i> Crises Actuelles
+                                </label>
+                                
+                                <input type="radio" class="btn-check" name="carte-type-crises" id="carte-passees" value="passees">
+                                <label class="btn btn-outline-secondary" for="carte-passees">
+                                    <i class="fas fa-history"></i> Crises Passées
+                                </label>
+                                
+                                <input type="radio" class="btn-check" name="carte-type-crises" id="carte-toutes" value="toutes">
+                                <label class="btn btn-outline-info" for="carte-toutes">
+                                    <i class="fas fa-globe"></i> Toutes les Crises
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="include-allocation">
+                            <label class="form-check-label" for="include-allocation">
+                                Inclure les allocations de ressources
                             </label>
                         </div>
+                        <button class="btn btn-primary btn-lg w-100" onclick="genererCarte()">
+                            <i class="fas fa-map"></i> Générer la Carte des Crises
+                        </button>
                     </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="include-allocation">
-                        <label class="form-check-label" for="include-allocation">
-                            Inclure les allocations de ressources
-                        </label>
+                    <!-- Bouton pour réouvrir le panneau quand il est fermé -->
+                    <div id="carte-controls-reopen" style="display: none;">
+                        <button class="btn btn-outline-primary btn-sm w-100" onclick="toggleCarteControls()">
+                            <i class="fas fa-sliders-h"></i> Afficher les contrôles
+                        </button>
                     </div>
-                    <button class="btn btn-primary btn-lg w-100" onclick="genererCarte()">
-                        <i class="fas fa-map"></i> Générer la Carte des Crises
-                    </button>
                     <div id="carte-container" class="mt-4"></div>
                 </div>
             </div>
@@ -423,6 +440,227 @@
                     </div>
                 </div>
                 <div id="prediction-results"></div>
+            </div>
+        </div>
+
+        <!-- Section Infos sur le Projet -->
+        <div id="infos-section" class="section" style="display: none;">
+            <h2 class="section-title text-center mb-4">
+                <i class="fas fa-info-circle"></i> Infos sur le Projet
+            </h2>
+
+            <!-- Titre du projet - grand et impactant -->
+            <div class="card mb-4" style="overflow: hidden;">
+                <div class="card-body text-center py-5" style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);">
+                    <h1 style="color: #fff; font-size: 2.2em; font-weight: 800; text-shadow: 0 2px 15px rgba(102,126,234,0.5); letter-spacing: 1px;">
+                        <i class="fas fa-brain" style="color: #667eea;"></i>
+                        L'IA face aux crises
+                    </h1>
+                    <p style="color: #a5b4fc; font-size: 1.4em; font-weight: 300; margin-top: 10px;">
+                        Sauver les ressources, sauver des vies
+                    </p>
+                    <div class="mt-3">
+                        <span class="badge bg-primary px-3 py-2 me-2" style="font-size: 0.95em;">
+                            <i class="fas fa-user"></i> Projet personnel
+                        </span>
+                        <span class="badge bg-info px-3 py-2 me-2" style="font-size: 0.95em;">
+                            <i class="fas fa-square-root-alt"></i> Mathématiques
+                        </span>
+                        <span class="badge bg-warning text-dark px-3 py-2" style="font-size: 0.95em;">
+                            <i class="fas fa-robot"></i> Intelligence Artificielle
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Colonne gauche -->
+                <div class="col-lg-6">
+
+                    <!-- Contexte scientifique -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-flask"></i> Contexte scientifique
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size: 1.05em; line-height: 1.7;">
+                                Notre projet s'inscrit dans un contexte de <strong>crises mondiales</strong> où les ressources deviennent rares. 
+                                L'IA peut apporter une aide précieuse pour <strong>prévoir</strong> et <strong>allouer les ressources critiques</strong> 
+                                en fonction des besoins réels et des scénarios de crise.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Problématique -->
+                    <div class="card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                            <i class="fas fa-question-circle"></i> Problématique
+                        </div>
+                        <div class="card-body">
+                            <blockquote style="border-left: 4px solid #e74c3c; padding-left: 15px; margin: 0; font-size: 1.1em; font-style: italic; color: #333;">
+                                Comment l'IA peut-elle optimiser la gestion des ressources en cas de catastrophe naturelle, pandémie ou guerre ?
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <!-- Caractère innovant -->
+                    <div class="card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                            <i class="fas fa-lightbulb"></i> Caractère innovant
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size: 1.05em; line-height: 1.7;">
+                                Utiliser des <strong>algorithmes IA</strong> combinés à une <strong>approche gloutonne</strong> pour allouer 
+                                dynamiquement les ressources, tout en intégrant une base de données de scénarios 
+                                <strong>réels et synthétiques</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Rôle des élèves -->
+                    <div class="card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                            <i class="fas fa-users"></i> Rôle des élèves
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size: 1.05em; line-height: 1.7;">
+                                Les élèves ont proposé le sujet, effectuent les recherches, programment les modèles 
+                                (<strong>Python</strong>), testent les cas d'usage, rédigent les documents et participeront à la présentation.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Colonne droite -->
+                <div class="col-lg-6">
+
+                    <!-- Démarche scientifique -->
+                    <div class="card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                            <i class="fas fa-project-diagram"></i> Démarche scientifique
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-start mb-3">
+                                <span class="badge bg-primary rounded-circle me-3 flex-shrink-0" style="width: 35px; height: 35px; line-height: 25px; font-size: 1.1em;">1</span>
+                                <div>
+                                    <strong>Collecte de données</strong>
+                                    <p class="mb-0 text-muted">Données historiques et synthétiques (catastrophes, pandémies, conflits)</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <span class="badge bg-info rounded-circle me-3 flex-shrink-0" style="width: 35px; height: 35px; line-height: 25px; font-size: 1.1em;">2</span>
+                                <div>
+                                    <strong>Modèle SVM</strong>
+                                    <p class="mb-0 text-muted">Construction d'un modèle SVM pour la prédiction des zones critiques</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <span class="badge bg-warning text-dark rounded-circle me-3 flex-shrink-0" style="width: 35px; height: 35px; line-height: 25px; font-size: 1.1em;">3</span>
+                                <div>
+                                    <strong>Optimisation gloutonne</strong>
+                                    <p class="mb-0 text-muted">Allocation optimale des ressources via un algorithme glouton</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <span class="badge bg-success rounded-circle me-3 flex-shrink-0" style="width: 35px; height: 35px; line-height: 25px; font-size: 1.1em;">4</span>
+                                <div>
+                                    <strong>Tests et validation</strong>
+                                    <p class="mb-0 text-muted">Tests sur cas simulés</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <span class="badge bg-danger rounded-circle me-3 flex-shrink-0" style="width: 35px; height: 35px; line-height: 25px; font-size: 1.1em;">5</span>
+                                <div>
+                                    <strong>Livrables</strong>
+                                    <p class="mb-0 text-muted">Rapport, vidéo et maquette</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Résumé du projet -->
+                    <div class="card mb-4">
+                        <div class="card-header" style="background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);">
+                            <i class="fas fa-file-alt"></i> Résumé du projet
+                        </div>
+                        <div class="card-body">
+                            <p style="font-size: 1.05em; line-height: 1.7;">
+                                Nous développons une application basée sur l'<strong>intelligence artificielle</strong> pour aider à 
+                                <strong>prévoir les zones à risque</strong> et optimiser la gestion de ressources critiques 
+                                (<strong>eau, énergie, soins, vivres</strong>) en situation de crise.
+                            </p>
+                            <p style="font-size: 1.05em; line-height: 1.7;">
+                                À partir de données historiques et simulées, le modèle identifie les <strong>besoins prioritaires</strong>, 
+                                et un <strong>algorithme glouton</strong> propose une répartition rapide et efficace des ressources.
+                            </p>
+                            <p style="font-size: 1.05em; line-height: 1.7; margin-bottom: 0;">
+                                Le projet est soutenu par des recherches bibliographiques, un travail de 
+                                <strong>modélisation mathématique</strong> et la création d'un <strong>prototype informatique</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Technologies utilisées -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-cogs"></i> Technologies utilisées
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fab fa-python" style="font-size: 2.5em; color: #3776ab;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Python</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-brain" style="font-size: 2.5em; color: #e74c3c;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">SVM / IA</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-map-marked-alt" style="font-size: 2.5em; color: #27ae60;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Folium</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-chart-bar" style="font-size: 2.5em; color: #f39c12;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Chart.js</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-server" style="font-size: 2.5em; color: #667eea;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Flask</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-code" style="font-size: 2.5em; color: #9b59b6;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Cursor</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-robot" style="font-size: 2.5em; color: #10a37f;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">ChatGPT</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-4 mb-3">
+                            <div class="p-3" style="background: #f8f9fa; border-radius: 10px;">
+                                <i class="fas fa-comment-dots" style="font-size: 2.5em; color: #ff6f00;"></i>
+                                <p class="mt-2 mb-0 fw-bold" style="font-size: 0.9em;">Mistral</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

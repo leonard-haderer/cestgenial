@@ -254,7 +254,9 @@ def api_carte():
                 'personnel_medical': 3000,
                 'denrees_alimentaires_kg': 10000000
             }
-            allocation, _, _ = allouer_ressources_glouton(crises, besoins, stock, seulement_actuelles=True)
+            # Charge toutes les crises pour calculer l'allocation sur les crises actuelles
+            toutes_crises = charger_crises(seulement_actuelles=False, seulement_passees=False)
+            allocation, _, _ = allouer_ressources_glouton(toutes_crises, besoins, stock, seulement_actuelles=True)
         
         # Détermine le titre selon le type de crises affichées
         if seulement_passees:

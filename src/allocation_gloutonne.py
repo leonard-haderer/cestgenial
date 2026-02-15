@@ -4,7 +4,8 @@ Auteur: Projet CGénial 2025
 
 Algorithme d'allocation simple: 
 - Filtre uniquement les crises actuelles (en_cours=True)
-- Calcule un score d'urgence pour chaque crise (intensité × population × (1 - accessibilité))
+- Calcule un score d'urgence pour chaque crise (intensité × log10(population) × (1 - accessibilité))
+- Le log10 compresse les écarts de population pour une répartition plus équilibrée
 - Réserve 25% des ressources (non utilisées)
 - Calcule les besoins en fonction du type de crise et du score d'urgence (normalisé par rapport au score moyen)
 - Pour chaque ressource, calcule le besoin total de toutes les crises
@@ -20,8 +21,14 @@ from pathlib import Path
 def calculer_score_urgence(crise):
     """
     Calcule le score d'urgence d'une crise
-    Score = intensité × population touchée × (1 - accessibilité)
-    Plus le score est élevé, plus la crise est urgente
+    Score = intensité × log10(population touchée) × (1 - accessibilité)
+    
+    Le logarithme base 10 est appliqué à la population pour compresser les écarts :
+    - Sans log : une pandémie (50M) écrase un séisme (100k) avec un rapport de 500:1
+    - Avec log : le rapport devient 7.7:5.0 soit ~1.5:1
+    Cela permet à l'intensité et l'accessibilité de peser davantage dans le score.
+    
+    Plus le score est élevé, plus la crise est urgente.
     
     Args:
         crise (pandas.Series): Une ligne du DataFrame des crises
@@ -34,9 +41,13 @@ def calculer_score_urgence(crise):
     population = crise['population_touchee']
     accessibilite = crise['accessibilite']
     
-    # Calcule le score: intensité × population × (1 - accessibilité)
+    # Applique le logarithme base 10 à la population pour compresser les écarts
+    # max(1, population) pour éviter log(0) qui serait -infini
+    log_population = np.log10(max(1, population))
+    
+    # Calcule le score: intensité × log10(population) × (1 - accessibilité)
     # (1 - accessibilité) car une faible accessibilité augmente l'urgence
-    score = intensite * population * (1 - accessibilite)
+    score = intensite * log_population * (1 - accessibilite)
     
     return score
 

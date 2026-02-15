@@ -69,28 +69,87 @@ async function loadDashboard() {
             document.getElementById('stat-intensite-moy').textContent = stats.intensite_moyenne.toFixed(2);
             document.getElementById('stat-population').textContent = (stats.population_totale / 1000000).toFixed(1) + 'M';
             
-            // Graphique
+            // Graphique en barres horizontales
             const ctx = document.getElementById('chart-types');
             if (ctx) {
+                const labels = Object.keys(stats.par_type);
+                const values = Object.values(stats.par_type);
+                const couleurs = [
+                    '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
+                    '#9966FF', '#FF9F40', '#E74C3C', '#C9CBCF',
+                    '#2ECC71', '#F39C12', '#8E44AD'
+                ];
+                
                 new Chart(ctx, {
-                    type: 'doughnut',
+                    type: 'bar',
                     data: {
-                        labels: Object.keys(stats.par_type),
+                        labels: labels,
                         datasets: [{
-                            data: Object.values(stats.par_type),
-                            backgroundColor: [
-                                '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0',
-                                '#9966FF', '#FF9F40', '#FF6384', '#C9CBCF',
-                                '#4BC0C0', '#FF6384', '#36A2EB'
-                            ]
+                            label: 'Nombre de crises',
+                            data: values,
+                            backgroundColor: couleurs.slice(0, labels.length),
+                            borderColor: couleurs.slice(0, labels.length).map(c => c),
+                            borderWidth: 2,
+                            borderRadius: 6,
+                            barPercentage: 0.85,
+                            categoryPercentage: 0.9
                         }]
                     },
                     options: {
+                        indexAxis: 'x',
                         responsive: true,
+                        maintainAspectRatio: false,
                         plugins: {
                             legend: {
-                                position: 'bottom'
+                                display: false
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.85)',
+                                titleFont: { size: 14, weight: 'bold' },
+                                bodyFont: { size: 13 },
+                                padding: 12,
+                                cornerRadius: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = values.reduce((a, b) => a + b, 0);
+                                        const pct = ((context.raw / total) * 100).toFixed(1);
+                                        return `${context.raw} crises (${pct}%)`;
+                                    }
+                                }
                             }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(0,0,0,0.05)'
+                                },
+                                ticks: {
+                                    font: { size: 13, weight: 'bold' },
+                                    precision: 0
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Nombre de crises',
+                                    font: { size: 14, weight: 'bold' },
+                                    color: '#555'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: { size: 11, weight: 'bold' },
+                                    color: '#333',
+                                    maxRotation: 45,
+                                    minRotation: 30
+                                }
+                            }
+                        },
+                        animation: {
+                            duration: 1200,
+                            easing: 'easeOutQuart'
                         }
                     }
                 });
@@ -391,6 +450,27 @@ function toggleCriseDetails(idx) {
             icon.classList.add('fa-chevron-down');
         }
         mainRow.classList.remove('table-active');
+    }
+}
+
+// Masque/affiche le panneau de contrôle de la carte des crises
+function toggleCarteControls() {
+    const panel = document.getElementById('carte-controls-panel');
+    const reopenBtn = document.getElementById('carte-controls-reopen');
+    const icon = document.getElementById('icon-toggle-controls');
+    
+    if (panel.style.display === 'none') {
+        // Réaffiche le panneau
+        panel.style.display = '';
+        reopenBtn.style.display = 'none';
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+    } else {
+        // Masque le panneau
+        panel.style.display = 'none';
+        reopenBtn.style.display = '';
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
     }
 }
 
@@ -796,11 +876,13 @@ function afficherResultatsPrediction(result) {
                         <h6>${ressource.nom}</h6>
                         <p><strong>Quantité:</strong> ${ressource.quantite.toLocaleString('fr-FR')}</p>
                         <p><strong>Coût:</strong> ${ressource.cout.toLocaleString('fr-FR')} €</p>
-                        <div class="progress progress-custom">
+                        <div class="progress progress-custom" style="position: relative;">
                             <div class="progress-bar" role="progressbar" 
                                  style="width: ${Math.min(pourcentage, 100)}%">
-                                ${ressource.pourcentage.toFixed(2)}%
                             </div>
+                            <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: black; font-weight: bold; font-size: 0.85em; text-shadow: 0 0 3px white;">
+                                ${ressource.pourcentage.toFixed(2)}%
+                            </span>
                         </div>
                     </div>
                 </div>
