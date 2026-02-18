@@ -905,9 +905,86 @@ function afficherResultatsPrediction(result) {
                 </div>
             </div>
         </div>
+        
+        <div class="card mt-3">
+            <div class="card-header" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: white; font-weight: bold;">
+                <i class="fas fa-chart-pie"></i> Répartition des Coûts par Ressource
+            </div>
+            <div class="card-body" style="height: 450px;">
+                <canvas id="chart-prediction-couts"></canvas>
+            </div>
+        </div>
     `;
     
     container.innerHTML = html;
+    
+    // Crée le graphique doughnut des coûts par ressource
+    const ctxCouts = document.getElementById('chart-prediction-couts');
+    if (ctxCouts && result.ressources && result.ressources.length > 0) {
+        const couleursRessources = [
+            '#3498db', '#e74c3c', '#2ecc71', '#f39c12',
+            '#9b59b6', '#1abc9c', '#e67e22', '#34495e',
+            '#16a085', '#c0392b', '#8e44ad', '#d35400'
+        ];
+        
+        // Détruit le graphique précédent s'il existe
+        const existingChart = Chart.getChart(ctxCouts);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+        
+        new Chart(ctxCouts, {
+            type: 'doughnut',
+            data: {
+                labels: result.ressources.map(r => r.nom),
+                datasets: [{
+                    data: result.ressources.map(r => r.cout),
+                    backgroundColor: couleursRessources.slice(0, result.ressources.length),
+                    borderColor: '#fff',
+                    borderWidth: 3,
+                    hoverBorderWidth: 4,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '45%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 15,
+                            usePointStyle: true,
+                            pointStyle: 'circle',
+                            font: { size: 12, weight: 'bold' },
+                            color: '#333'
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0,0,0,0.85)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            label: function(context) {
+                                const cout = context.raw;
+                                const total = result.cout_total;
+                                const pct = ((cout / total) * 100).toFixed(1);
+                                return ` ${context.label}: ${cout.toLocaleString('fr-FR')} € (${pct}%)`;
+                            }
+                        }
+                    }
+                },
+                animation: {
+                    animateRotate: true,
+                    duration: 1200,
+                    easing: 'easeOutQuart'
+                }
+            }
+        });
+    }
 }
 
 

@@ -470,15 +470,16 @@ def calculer_couts_pourcentages(besoins, budget_total=100000000):
         dict: Dictionnaire avec les coûts et pourcentages
     """
     # Coûts unitaires approximatifs (en euros/dollars)
+    # Coûts unitaires en contexte de crise humanitaire (transport, logistique, déploiement inclus)
     couts_unitaires = {
-        'eau_potable_litres': 0.001,  # 1€ pour 1000 litres
-        'tentes': 200,  # 200€ par tente
-        'medicaments_doses': 5,  # 5€ par dose
-        'hopitaux_campagne': 50000,  # 50000€ par hôpital
-        'generateurs': 3000,  # 3000€ par générateur
-        'vehicules_urgence': 25000,  # 25000€ par véhicule
-        'personnel_medical': 5000,  # 5000€ par personne (salaire/mois)
-        'denrees_alimentaires_kg': 2  # 2€ par kg
+        'eau_potable_litres': 0.05,  # 0.05€/litre (moyenne transport terrestre/aérien, purification, distribution)
+        'tentes': 350,  # 350€ par tente humanitaire (type UNHCR, famille)
+        'medicaments_doses': 5,  # 5€ par dose (kit médical d'urgence moyen, source OMS)
+        'hopitaux_campagne': 150000,  # 150 000€ par hôpital de campagne (déploiement complet)
+        'generateurs': 5000,  # 5 000€ par générateur (transport + installation)
+        'vehicules_urgence': 40000,  # 40 000€ par véhicule tout-terrain adapté
+        'personnel_medical': 7000,  # 7 000€ par personne/mois (mission, assurance, logement)
+        'denrees_alimentaires_kg': 2  # 2€ par kg (kit alimentaire standard + transport terrestre)
     }
     
     resultats = {}

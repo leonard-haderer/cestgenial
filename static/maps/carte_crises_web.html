@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_dc6424e614bf7f4a05a3fb2b82f8fafa {
+                #map_d4af36b6fb11cba1511d9018a788e575 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -165,14 +165,14 @@
     
     
     <!-- Panneau de recherche de coordonnees (masquable) -->
-    <div id="search-panel-dc6424e614bf7f4a05a3fb2b82f8fafa" style="position: fixed; 
+    <div id="search-panel-d4af36b6fb11cba1511d9018a788e575" style="position: fixed; 
                 top: 80px; left: 50px; width: 300px; 
                 background-color: white; z-index:10000; 
                 border:2px solid #007bff; padding: 15px;
                 border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
             <h4 style="margin: 0; color: #007bff;">🔍 Coordonnees</h4>
-            <button type="button" id="close-search-dc6424e614bf7f4a05a3fb2b82f8fafa" 
+            <button type="button" id="close-search-d4af36b6fb11cba1511d9018a788e575" 
                     style="background: none; border: none; font-size: 18px; cursor: pointer; color: #999; padding: 0 5px;"
                     title="Fermer le panneau de recherche">
                 ✕
@@ -180,39 +180,39 @@
         </div>
         <form id="search-form" onsubmit="return false;">
             <div style="margin-bottom: 10px;">
-                <label for="lat-input-dc6424e614bf7f4a05a3fb2b82f8fafa" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                <label for="lat-input-d4af36b6fb11cba1511d9018a788e575" style="display: block; margin-bottom: 5px; font-weight: bold;">
                     Latitude:
                 </label>
-                <input type="number" id="lat-input-dc6424e614bf7f4a05a3fb2b82f8fafa" step="any" 
+                <input type="number" id="lat-input-d4af36b6fb11cba1511d9018a788e575" step="any" 
                        placeholder="Ex: 35.0" 
                        style="width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 3px;">
             </div>
             <div style="margin-bottom: 10px;">
-                <label for="lon-input-dc6424e614bf7f4a05a3fb2b82f8fafa" style="display: block; margin-bottom: 5px; font-weight: bold;">
+                <label for="lon-input-d4af36b6fb11cba1511d9018a788e575" style="display: block; margin-bottom: 5px; font-weight: bold;">
                     Longitude:
                 </label>
-                <input type="number" id="lon-input-dc6424e614bf7f4a05a3fb2b82f8fafa" step="any" 
+                <input type="number" id="lon-input-d4af36b6fb11cba1511d9018a788e575" step="any" 
                        placeholder="Ex: 139.0" 
                        style="width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 3px;">
             </div>
-            <button type="button" id="search-btn-dc6424e614bf7f4a05a3fb2b82f8fafa" 
+            <button type="button" id="search-btn-d4af36b6fb11cba1511d9018a788e575" 
                     style="width: 100%; padding: 8px; background-color: #007bff; 
                            color: white; border: none; border-radius: 3px; 
                            cursor: pointer; font-weight: bold;">
                 🔍 Rechercher
             </button>
-            <button type="button" id="clear-btn-dc6424e614bf7f4a05a3fb2b82f8fafa" 
+            <button type="button" id="clear-btn-d4af36b6fb11cba1511d9018a788e575" 
                     style="width: 100%; padding: 8px; margin-top: 5px; 
                            background-color: #dc3545; color: white; 
                            border: none; border-radius: 3px; cursor: pointer;">
                 ✖ Effacer
             </button>
         </form>
-        <div id="search-result-dc6424e614bf7f4a05a3fb2b82f8fafa" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
+        <div id="search-result-d4af36b6fb11cba1511d9018a788e575" style="margin-top: 10px; font-size: 12px; color: #666;"></div>
     </div>
     
     <!-- Bouton pour reouvrir le panneau de recherche (visible quand le panneau est ferme) -->
-    <div id="open-search-btn-dc6424e614bf7f4a05a3fb2b82f8fafa" style="display: none; position: fixed; 
+    <div id="open-search-btn-d4af36b6fb11cba1511d9018a788e575" style="display: none; position: fixed; 
                 top: 80px; left: 50px; z-index:10000;">
         <button type="button" 
                 style="background-color: #007bff; color: white; border: none; 
@@ -224,13 +224,13 @@
     </div>
     
     <script>
-        var searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa = null;
-        var foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa = null;
+        var searchMarker_d4af36b6fb11cba1511d9018a788e575 = null;
+        var foliumMap_d4af36b6fb11cba1511d9018a788e575 = null;
         
         // Fonction pour obtenir la reference a la carte Folium
-        function getFoliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa() {
-            if (foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa) {
-                return foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa;
+        function getFoliumMap_d4af36b6fb11cba1511d9018a788e575() {
+            if (foliumMap_d4af36b6fb11cba1511d9018a788e575) {
+                return foliumMap_d4af36b6fb11cba1511d9018a788e575;
             }
             
             // Methode 1: Cherche via le conteneur DOM (la plus fiable)
@@ -244,8 +244,8 @@
                         try {
                             var obj = window[key];
                             if (obj instanceof L.Map && obj._container === mapDiv) {
-                                foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa = obj;
-                                return foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa;
+                                foliumMap_d4af36b6fb11cba1511d9018a788e575 = obj;
+                                return foliumMap_d4af36b6fb11cba1511d9018a788e575;
                             }
                         } catch(e) {
                             // Continue
@@ -268,8 +268,8 @@
             
             // Si on trouve une seule carte, c est probablement la bonne
             if (allMaps.length === 1) {
-                foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa = allMaps[0];
-                return foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa;
+                foliumMap_d4af36b6fb11cba1511d9018a788e575 = allMaps[0];
+                return foliumMap_d4af36b6fb11cba1511d9018a788e575;
             }
             
             // Si plusieurs cartes, essaie de trouver celle qui correspond au conteneur
@@ -277,8 +277,8 @@
                 for (var i = 0; i < allMaps.length; i++) {
                     try {
                         if (allMaps[i]._container === mapDiv) {
-                            foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa = allMaps[i];
-                            return foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa;
+                            foliumMap_d4af36b6fb11cba1511d9018a788e575 = allMaps[i];
+                            return foliumMap_d4af36b6fb11cba1511d9018a788e575;
                         }
                     } catch(e) {
                         // Continue
@@ -288,24 +288,24 @@
             
             // Methode 3: Utilise la premiere carte trouvee si aucune correspondance
             if (allMaps.length > 0) {
-                foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa = allMaps[0];
-                return foliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa;
+                foliumMap_d4af36b6fb11cba1511d9018a788e575 = allMaps[0];
+                return foliumMap_d4af36b6fb11cba1511d9018a788e575;
             }
             
             return null;
         }
         
-        function rechercherCoordonnees_dc6424e614bf7f4a05a3fb2b82f8fafa() {
+        function rechercherCoordonnees_d4af36b6fb11cba1511d9018a788e575() {
             // Verifie que Leaflet est charge
             if (typeof L === 'undefined') {
-                var resultDiv = document.getElementById('search-result-dc6424e614bf7f4a05a3fb2b82f8fafa');
+                var resultDiv = document.getElementById('search-result-d4af36b6fb11cba1511d9018a788e575');
                 resultDiv.innerHTML = '<span style="color: red;">⚠ Leaflet n est pas charge. Attendez quelques secondes.</span>';
                 return;
             }
             
-            var lat = parseFloat(document.getElementById('lat-input-dc6424e614bf7f4a05a3fb2b82f8fafa').value);
-            var lon = parseFloat(document.getElementById('lon-input-dc6424e614bf7f4a05a3fb2b82f8fafa').value);
-            var resultDiv = document.getElementById('search-result-dc6424e614bf7f4a05a3fb2b82f8fafa');
+            var lat = parseFloat(document.getElementById('lat-input-d4af36b6fb11cba1511d9018a788e575').value);
+            var lon = parseFloat(document.getElementById('lon-input-d4af36b6fb11cba1511d9018a788e575').value);
+            var resultDiv = document.getElementById('search-result-d4af36b6fb11cba1511d9018a788e575');
             
             // Validation des coordonnees
             if (isNaN(lat) || isNaN(lon)) {
@@ -324,15 +324,15 @@
             }
             
             // Obtient la reference a la carte
-            var map = getFoliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa();
+            var map = getFoliumMap_d4af36b6fb11cba1511d9018a788e575();
             
             if (!map) {
                 // Essaie une derniere fois apres un court delai
                 resultDiv.innerHTML = '<span style="color: orange;">⚠ Recherche de la carte...</span>';
                 setTimeout(function() {
-                    map = getFoliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa();
+                    map = getFoliumMap_d4af36b6fb11cba1511d9018a788e575();
                     if (map) {
-                        rechercherCoordonnees_dc6424e614bf7f4a05a3fb2b82f8fafa();
+                        rechercherCoordonnees_d4af36b6fb11cba1511d9018a788e575();
                     } else {
                         resultDiv.innerHTML = '<span style="color: red;">⚠ Carte non trouvee. Verifiez la console pour plus de details.</span>';
                         console.error('Carte Folium non trouvee. Variables globales:', Object.keys(window).filter(k => window[k] instanceof L.Map));
@@ -343,26 +343,26 @@
             
             try {
                 // Efface le marqueur precedent s il existe
-                if (searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa) {
+                if (searchMarker_d4af36b6fb11cba1511d9018a788e575) {
                     try {
-                        if (map.hasLayer && map.hasLayer(searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa)) {
-                            map.removeLayer(searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa);
+                        if (map.hasLayer && map.hasLayer(searchMarker_d4af36b6fb11cba1511d9018a788e575)) {
+                            map.removeLayer(searchMarker_d4af36b6fb11cba1511d9018a788e575);
                         }
                     } catch(e) {
                         // Ignore les erreurs de suppression
                     }
-                    searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa = null;
+                    searchMarker_d4af36b6fb11cba1511d9018a788e575 = null;
                 }
                 
                 // Cree un nouveau marqueur (utilise l icone par defaut de Leaflet pour plus de fiabilite)
-                searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa = L.marker([lat, lon]);
+                searchMarker_d4af36b6fb11cba1511d9018a788e575 = L.marker([lat, lon]);
                 
                 // Ajoute le marqueur a la carte
-                searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa.addTo(map);
+                searchMarker_d4af36b6fb11cba1511d9018a788e575.addTo(map);
                 
                 // Ajoute un popup
                 var popupContent = '<b>📍 Emplacement recherche</b><br>Latitude: ' + lat.toFixed(4) + '<br>Longitude: ' + lon.toFixed(4);
-                searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa.bindPopup(popupContent);
+                searchMarker_d4af36b6fb11cba1511d9018a788e575.bindPopup(popupContent);
                 
                 // Centre la carte sur le marqueur avec un zoom approprie
                 var currentZoom = map.getZoom();
@@ -372,8 +372,8 @@
                 // Ouvre le popup apres un court delai pour s assurer que le marqueur est bien ajoute
                 setTimeout(function() {
                     try {
-                        if (searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa && map.hasLayer(searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa)) {
-                            searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa.openPopup();
+                        if (searchMarker_d4af36b6fb11cba1511d9018a788e575 && map.hasLayer(searchMarker_d4af36b6fb11cba1511d9018a788e575)) {
+                            searchMarker_d4af36b6fb11cba1511d9018a788e575.openPopup();
                         }
                     } catch(e) {
                         console.warn('Impossible d ouvrir le popup:', e);
@@ -391,14 +391,14 @@
             }
         }
         
-        function effacerMarqueur_dc6424e614bf7f4a05a3fb2b82f8fafa() {
-            var resultDiv = document.getElementById('search-result-dc6424e614bf7f4a05a3fb2b82f8fafa');
+        function effacerMarqueur_d4af36b6fb11cba1511d9018a788e575() {
+            var resultDiv = document.getElementById('search-result-d4af36b6fb11cba1511d9018a788e575');
             
-            if (searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa) {
-                var map = getFoliumMap_dc6424e614bf7f4a05a3fb2b82f8fafa();
+            if (searchMarker_d4af36b6fb11cba1511d9018a788e575) {
+                var map = getFoliumMap_d4af36b6fb11cba1511d9018a788e575();
                 if (map) {
-                    map.removeLayer(searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa);
-                    searchMarker_dc6424e614bf7f4a05a3fb2b82f8fafa = null;
+                    map.removeLayer(searchMarker_d4af36b6fb11cba1511d9018a788e575);
+                    searchMarker_d4af36b6fb11cba1511d9018a788e575 = null;
                     resultDiv.innerHTML = '<span style="color: blue;">✓ Marqueur efface</span>';
                 } else {
                     resultDiv.innerHTML = '<span style="color: orange;">⚠ Impossible d effacer le marqueur</span>';
@@ -409,9 +409,9 @@
         }
         
         // Fonction pour masquer/afficher le panneau de recherche
-        function toggleSearchPanel_dc6424e614bf7f4a05a3fb2b82f8fafa(show) {
-            var panel = document.getElementById('search-panel-dc6424e614bf7f4a05a3fb2b82f8fafa');
-            var openBtn = document.getElementById('open-search-btn-dc6424e614bf7f4a05a3fb2b82f8fafa');
+        function toggleSearchPanel_d4af36b6fb11cba1511d9018a788e575(show) {
+            var panel = document.getElementById('search-panel-d4af36b6fb11cba1511d9018a788e575');
+            var openBtn = document.getElementById('open-search-btn-d4af36b6fb11cba1511d9018a788e575');
             if (show) {
                 panel.style.display = '';
                 openBtn.style.display = 'none';
@@ -423,40 +423,40 @@
         
         // Initialise les event listeners une fois le DOM charge
         (function() {
-            function initSearch_dc6424e614bf7f4a05a3fb2b82f8fafa() {
-                var searchBtn = document.getElementById('search-btn-dc6424e614bf7f4a05a3fb2b82f8fafa');
-                var clearBtn = document.getElementById('clear-btn-dc6424e614bf7f4a05a3fb2b82f8fafa');
-                var latInput = document.getElementById('lat-input-dc6424e614bf7f4a05a3fb2b82f8fafa');
-                var lonInput = document.getElementById('lon-input-dc6424e614bf7f4a05a3fb2b82f8fafa');
-                var closeBtn = document.getElementById('close-search-dc6424e614bf7f4a05a3fb2b82f8fafa');
-                var openBtn = document.getElementById('open-search-btn-dc6424e614bf7f4a05a3fb2b82f8fafa');
+            function initSearch_d4af36b6fb11cba1511d9018a788e575() {
+                var searchBtn = document.getElementById('search-btn-d4af36b6fb11cba1511d9018a788e575');
+                var clearBtn = document.getElementById('clear-btn-d4af36b6fb11cba1511d9018a788e575');
+                var latInput = document.getElementById('lat-input-d4af36b6fb11cba1511d9018a788e575');
+                var lonInput = document.getElementById('lon-input-d4af36b6fb11cba1511d9018a788e575');
+                var closeBtn = document.getElementById('close-search-d4af36b6fb11cba1511d9018a788e575');
+                var openBtn = document.getElementById('open-search-btn-d4af36b6fb11cba1511d9018a788e575');
                 
                 if (searchBtn) {
-                    searchBtn.addEventListener('click', rechercherCoordonnees_dc6424e614bf7f4a05a3fb2b82f8fafa);
+                    searchBtn.addEventListener('click', rechercherCoordonnees_d4af36b6fb11cba1511d9018a788e575);
                 }
                 
                 if (clearBtn) {
-                    clearBtn.addEventListener('click', effacerMarqueur_dc6424e614bf7f4a05a3fb2b82f8fafa);
+                    clearBtn.addEventListener('click', effacerMarqueur_d4af36b6fb11cba1511d9018a788e575);
                 }
                 
                 // Bouton fermer le panneau
                 if (closeBtn) {
                     closeBtn.addEventListener('click', function() {
-                        toggleSearchPanel_dc6424e614bf7f4a05a3fb2b82f8fafa(false);
+                        toggleSearchPanel_d4af36b6fb11cba1511d9018a788e575(false);
                     });
                 }
                 
                 // Bouton reouvrir le panneau
                 if (openBtn) {
                     openBtn.addEventListener('click', function() {
-                        toggleSearchPanel_dc6424e614bf7f4a05a3fb2b82f8fafa(true);
+                        toggleSearchPanel_d4af36b6fb11cba1511d9018a788e575(true);
                     });
                 }
                 
                 if (latInput) {
                     latInput.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
-                            rechercherCoordonnees_dc6424e614bf7f4a05a3fb2b82f8fafa();
+                            rechercherCoordonnees_d4af36b6fb11cba1511d9018a788e575();
                         }
                     });
                 }
@@ -464,7 +464,7 @@
                 if (lonInput) {
                     lonInput.addEventListener('keypress', function(e) {
                         if (e.key === 'Enter') {
-                            rechercherCoordonnees_dc6424e614bf7f4a05a3fb2b82f8fafa();
+                            rechercherCoordonnees_d4af36b6fb11cba1511d9018a788e575();
                         }
                     });
                 }
@@ -472,23 +472,23 @@
             
             // Essaie d initialiser immediatement
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initSearch_dc6424e614bf7f4a05a3fb2b82f8fafa);
+                document.addEventListener('DOMContentLoaded', initSearch_d4af36b6fb11cba1511d9018a788e575);
             } else {
                 // DOM deja charge
-                setTimeout(initSearch_dc6424e614bf7f4a05a3fb2b82f8fafa, 100);
+                setTimeout(initSearch_d4af36b6fb11cba1511d9018a788e575, 100);
             }
         })();
     </script>
     
     
-            <div class="folium-map" id="map_dc6424e614bf7f4a05a3fb2b82f8fafa" ></div>
+            <div class="folium-map" id="map_d4af36b6fb11cba1511d9018a788e575" ></div>
         
 </body>
 <script>
     
     
-            var map_dc6424e614bf7f4a05a3fb2b82f8fafa = L.map(
-                "map_dc6424e614bf7f4a05a3fb2b82f8fafa",
+            var map_d4af36b6fb11cba1511d9018a788e575 = L.map(
+                "map_d4af36b6fb11cba1511d9018a788e575",
                 {
                     center: [30.160812500000002, 19.660658333333334],
                     crs: L.CRS.EPSG3857,
@@ -505,7 +505,7 @@
 
         
     
-            var tile_layer_34677aa1bce1b5b24aa472d7582cccfe = L.tileLayer(
+            var tile_layer_19b0336c143190ded5bab258bfc92202 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -522,10 +522,10 @@
             );
         
     
-            tile_layer_34677aa1bce1b5b24aa472d7582cccfe.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            tile_layer_19b0336c143190ded5bab258bfc92202.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var tile_layer_530536858bcc1dbb20c7d3888fb03d66 = L.tileLayer(
+            var tile_layer_5ddbaf19aef029555fc15f8a36def4bb = L.tileLayer(
                 "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
                 {
   "minZoom": 0,
@@ -542,23 +542,23 @@
             );
         
     
-            tile_layer_530536858bcc1dbb20c7d3888fb03d66.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            tile_layer_5ddbaf19aef029555fc15f8a36def4bb.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_3bba20ebe9c3564cf39a83ccd9e3c188 = L.featureGroup(
+            var feature_group_a97cbecea56418259e7918a04790c233 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_5caf9868e19b3ef9e86525f0eedf8aed = L.marker(
+            var marker_37301f84b87a562626de36dffcd3f9ca = L.marker(
                 [50.4501, 30.5234],
                 {
 }
-            ).addTo(feature_group_3bba20ebe9c3564cf39a83ccd9e3c188);
+            ).addTo(feature_group_a97cbecea56418259e7918a04790c233);
         
     
-            var icon_c2b1f137c07c8457199fe2ec7f8c2d9e = L.AwesomeMarkers.icon(
+            var icon_474745a3db6808aae1d600f4323b41e1 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "black",
@@ -569,24 +569,24 @@
             );
         
     
-        var popup_8a3c3e0a0c8f1e1b42dc74dd32c78f78 = L.popup({
+        var popup_7e1ef7713bb359a26516f46f76193377 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_7b6d100a75fa9c6de7194c435e5f7ca2 = $(`<div id="html_7b6d100a75fa9c6de7194c435e5f7ca2" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Ukraine 2022</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Ukraine</p>             <p><b>Date:</b> 2022-02-24 00:00:00</p>             <p><b>Intensité:</b> 9.0</p>             <p><b>Population touchée:</b> 44,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 473,655 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 193 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 2,324 <small>(3.2% du besoin)</small></p><p><b>Generateurs:</b> 3 <small>(12.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 2 <small>(10.5% du besoin)</small></p><p><b>Personnel Medical:</b> 17 <small>(4.7% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 147,312 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 1.06%</p></div></div>`)[0];
-                popup_8a3c3e0a0c8f1e1b42dc74dd32c78f78.setContent(html_7b6d100a75fa9c6de7194c435e5f7ca2);
+                var html_cac32636d603c809f4f7eba637348a18 = $(`<div id="html_cac32636d603c809f4f7eba637348a18" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Ukraine 2022</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Ukraine</p>             <p><b>Date:</b> 2022-02-24 00:00:00</p>             <p><b>Intensité:</b> 9.0</p>             <p><b>Population touchée:</b> 44,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 3,755,195 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 851 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 33,960 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 8 <small>(11.6% du besoin)</small></p><p><b>Generateurs:</b> 19 <small>(13.8% du besoin)</small></p><p><b>Vehicules Urgence:</b> 14 <small>(12.7% du besoin)</small></p><p><b>Personnel Medical:</b> 209 <small>(10.1% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 729,606 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 85.37%</p></div></div>`)[0];
+                popup_7e1ef7713bb359a26516f46f76193377.setContent(html_cac32636d603c809f4f7eba637348a18);
             
         
 
-        marker_5caf9868e19b3ef9e86525f0eedf8aed.bindPopup(popup_8a3c3e0a0c8f1e1b42dc74dd32c78f78)
+        marker_37301f84b87a562626de36dffcd3f9ca.bindPopup(popup_7e1ef7713bb359a26516f46f76193377)
         ;
 
         
     
     
-            marker_5caf9868e19b3ef9e86525f0eedf8aed.bindTooltip(
+            marker_37301f84b87a562626de36dffcd3f9ca.bindTooltip(
                 `<div>
                      Guerre Ukraine 2022 (Guerre)
                  </div>`,
@@ -596,17 +596,17 @@
             );
         
     
-                marker_5caf9868e19b3ef9e86525f0eedf8aed.setIcon(icon_c2b1f137c07c8457199fe2ec7f8c2d9e);
+                marker_37301f84b87a562626de36dffcd3f9ca.setIcon(icon_474745a3db6808aae1d600f4323b41e1);
             
     
-            var marker_b0aad3fca730fd8f7b26204d70153d17 = L.marker(
+            var marker_6144d5e5179ebc6688d56a870b8cd9ab = L.marker(
                 [33.5138, 36.2765],
                 {
 }
-            ).addTo(feature_group_3bba20ebe9c3564cf39a83ccd9e3c188);
+            ).addTo(feature_group_a97cbecea56418259e7918a04790c233);
         
     
-            var icon_438e14576f2b8a81ad084ddb77194ff8 = L.AwesomeMarkers.icon(
+            var icon_015eb333530ee15171adcc9406f9c1c4 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "black",
@@ -617,24 +617,24 @@
             );
         
     
-        var popup_8bc0051ed48327dce17cb48e24afb5ff = L.popup({
+        var popup_42637b70d83e3b1ee9fa3db3ba336db2 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_f45fb9dad8f09f358a4025c205a6c0d7 = $(`<div id="html_f45fb9dad8f09f358a4025c205a6c0d7" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Syrie 2011</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Syrie</p>             <p><b>Date:</b> 2011-03-15 00:00:00</p>             <p><b>Intensité:</b> 8.5</p>             <p><b>Population touchée:</b> 22,000,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 260,949 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 106 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 1,280 <small>(3.2% du besoin)</small></p><p><b>Generateurs:</b> 2 <small>(15.4% du besoin)</small></p><p><b>Vehicules Urgence:</b> 1 <small>(10.0% du besoin)</small></p><p><b>Personnel Medical:</b> 9 <small>(4.5% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 81,158 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.58%</p></div></div>`)[0];
-                popup_8bc0051ed48327dce17cb48e24afb5ff.setContent(html_f45fb9dad8f09f358a4025c205a6c0d7);
+                var html_922a3001bb7f6d7aed58e1d9e279646a = $(`<div id="html_922a3001bb7f6d7aed58e1d9e279646a" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Syrie 2011</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Syrie</p>             <p><b>Date:</b> 2011-03-15 00:00:00</p>             <p><b>Intensité:</b> 8.5</p>             <p><b>Population touchée:</b> 22,000,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 3,974,711 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 901 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 35,945 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 8 <small>(11.0% du besoin)</small></p><p><b>Generateurs:</b> 20 <small>(13.7% du besoin)</small></p><p><b>Vehicules Urgence:</b> 15 <small>(12.8% du besoin)</small></p><p><b>Personnel Medical:</b> 221 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 772,256 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 90.36%</p></div></div>`)[0];
+                popup_42637b70d83e3b1ee9fa3db3ba336db2.setContent(html_922a3001bb7f6d7aed58e1d9e279646a);
             
         
 
-        marker_b0aad3fca730fd8f7b26204d70153d17.bindPopup(popup_8bc0051ed48327dce17cb48e24afb5ff)
+        marker_6144d5e5179ebc6688d56a870b8cd9ab.bindPopup(popup_42637b70d83e3b1ee9fa3db3ba336db2)
         ;
 
         
     
     
-            marker_b0aad3fca730fd8f7b26204d70153d17.bindTooltip(
+            marker_6144d5e5179ebc6688d56a870b8cd9ab.bindTooltip(
                 `<div>
                      Guerre Syrie 2011 (Guerre)
                  </div>`,
@@ -644,17 +644,17 @@
             );
         
     
-                marker_b0aad3fca730fd8f7b26204d70153d17.setIcon(icon_438e14576f2b8a81ad084ddb77194ff8);
+                marker_6144d5e5179ebc6688d56a870b8cd9ab.setIcon(icon_015eb333530ee15171adcc9406f9c1c4);
             
     
-            var marker_77d96c93f53cba7e9225c0d30b9caec7 = L.marker(
+            var marker_5eeda00a88196d2c936fe51ce92491b5 = L.marker(
                 [15.3694, 44.191],
                 {
 }
-            ).addTo(feature_group_3bba20ebe9c3564cf39a83ccd9e3c188);
+            ).addTo(feature_group_a97cbecea56418259e7918a04790c233);
         
     
-            var icon_6e9972dd010e625e39a5ff76d1e517de = L.AwesomeMarkers.icon(
+            var icon_ea2d7047608c1ccd4c64c58b79d352b4 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "black",
@@ -665,24 +665,24 @@
             );
         
     
-        var popup_27e7b06954950d8568e23a0d5ebd940e = L.popup({
+        var popup_9add7a9fe7e35a75a6018536ca375712 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_016687ff5ffb118510e1682f8199d3df = $(`<div id="html_016687ff5ffb118510e1682f8199d3df" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Yémen 2015</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Yémen</p>             <p><b>Date:</b> 2015-03-26 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 30,000,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 382,751 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 156 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 1,878 <small>(3.2% du besoin)</small></p><p><b>Generateurs:</b> 2 <small>(10.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 1 <small>(6.7% du besoin)</small></p><p><b>Personnel Medical:</b> 14 <small>(4.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 119,040 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.86%</p></div></div>`)[0];
-                popup_27e7b06954950d8568e23a0d5ebd940e.setContent(html_016687ff5ffb118510e1682f8199d3df);
+                var html_a0eeba11303eae84aa970a5e2fd194ff = $(`<div id="html_a0eeba11303eae84aa970a5e2fd194ff" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Yémen 2015</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Yémen</p>             <p><b>Date:</b> 2015-03-26 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 30,000,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 4,353,751 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 987 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 39,373 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 9 <small>(11.2% du besoin)</small></p><p><b>Generateurs:</b> 22 <small>(13.8% du besoin)</small></p><p><b>Vehicules Urgence:</b> 17 <small>(13.3% du besoin)</small></p><p><b>Personnel Medical:</b> 242 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 845,901 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 98.98%</p></div></div>`)[0];
+                popup_9add7a9fe7e35a75a6018536ca375712.setContent(html_a0eeba11303eae84aa970a5e2fd194ff);
             
         
 
-        marker_77d96c93f53cba7e9225c0d30b9caec7.bindPopup(popup_27e7b06954950d8568e23a0d5ebd940e)
+        marker_5eeda00a88196d2c936fe51ce92491b5.bindPopup(popup_9add7a9fe7e35a75a6018536ca375712)
         ;
 
         
     
     
-            marker_77d96c93f53cba7e9225c0d30b9caec7.bindTooltip(
+            marker_5eeda00a88196d2c936fe51ce92491b5.bindTooltip(
                 `<div>
                      Guerre Yémen 2015 (Guerre)
                  </div>`,
@@ -692,17 +692,17 @@
             );
         
     
-                marker_77d96c93f53cba7e9225c0d30b9caec7.setIcon(icon_6e9972dd010e625e39a5ff76d1e517de);
+                marker_5eeda00a88196d2c936fe51ce92491b5.setIcon(icon_ea2d7047608c1ccd4c64c58b79d352b4);
             
     
-            var marker_48720353dd1ef6ec50541b495fd32963 = L.marker(
+            var marker_c3114547d0d5a28486acf4dd65e3b030 = L.marker(
                 [31.3547, 34.3088],
                 {
 }
-            ).addTo(feature_group_3bba20ebe9c3564cf39a83ccd9e3c188);
+            ).addTo(feature_group_a97cbecea56418259e7918a04790c233);
         
     
-            var icon_1cb66e11049a2346f9736b0b854de16f = L.AwesomeMarkers.icon(
+            var icon_1291fd32614bbc61ae5524e55078c58a = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "black",
@@ -713,24 +713,24 @@
             );
         
     
-        var popup_af625daa253f65765ab5e36c7e2613f6 = L.popup({
+        var popup_7879c52e3d189b6038d2a5fec9abc4b4 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_4d76080b2aedbd39023fc54d5e8c894b = $(`<div id="html_4d76080b2aedbd39023fc54d5e8c894b" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Gaza 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Palestine</p>             <p><b>Date:</b> 2024-10-07 00:00:00</p>             <p><b>Intensité:</b> 9.5</p>             <p><b>Population touchée:</b> 2,300,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 34,846 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 14 <small>(9.9% du besoin)</small></p><p><b>Medicaments Doses:</b> 171 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 1 <small>(3.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 10,837 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.08%</p></div></div>`)[0];
-                popup_af625daa253f65765ab5e36c7e2613f6.setContent(html_4d76080b2aedbd39023fc54d5e8c894b);
+                var html_2c8be53c3f1e4510faf98cdb4a88da90 = $(`<div id="html_2c8be53c3f1e4510faf98cdb4a88da90" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Guerre Gaza 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Guerre</p>             <p><b>Pays:</b> Palestine</p>             <p><b>Date:</b> 2024-10-07 00:00:00</p>             <p><b>Intensité:</b> 9.5</p>             <p><b>Population touchée:</b> 2,300,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 4,398,837 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 997 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 39,780 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 9 <small>(11.1% du besoin)</small></p><p><b>Generateurs:</b> 22 <small>(13.6% du besoin)</small></p><p><b>Vehicules Urgence:</b> 17 <small>(13.2% du besoin)</small></p><p><b>Personnel Medical:</b> 245 <small>(10.1% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 854,661 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 100.00%</p></div></div>`)[0];
+                popup_7879c52e3d189b6038d2a5fec9abc4b4.setContent(html_2c8be53c3f1e4510faf98cdb4a88da90);
             
         
 
-        marker_48720353dd1ef6ec50541b495fd32963.bindPopup(popup_af625daa253f65765ab5e36c7e2613f6)
+        marker_c3114547d0d5a28486acf4dd65e3b030.bindPopup(popup_7879c52e3d189b6038d2a5fec9abc4b4)
         ;
 
         
     
     
-            marker_48720353dd1ef6ec50541b495fd32963.bindTooltip(
+            marker_c3114547d0d5a28486acf4dd65e3b030.bindTooltip(
                 `<div>
                      Guerre Gaza 2024 (Guerre)
                  </div>`,
@@ -740,26 +740,26 @@
             );
         
     
-                marker_48720353dd1ef6ec50541b495fd32963.setIcon(icon_1cb66e11049a2346f9736b0b854de16f);
+                marker_c3114547d0d5a28486acf4dd65e3b030.setIcon(icon_1291fd32614bbc61ae5524e55078c58a);
             
     
-            feature_group_3bba20ebe9c3564cf39a83ccd9e3c188.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_a97cbecea56418259e7918a04790c233.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_f4915e7eaccbcdca4e5bccf7e1742300 = L.featureGroup(
+            var feature_group_faf414420e6a579bcc2ff3de814ecce5 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_38fb6fae4fea8d043819513e0ac86941 = L.marker(
+            var marker_a1c3bb599c4b9999b312677fb2227060 = L.marker(
                 [30.3753, 69.3451],
                 {
 }
-            ).addTo(feature_group_f4915e7eaccbcdca4e5bccf7e1742300);
+            ).addTo(feature_group_faf414420e6a579bcc2ff3de814ecce5);
         
     
-            var icon_d0e36fe94a9017bacd54e5a092de812e = L.AwesomeMarkers.icon(
+            var icon_e47c0d5ed8111e5472568b1fac345fac = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "lightblue",
@@ -770,24 +770,24 @@
             );
         
     
-        var popup_3ae1a2c89b430b7b761cd19bdbc02d3d = L.popup({
+        var popup_cef04689efc96fd1969f8be4d2cb34e7 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_215e9358103df4c11d8b867793f6dda5 = $(`<div id="html_215e9358103df4c11d8b867793f6dda5" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Pakistan 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Pakistan</p>             <p><b>Date:</b> 2024-08-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 15,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 53,824 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 17 <small>(9.9% du besoin)</small></p><p><b>Medicaments Doses:</b> 264 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 1 <small>(2.4% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 17,437 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.30%</p></div></div>`)[0];
-                popup_3ae1a2c89b430b7b761cd19bdbc02d3d.setContent(html_215e9358103df4c11d8b867793f6dda5);
+                var html_a4c0fe6fa73400f466e7781f25f0a31d = $(`<div id="html_a4c0fe6fa73400f466e7781f25f0a31d" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Pakistan 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Pakistan</p>             <p><b>Date:</b> 2024-08-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 15,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,175,194 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 208 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 10,627 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 2 <small>(10.5% du besoin)</small></p><p><b>Generateurs:</b> 8 <small>(13.6% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(10.8% du besoin)</small></p><p><b>Personnel Medical:</b> 65 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 237,845 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 66.79%</p></div></div>`)[0];
+                popup_cef04689efc96fd1969f8be4d2cb34e7.setContent(html_a4c0fe6fa73400f466e7781f25f0a31d);
             
         
 
-        marker_38fb6fae4fea8d043819513e0ac86941.bindPopup(popup_3ae1a2c89b430b7b761cd19bdbc02d3d)
+        marker_a1c3bb599c4b9999b312677fb2227060.bindPopup(popup_cef04689efc96fd1969f8be4d2cb34e7)
         ;
 
         
     
     
-            marker_38fb6fae4fea8d043819513e0ac86941.bindTooltip(
+            marker_a1c3bb599c4b9999b312677fb2227060.bindTooltip(
                 `<div>
                      Inondation Pakistan 2024 (Inondation)
                  </div>`,
@@ -797,17 +797,17 @@
             );
         
     
-                marker_38fb6fae4fea8d043819513e0ac86941.setIcon(icon_d0e36fe94a9017bacd54e5a092de812e);
+                marker_a1c3bb599c4b9999b312677fb2227060.setIcon(icon_e47c0d5ed8111e5472568b1fac345fac);
             
     
-            var marker_de5ebc690e98dd674b65c1da3aaa25ae = L.marker(
+            var marker_daee5bd490a277fb6167ee50ecca161a = L.marker(
                 [-23.5505, -46.6333],
                 {
 }
-            ).addTo(feature_group_f4915e7eaccbcdca4e5bccf7e1742300);
+            ).addTo(feature_group_faf414420e6a579bcc2ff3de814ecce5);
         
     
-            var icon_004756a07ff44f4a71f126d9d1b2f37c = L.AwesomeMarkers.icon(
+            var icon_d4ff34dfe69ac5de584e56d189e6abdc = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "lightblue",
@@ -818,24 +818,24 @@
             );
         
     
-        var popup_c3db81cfc70592bdcb5fa2b7f605d8e0 = L.popup({
+        var popup_a936bb312207e41995d3c3bd00d265fa = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_eb4566a8865608663985bd8e041568c8 = $(`<div id="html_eb4566a8865608663985bd8e041568c8" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Brésil 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Brésil</p>             <p><b>Date:</b> 2024-12-01 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 12,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 38,275 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 12 <small>(9.9% du besoin)</small></p><p><b>Medicaments Doses:</b> 187 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 1 <small>(3.5% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 12,400 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.21%</p></div></div>`)[0];
-                popup_c3db81cfc70592bdcb5fa2b7f605d8e0.setContent(html_eb4566a8865608663985bd8e041568c8);
+                var html_06737598c437901506fe295e9ea40157 = $(`<div id="html_06737598c437901506fe295e9ea40157" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Brésil 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Brésil</p>             <p><b>Date:</b> 2024-12-01 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 12,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,030,509 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 182 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 9,319 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(5.9% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(13.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(12.1% du besoin)</small></p><p><b>Personnel Medical:</b> 57 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 208,562 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 58.57%</p></div></div>`)[0];
+                popup_a936bb312207e41995d3c3bd00d265fa.setContent(html_06737598c437901506fe295e9ea40157);
             
         
 
-        marker_de5ebc690e98dd674b65c1da3aaa25ae.bindPopup(popup_c3db81cfc70592bdcb5fa2b7f605d8e0)
+        marker_daee5bd490a277fb6167ee50ecca161a.bindPopup(popup_a936bb312207e41995d3c3bd00d265fa)
         ;
 
         
     
     
-            marker_de5ebc690e98dd674b65c1da3aaa25ae.bindTooltip(
+            marker_daee5bd490a277fb6167ee50ecca161a.bindTooltip(
                 `<div>
                      Inondation Brésil 2024 (Inondation)
                  </div>`,
@@ -845,17 +845,17 @@
             );
         
     
-                marker_de5ebc690e98dd674b65c1da3aaa25ae.setIcon(icon_004756a07ff44f4a71f126d9d1b2f37c);
+                marker_daee5bd490a277fb6167ee50ecca161a.setIcon(icon_d4ff34dfe69ac5de584e56d189e6abdc);
             
     
-            var marker_3c11ee3c9037c999a63af01e1c6f2199 = L.marker(
+            var marker_ba41c971b288762bafb064dfbb3c04ce = L.marker(
                 [28.7041, 77.1025],
                 {
 }
-            ).addTo(feature_group_f4915e7eaccbcdca4e5bccf7e1742300);
+            ).addTo(feature_group_faf414420e6a579bcc2ff3de814ecce5);
         
     
-            var icon_8b60843e19e8abf7727fb504f4b045e6 = L.AwesomeMarkers.icon(
+            var icon_974ccb9e2ec8234f66ae3309fc61349e = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "lightblue",
@@ -866,24 +866,24 @@
             );
         
     
-        var popup_1d5e3ae62a239d3c6ec8ef13951be616 = L.popup({
+        var popup_0d2c8a534c8bde1f657087ce17859038 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_d8643f4924d9c35f635c68139656fd4b = $(`<div id="html_d8643f4924d9c35f635c68139656fd4b" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Inde 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Inde</p>             <p><b>Date:</b> 2024-09-15 00:00:00</p>             <p><b>Intensité:</b> 7.8</p>             <p><b>Population touchée:</b> 25,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 77,746 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 24 <small>(9.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 381 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 2 <small>(3.4% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 25,187 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.44%</p></div></div>`)[0];
-                popup_1d5e3ae62a239d3c6ec8ef13951be616.setContent(html_d8643f4924d9c35f635c68139656fd4b);
+                var html_c793986c4973d1fc778e0cad6403a5f9 = $(`<div id="html_c793986c4973d1fc778e0cad6403a5f9" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Inde 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Inde</p>             <p><b>Date:</b> 2024-09-15 00:00:00</p>             <p><b>Intensité:</b> 7.8</p>             <p><b>Population touchée:</b> 25,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,049,988 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 185 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 9,495 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(5.9% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(13.2% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(12.1% du besoin)</small></p><p><b>Personnel Medical:</b> 58 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 212,505 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 59.67%</p></div></div>`)[0];
+                popup_0d2c8a534c8bde1f657087ce17859038.setContent(html_c793986c4973d1fc778e0cad6403a5f9);
             
         
 
-        marker_3c11ee3c9037c999a63af01e1c6f2199.bindPopup(popup_1d5e3ae62a239d3c6ec8ef13951be616)
+        marker_ba41c971b288762bafb064dfbb3c04ce.bindPopup(popup_0d2c8a534c8bde1f657087ce17859038)
         ;
 
         
     
     
-            marker_3c11ee3c9037c999a63af01e1c6f2199.bindTooltip(
+            marker_ba41c971b288762bafb064dfbb3c04ce.bindTooltip(
                 `<div>
                      Inondation Inde 2024 (Inondation)
                  </div>`,
@@ -893,17 +893,17 @@
             );
         
     
-                marker_3c11ee3c9037c999a63af01e1c6f2199.setIcon(icon_8b60843e19e8abf7727fb504f4b045e6);
+                marker_ba41c971b288762bafb064dfbb3c04ce.setIcon(icon_974ccb9e2ec8234f66ae3309fc61349e);
             
     
-            var marker_9e56ec3ff07647bb126c4fb528764e63 = L.marker(
+            var marker_ffc639cd36091e5f00449d9818717741 = L.marker(
                 [-1.2921, 36.8219],
                 {
 }
-            ).addTo(feature_group_f4915e7eaccbcdca4e5bccf7e1742300);
+            ).addTo(feature_group_faf414420e6a579bcc2ff3de814ecce5);
         
     
-            var icon_ec9dc4e7ee997070ff0966799608d343 = L.AwesomeMarkers.icon(
+            var icon_4e5c1f750dd98c901f4f5fe44e2e98f3 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "lightblue",
@@ -914,24 +914,24 @@
             );
         
     
-        var popup_b955d5413b43c1c67f035fa06a38c605 = L.popup({
+        var popup_d31f6c5a720bc0fb14830bc50343058b = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_7e3391f5eb43e4aaf4ca052672eaaac0 = $(`<div id="html_7e3391f5eb43e4aaf4ca052672eaaac0" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Kenya 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Kenya</p>             <p><b>Date:</b> 2024-11-15 00:00:00</p>             <p><b>Intensité:</b> 7.0</p>             <p><b>Population touchée:</b> 8,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 26,792 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 8 <small>(9.4% du besoin)</small></p><p><b>Medicaments Doses:</b> 131 <small>(3.2% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 8,680 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.15%</p></div></div>`)[0];
-                popup_b955d5413b43c1c67f035fa06a38c605.setContent(html_7e3391f5eb43e4aaf4ca052672eaaac0);
+                var html_e21038a60361e894b5790ad6b8d54491 = $(`<div id="html_e21038a60361e894b5790ad6b8d54491" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Inondation Kenya 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Inondation</p>             <p><b>Pays:</b> Kenya</p>             <p><b>Date:</b> 2024-11-15 00:00:00</p>             <p><b>Intensité:</b> 7.0</p>             <p><b>Population touchée:</b> 8,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,055,120 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 186 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 9,541 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(5.9% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(13.2% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(11.8% du besoin)</small></p><p><b>Personnel Medical:</b> 58 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 213,543 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 59.97%</p></div></div>`)[0];
+                popup_d31f6c5a720bc0fb14830bc50343058b.setContent(html_e21038a60361e894b5790ad6b8d54491);
             
         
 
-        marker_9e56ec3ff07647bb126c4fb528764e63.bindPopup(popup_b955d5413b43c1c67f035fa06a38c605)
+        marker_ffc639cd36091e5f00449d9818717741.bindPopup(popup_d31f6c5a720bc0fb14830bc50343058b)
         ;
 
         
     
     
-            marker_9e56ec3ff07647bb126c4fb528764e63.bindTooltip(
+            marker_ffc639cd36091e5f00449d9818717741.bindTooltip(
                 `<div>
                      Inondation Kenya 2024 (Inondation)
                  </div>`,
@@ -941,26 +941,26 @@
             );
         
     
-                marker_9e56ec3ff07647bb126c4fb528764e63.setIcon(icon_ec9dc4e7ee997070ff0966799608d343);
+                marker_ffc639cd36091e5f00449d9818717741.setIcon(icon_4e5c1f750dd98c901f4f5fe44e2e98f3);
             
     
-            feature_group_f4915e7eaccbcdca4e5bccf7e1742300.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_faf414420e6a579bcc2ff3de814ecce5.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_ed917c577945f26fb587ccde009c56e0 = L.featureGroup(
+            var feature_group_01a1b22a1d6caf4d52aeacefab60e5ec = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_aee803ad76d9bd0f277c562071a96bd9 = L.marker(
+            var marker_3cd9b0457488a12fb439db3d7e417eb4 = L.marker(
                 [22.5726, 88.3639],
                 {
 }
-            ).addTo(feature_group_ed917c577945f26fb587ccde009c56e0);
+            ).addTo(feature_group_01a1b22a1d6caf4d52aeacefab60e5ec);
         
     
-            var icon_ddfb9f98138a5b2c423fbaad715d0316 = L.AwesomeMarkers.icon(
+            var icon_334b441484eb977bd77c50d99995b147 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "darkblue",
@@ -971,24 +971,24 @@
             );
         
     
-        var popup_83920dd385b06b50c26a7a245b34063b = L.popup({
+        var popup_79606e8e02cc6f599345597bc872d037 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_f558b8b40817b4419dc317132a2b0c04 = $(`<div id="html_f558b8b40817b4419dc317132a2b0c04" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Cyclone Biparjoy 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Cyclone</p>             <p><b>Pays:</b> Inde</p>             <p><b>Date:</b> 2024-06-15 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 8,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 17,011 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 6 <small>(9.4% du besoin)</small></p><p><b>Medicaments Doses:</b> 104 <small>(3.2% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 6,613 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.14%</p></div></div>`)[0];
-                popup_83920dd385b06b50c26a7a245b34063b.setContent(html_f558b8b40817b4419dc317132a2b0c04);
+                var html_2c5cd65c6465e860bf10ea4a0a3f1ef1 = $(`<div id="html_2c5cd65c6465e860bf10ea4a0a3f1ef1" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Cyclone Biparjoy 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Cyclone</p>             <p><b>Pays:</b> Inde</p>             <p><b>Date:</b> 2024-06-15 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 8,000,000</p>             <p><b>Accessibilité:</b> 0.50</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 669,917 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 142 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 7,572 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(7.7% du besoin)</small></p><p><b>Generateurs:</b> 6 <small>(13.0% du besoin)</small></p><p><b>Vehicules Urgence:</b> 3 <small>(11.1% du besoin)</small></p><p><b>Personnel Medical:</b> 46 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 162,699 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 57.11%</p></div></div>`)[0];
+                popup_79606e8e02cc6f599345597bc872d037.setContent(html_2c5cd65c6465e860bf10ea4a0a3f1ef1);
             
         
 
-        marker_aee803ad76d9bd0f277c562071a96bd9.bindPopup(popup_83920dd385b06b50c26a7a245b34063b)
+        marker_3cd9b0457488a12fb439db3d7e417eb4.bindPopup(popup_79606e8e02cc6f599345597bc872d037)
         ;
 
         
     
     
-            marker_aee803ad76d9bd0f277c562071a96bd9.bindTooltip(
+            marker_3cd9b0457488a12fb439db3d7e417eb4.bindTooltip(
                 `<div>
                      Cyclone Biparjoy 2024 (Cyclone)
                  </div>`,
@@ -998,17 +998,17 @@
             );
         
     
-                marker_aee803ad76d9bd0f277c562071a96bd9.setIcon(icon_ddfb9f98138a5b2c423fbaad715d0316);
+                marker_3cd9b0457488a12fb439db3d7e417eb4.setIcon(icon_334b441484eb977bd77c50d99995b147);
             
     
-            var marker_a81eadeadeb5819f3d4c8659f33b4bf7 = L.marker(
+            var marker_452294bc0ed3d92e27fae7b38eeba996 = L.marker(
                 [23.685, 90.3563],
                 {
 }
-            ).addTo(feature_group_ed917c577945f26fb587ccde009c56e0);
+            ).addTo(feature_group_01a1b22a1d6caf4d52aeacefab60e5ec);
         
     
-            var icon_1ac4fd634e92fa35da34100687eae9d3 = L.AwesomeMarkers.icon(
+            var icon_e023e2fb6dc46532fb80fdeff1dcd3c4 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "darkblue",
@@ -1019,24 +1019,24 @@
             );
         
     
-        var popup_4487688986f7bdfddb729c1682f4562b = L.popup({
+        var popup_1fa2c16d38bf36664226ddddc4c5800f = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_fedcdb15a0a61a2434de7bc01d02ee6e = $(`<div id="html_fedcdb15a0a61a2434de7bc01d02ee6e" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Cyclone Remal 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Cyclone</p>             <p><b>Pays:</b> Bangladesh</p>             <p><b>Date:</b> 2024-05-26 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 10,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 25,516 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 9 <small>(9.3% du besoin)</small></p><p><b>Medicaments Doses:</b> 156 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 1 <small>(4.2% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 9,919 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.21%</p></div></div>`)[0];
-                popup_4487688986f7bdfddb729c1682f4562b.setContent(html_fedcdb15a0a61a2434de7bc01d02ee6e);
+                var html_8fae230fb70c70812a637afb228dcb9c = $(`<div id="html_8fae230fb70c70812a637afb228dcb9c" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Cyclone Remal 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Cyclone</p>             <p><b>Pays:</b> Bangladesh</p>             <p><b>Date:</b> 2024-05-26 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 10,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 815,186 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 173 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 9,215 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(6.2% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(12.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(12.1% du besoin)</small></p><p><b>Personnel Medical:</b> 56 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 197,980 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 69.49%</p></div></div>`)[0];
+                popup_1fa2c16d38bf36664226ddddc4c5800f.setContent(html_8fae230fb70c70812a637afb228dcb9c);
             
         
 
-        marker_a81eadeadeb5819f3d4c8659f33b4bf7.bindPopup(popup_4487688986f7bdfddb729c1682f4562b)
+        marker_452294bc0ed3d92e27fae7b38eeba996.bindPopup(popup_1fa2c16d38bf36664226ddddc4c5800f)
         ;
 
         
     
     
-            marker_a81eadeadeb5819f3d4c8659f33b4bf7.bindTooltip(
+            marker_452294bc0ed3d92e27fae7b38eeba996.bindTooltip(
                 `<div>
                      Cyclone Remal 2024 (Cyclone)
                  </div>`,
@@ -1046,26 +1046,26 @@
             );
         
     
-                marker_a81eadeadeb5819f3d4c8659f33b4bf7.setIcon(icon_1ac4fd634e92fa35da34100687eae9d3);
+                marker_452294bc0ed3d92e27fae7b38eeba996.setIcon(icon_e023e2fb6dc46532fb80fdeff1dcd3c4);
             
     
-            feature_group_ed917c577945f26fb587ccde009c56e0.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_01a1b22a1d6caf4d52aeacefab60e5ec.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_6f2375aeeb7b6192d54b8f1e1e38c23e = L.featureGroup(
+            var feature_group_02d4fdc1181f1ca9e3bf556ab818f29d = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_61bf6c67ab97becf85cc30c34b90b762 = L.marker(
+            var marker_334186bc1bac4f903621489bfe2075b2 = L.marker(
                 [12.8628, 30.2176],
                 {
 }
-            ).addTo(feature_group_6f2375aeeb7b6192d54b8f1e1e38c23e);
+            ).addTo(feature_group_02d4fdc1181f1ca9e3bf556ab818f29d);
         
     
-            var icon_0b174e2ee5fcd51ca5bd2ae3aef4c0b3 = L.AwesomeMarkers.icon(
+            var icon_703ac9f5e6d8496cca0ee7f26d2f2e26 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "orange",
@@ -1076,24 +1076,24 @@
             );
         
     
-        var popup_120c86cae40d0ea8385deccefbf9f280 = L.popup({
+        var popup_b6db719cbfd287ea605cec4d7f491d44 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_d516775b029e06399b5300fae117fd42 = $(`<div id="html_d516775b029e06399b5300fae117fd42" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Famine Soudan 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Famine</p>             <p><b>Pays:</b> Soudan</p>             <p><b>Date:</b> 2024-04-15 00:00:00</p>             <p><b>Intensité:</b> 8.5</p>             <p><b>Population touchée:</b> 12,000,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 108,446 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 41 <small>(9.9% du besoin)</small></p><p><b>Medicaments Doses:</b> 532 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 3 <small>(3.7% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 42,160 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.36%</p></div></div>`)[0];
-                popup_120c86cae40d0ea8385deccefbf9f280.setContent(html_d516775b029e06399b5300fae117fd42);
+                var html_ecbd5355f0dfab9297146dceca98131e = $(`<div id="html_ecbd5355f0dfab9297146dceca98131e" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Famine Soudan 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Famine</p>             <p><b>Pays:</b> Soudan</p>             <p><b>Date:</b> 2024-04-15 00:00:00</p>             <p><b>Intensité:</b> 8.5</p>             <p><b>Population touchée:</b> 12,000,000</p>             <p><b>Accessibilité:</b> 0.20</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 2,919,778 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 620 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 26,404 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 4 <small>(10.0% du besoin)</small></p><p><b>Generateurs:</b> 18 <small>(13.9% du besoin)</small></p><p><b>Vehicules Urgence:</b> 10 <small>(12.5% du besoin)</small></p><p><b>Personnel Medical:</b> 162 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 709,113 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 99.56%</p></div></div>`)[0];
+                popup_b6db719cbfd287ea605cec4d7f491d44.setContent(html_ecbd5355f0dfab9297146dceca98131e);
             
         
 
-        marker_61bf6c67ab97becf85cc30c34b90b762.bindPopup(popup_120c86cae40d0ea8385deccefbf9f280)
+        marker_334186bc1bac4f903621489bfe2075b2.bindPopup(popup_b6db719cbfd287ea605cec4d7f491d44)
         ;
 
         
     
     
-            marker_61bf6c67ab97becf85cc30c34b90b762.bindTooltip(
+            marker_334186bc1bac4f903621489bfe2075b2.bindTooltip(
                 `<div>
                      Famine Soudan 2024 (Famine)
                  </div>`,
@@ -1103,17 +1103,17 @@
             );
         
     
-                marker_61bf6c67ab97becf85cc30c34b90b762.setIcon(icon_0b174e2ee5fcd51ca5bd2ae3aef4c0b3);
+                marker_334186bc1bac4f903621489bfe2075b2.setIcon(icon_703ac9f5e6d8496cca0ee7f26d2f2e26);
             
     
-            var marker_60a4f5d42e798327bcc4399bbfbee2d8 = L.marker(
+            var marker_7309a36aaa5a982e30977264dcadfb11 = L.marker(
                 [-18.7669, 46.8691],
                 {
 }
-            ).addTo(feature_group_6f2375aeeb7b6192d54b8f1e1e38c23e);
+            ).addTo(feature_group_02d4fdc1181f1ca9e3bf556ab818f29d);
         
     
-            var icon_faf4f372cb03cf491f29d1ecf4307fdc = L.AwesomeMarkers.icon(
+            var icon_22da0ce7fb97701b09c1aaade03f86c3 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "orange",
@@ -1124,24 +1124,24 @@
             );
         
     
-        var popup_5b75eb92390d0cb86693c77398dbe5c5 = L.popup({
+        var popup_2193b18f3c8398c26c8ec7ddcef21835 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_e07e886683dd33e81eaaae1964ed3af1 = $(`<div id="html_e07e886683dd33e81eaaae1964ed3af1" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Famine Madagascar 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Famine</p>             <p><b>Pays:</b> Madagascar</p>             <p><b>Date:</b> 2024-03-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 5,000,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 34,886 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 13 <small>(9.8% du besoin)</small></p><p><b>Medicaments Doses:</b> 171 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 1 <small>(3.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 13,562 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.12%</p></div></div>`)[0];
-                popup_5b75eb92390d0cb86693c77398dbe5c5.setContent(html_e07e886683dd33e81eaaae1964ed3af1);
+                var html_6440f17726b506a8277faed5eeceed09 = $(`<div id="html_6440f17726b506a8277faed5eeceed09" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Famine Madagascar 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Famine</p>             <p><b>Pays:</b> Madagascar</p>             <p><b>Date:</b> 2024-03-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 5,000,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 2,133,169 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 453 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 19,291 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 3 <small>(10.3% du besoin)</small></p><p><b>Generateurs:</b> 13 <small>(13.8% du besoin)</small></p><p><b>Vehicules Urgence:</b> 7 <small>(11.9% du besoin)</small></p><p><b>Personnel Medical:</b> 118 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 518,073 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 72.74%</p></div></div>`)[0];
+                popup_2193b18f3c8398c26c8ec7ddcef21835.setContent(html_6440f17726b506a8277faed5eeceed09);
             
         
 
-        marker_60a4f5d42e798327bcc4399bbfbee2d8.bindPopup(popup_5b75eb92390d0cb86693c77398dbe5c5)
+        marker_7309a36aaa5a982e30977264dcadfb11.bindPopup(popup_2193b18f3c8398c26c8ec7ddcef21835)
         ;
 
         
     
     
-            marker_60a4f5d42e798327bcc4399bbfbee2d8.bindTooltip(
+            marker_7309a36aaa5a982e30977264dcadfb11.bindTooltip(
                 `<div>
                      Famine Madagascar 2024 (Famine)
                  </div>`,
@@ -1151,26 +1151,26 @@
             );
         
     
-                marker_60a4f5d42e798327bcc4399bbfbee2d8.setIcon(icon_faf4f372cb03cf491f29d1ecf4307fdc);
+                marker_7309a36aaa5a982e30977264dcadfb11.setIcon(icon_22da0ce7fb97701b09c1aaade03f86c3);
             
     
-            feature_group_6f2375aeeb7b6192d54b8f1e1e38c23e.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_02d4fdc1181f1ca9e3bf556ab818f29d.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_ddf280647322a3184020e772786c2c8e = L.featureGroup(
+            var feature_group_cb2c30ad629b919118fa42bd03114873 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_66c0012979aaf07dcb541b366e802118 = L.marker(
+            var marker_4c63c9842aa4c31aa39ee352d8df69f7 = L.marker(
                 [56.1304, -106.3468],
                 {
 }
-            ).addTo(feature_group_ddf280647322a3184020e772786c2c8e);
+            ).addTo(feature_group_cb2c30ad629b919118fa42bd03114873);
         
     
-            var icon_5c8fe76467545973713f66121f489ac1 = L.AwesomeMarkers.icon(
+            var icon_58f801f5549c542deb2affb23d31461d = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "darkorange",
@@ -1181,24 +1181,24 @@
             );
         
     
-        var popup_7083ab4792f7511f0b323c7417d6e86a = L.popup({
+        var popup_b71ceb948d7ca8624191fc4c2d5489bb = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_d97c66903b92c6dea207d257663971fa = $(`<div id="html_d97c66903b92c6dea207d257663971fa" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Incendie Canada 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Incendie</p>             <p><b>Pays:</b> Canada</p>             <p><b>Date:</b> 2024-05-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 10,000,000</p>             <p><b>Accessibilité:</b> 0.60</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 7,973 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 3 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 58 <small>(3.2% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 3,099 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.13%</p></div></div>`)[0];
-                popup_7083ab4792f7511f0b323c7417d6e86a.setContent(html_d97c66903b92c6dea207d257663971fa);
+                var html_2da6fb067d599c532cef5c040d0ee4c0 = $(`<div id="html_2da6fb067d599c532cef5c040d0ee4c0" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Incendie Canada 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Incendie</p>             <p><b>Pays:</b> Canada</p>             <p><b>Date:</b> 2024-05-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 10,000,000</p>             <p><b>Accessibilité:</b> 0.60</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 254,745 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 54 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 3,455 <small>(8.2% du besoin)</small></p><p><b>Generateurs:</b> 2 <small>(9.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 1 <small>(7.1% du besoin)</small></p><p><b>Personnel Medical:</b> 21 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 61,869 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 43.43%</p></div></div>`)[0];
+                popup_b71ceb948d7ca8624191fc4c2d5489bb.setContent(html_2da6fb067d599c532cef5c040d0ee4c0);
             
         
 
-        marker_66c0012979aaf07dcb541b366e802118.bindPopup(popup_7083ab4792f7511f0b323c7417d6e86a)
+        marker_4c63c9842aa4c31aa39ee352d8df69f7.bindPopup(popup_b71ceb948d7ca8624191fc4c2d5489bb)
         ;
 
         
     
     
-            marker_66c0012979aaf07dcb541b366e802118.bindTooltip(
+            marker_4c63c9842aa4c31aa39ee352d8df69f7.bindTooltip(
                 `<div>
                      Incendie Canada 2024 (Incendie)
                  </div>`,
@@ -1208,26 +1208,26 @@
             );
         
     
-                marker_66c0012979aaf07dcb541b366e802118.setIcon(icon_5c8fe76467545973713f66121f489ac1);
+                marker_4c63c9842aa4c31aa39ee352d8df69f7.setIcon(icon_58f801f5549c542deb2affb23d31461d);
             
     
-            feature_group_ddf280647322a3184020e772786c2c8e.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_cb2c30ad629b919118fa42bd03114873.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_b9657e5d4acbd264babe775dce9b2c2c = L.featureGroup(
+            var feature_group_af44aa24ea52aa3bb3053efd5556c0ee = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_5d7e4b13b287b4f78c15c963e58e79d8 = L.marker(
+            var marker_b57b1bc0f80daf675138b251103841f7 = L.marker(
                 [14.5995, 120.9842],
                 {
 }
-            ).addTo(feature_group_b9657e5d4acbd264babe775dce9b2c2c);
+            ).addTo(feature_group_af44aa24ea52aa3bb3053efd5556c0ee);
         
     
-            var icon_b8f5f930035ba7301e03ff605e70ee51 = L.AwesomeMarkers.icon(
+            var icon_5562b2439927f6f03acbfd1130053122 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "cadetblue",
@@ -1238,24 +1238,24 @@
             );
         
     
-        var popup_5f006181eccb19eaa291ce21bf5ba202 = L.popup({
+        var popup_f202acd797078baea1d49217d95c8aba = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_614a4cf61c54b9c79c44d82071795059 = $(`<div id="html_614a4cf61c54b9c79c44d82071795059" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Typhon Doksuri 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Typhon</p>             <p><b>Pays:</b> Philippines</p>             <p><b>Date:</b> 2024-07-25 00:00:00</p>             <p><b>Intensité:</b> 10.0</p>             <p><b>Population touchée:</b> 15,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 59,804 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 22 <small>(9.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 352 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 2 <small>(3.7% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 23,250 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.40%</p></div></div>`)[0];
-                popup_5f006181eccb19eaa291ce21bf5ba202.setContent(html_614a4cf61c54b9c79c44d82071795059);
+                var html_465abbd52060eb98a392376f4babcaa6 = $(`<div id="html_465abbd52060eb98a392376f4babcaa6" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Typhon Doksuri 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Typhon</p>             <p><b>Pays:</b> Philippines</p>             <p><b>Date:</b> 2024-07-25 00:00:00</p>             <p><b>Intensité:</b> 10.0</p>             <p><b>Population touchée:</b> 15,000,000</p>             <p><b>Accessibilité:</b> 0.40</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,305,771 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 277 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 14,170 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 3 <small>(11.5% du besoin)</small></p><p><b>Generateurs:</b> 11 <small>(13.9% du besoin)</small></p><p><b>Vehicules Urgence:</b> 6 <small>(12.0% du besoin)</small></p><p><b>Personnel Medical:</b> 87 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 317,127 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 89.05%</p></div></div>`)[0];
+                popup_f202acd797078baea1d49217d95c8aba.setContent(html_465abbd52060eb98a392376f4babcaa6);
             
         
 
-        marker_5d7e4b13b287b4f78c15c963e58e79d8.bindPopup(popup_5f006181eccb19eaa291ce21bf5ba202)
+        marker_b57b1bc0f80daf675138b251103841f7.bindPopup(popup_f202acd797078baea1d49217d95c8aba)
         ;
 
         
     
     
-            marker_5d7e4b13b287b4f78c15c963e58e79d8.bindTooltip(
+            marker_b57b1bc0f80daf675138b251103841f7.bindTooltip(
                 `<div>
                      Typhon Doksuri 2024 (Typhon)
                  </div>`,
@@ -1265,26 +1265,26 @@
             );
         
     
-                marker_5d7e4b13b287b4f78c15c963e58e79d8.setIcon(icon_b8f5f930035ba7301e03ff605e70ee51);
+                marker_b57b1bc0f80daf675138b251103841f7.setIcon(icon_5562b2439927f6f03acbfd1130053122);
             
     
-            feature_group_b9657e5d4acbd264babe775dce9b2c2c.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_af44aa24ea52aa3bb3053efd5556c0ee.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_f01987cfb3c96cff97c8a858ba15e406 = L.featureGroup(
+            var feature_group_c71b4c6d5aa33be48ef9aaa849c9d4c8 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_2c04eeb40f15004a410b748cda987f7b = L.marker(
+            var marker_f20b6921493d91e76abb8d125aa4a294 = L.marker(
                 [64.9631, -19.0208],
                 {
 }
-            ).addTo(feature_group_f01987cfb3c96cff97c8a858ba15e406);
+            ).addTo(feature_group_c71b4c6d5aa33be48ef9aaa849c9d4c8);
         
     
-            var icon_25c205a8af7189f22b1663fc265058a4 = L.AwesomeMarkers.icon(
+            var icon_5af38eb70f6fae3fe0d9c40ef47f181b = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "darkred",
@@ -1295,24 +1295,24 @@
             );
         
     
-        var popup_8232f2530d10776fd879553f7b2ee11e = L.popup({
+        var popup_4728d61dd2831ec5af37bd6ef06b75b3 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_ff6d48d146be7767f18e6082c36f5eee = $(`<div id="html_ff6d48d146be7767f18e6082c36f5eee" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Éruption volcanique Islande 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Éruption volcanique</p>             <p><b>Pays:</b> Islande</p>             <p><b>Date:</b> 2024-12-18 00:00:00</p>             <p><b>Intensité:</b> 6.5</p>             <p><b>Population touchée:</b> 350,000</p>             <p><b>Accessibilité:</b> 0.70</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 272 <small>(13.1% du besoin)</small></p><p><b>Medicaments Doses:</b> 2 <small>(2.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 105 <small>(10.1% du besoin)</small></p><p><b>Score d'urgence:</b> 0.00%</p></div></div>`)[0];
-                popup_8232f2530d10776fd879553f7b2ee11e.setContent(html_ff6d48d146be7767f18e6082c36f5eee);
+                var html_ea5d6215753d34573d1b52d1b51af670 = $(`<div id="html_ea5d6215753d34573d1b52d1b51af670" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Éruption volcanique Islande 2024</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Éruption volcanique</p>             <p><b>Pays:</b> Islande</p>             <p><b>Date:</b> 2024-12-18 00:00:00</p>             <p><b>Intensité:</b> 6.5</p>             <p><b>Population touchée:</b> 350,000</p>             <p><b>Accessibilité:</b> 0.70</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 196,717 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 41 <small>(7.5% du besoin)</small></p><p><b>Medicaments Doses:</b> 2,964 <small>(8.2% du besoin)</small></p><p><b>Generateurs:</b> 1 <small>(7.1% du besoin)</small></p><p><b>Vehicules Urgence:</b> 1 <small>(11.1% du besoin)</small></p><p><b>Personnel Medical:</b> 14 <small>(9.7% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 47,775 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 22.36%</p></div></div>`)[0];
+                popup_4728d61dd2831ec5af37bd6ef06b75b3.setContent(html_ea5d6215753d34573d1b52d1b51af670);
             
         
 
-        marker_2c04eeb40f15004a410b748cda987f7b.bindPopup(popup_8232f2530d10776fd879553f7b2ee11e)
+        marker_f20b6921493d91e76abb8d125aa4a294.bindPopup(popup_4728d61dd2831ec5af37bd6ef06b75b3)
         ;
 
         
     
     
-            marker_2c04eeb40f15004a410b748cda987f7b.bindTooltip(
+            marker_f20b6921493d91e76abb8d125aa4a294.bindTooltip(
                 `<div>
                      Éruption volcanique Islande 2024 (Éruption volcanique)
                  </div>`,
@@ -1322,26 +1322,26 @@
             );
         
     
-                marker_2c04eeb40f15004a410b748cda987f7b.setIcon(icon_25c205a8af7189f22b1663fc265058a4);
+                marker_f20b6921493d91e76abb8d125aa4a294.setIcon(icon_5af38eb70f6fae3fe0d9c40ef47f181b);
             
     
-            feature_group_f01987cfb3c96cff97c8a858ba15e406.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_c71b4c6d5aa33be48ef9aaa849c9d4c8.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_91140fb25efcf98c13201b32e200a4b6 = L.featureGroup(
+            var feature_group_2e973bad4b479ca0658c3202ec611bce = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_59c8b95ca00053d3b4a05e9e1e9052f5 = L.marker(
+            var marker_3de18d75d5be1ba038945ee846702be7 = L.marker(
                 [22.011, 95.936],
                 {
 }
-            ).addTo(feature_group_91140fb25efcf98c13201b32e200a4b6);
+            ).addTo(feature_group_2e973bad4b479ca0658c3202ec611bce);
         
     
-            var icon_db2ac12df6515454d0af2c827ce3545c = L.AwesomeMarkers.icon(
+            var icon_6ab0d534b7f87194cf9aec6114ed1c57 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "red",
@@ -1352,24 +1352,24 @@
             );
         
     
-        var popup_4222c8558d47bf6fff1142379c630a25 = L.popup({
+        var popup_f2f42f600994dec1af9930f6f7d14084 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_ea7d5ea3f8461af7712d22406a3e672f = $(`<div id="html_ea7d5ea3f8461af7712d22406a3e672f" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Myanmar (burma); Thailand 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> MYANMAR (BURMA); THAILAND</p>             <p><b>Date:</b> 2025-03-28 00:00:00</p>             <p><b>Intensité:</b> 7.7</p>             <p><b>Population touchée:</b> 1,200,000</p>             <p><b>Accessibilité:</b> 0.45</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 3,376 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 1 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 16 <small>(3.1% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 1,050 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.02%</p></div></div>`)[0];
-                popup_4222c8558d47bf6fff1142379c630a25.setContent(html_ea7d5ea3f8461af7712d22406a3e672f);
+                var html_6a4ec40bccaab2f3488635d049485be7 = $(`<div id="html_6a4ec40bccaab2f3488635d049485be7" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Myanmar (burma); Thailand 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> MYANMAR (BURMA); THAILAND</p>             <p><b>Date:</b> 2025-03-28 00:00:00</p>             <p><b>Intensité:</b> 7.7</p>             <p><b>Population touchée:</b> 1,200,000</p>             <p><b>Accessibilité:</b> 0.45</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 780,775 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 132 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 7,060 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(8.3% du besoin)</small></p><p><b>Generateurs:</b> 6 <small>(13.9% du besoin)</small></p><p><b>Vehicules Urgence:</b> 3 <small>(12.0% du besoin)</small></p><p><b>Personnel Medical:</b> 43 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 151,698 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 53.25%</p></div></div>`)[0];
+                popup_f2f42f600994dec1af9930f6f7d14084.setContent(html_6a4ec40bccaab2f3488635d049485be7);
             
         
 
-        marker_59c8b95ca00053d3b4a05e9e1e9052f5.bindPopup(popup_4222c8558d47bf6fff1142379c630a25)
+        marker_3de18d75d5be1ba038945ee846702be7.bindPopup(popup_f2f42f600994dec1af9930f6f7d14084)
         ;
 
         
     
     
-            marker_59c8b95ca00053d3b4a05e9e1e9052f5.bindTooltip(
+            marker_3de18d75d5be1ba038945ee846702be7.bindTooltip(
                 `<div>
                      Séisme Myanmar (burma); Thailand 2025 (Séisme)
                  </div>`,
@@ -1379,17 +1379,17 @@
             );
         
     
-                marker_59c8b95ca00053d3b4a05e9e1e9052f5.setIcon(icon_db2ac12df6515454d0af2c827ce3545c);
+                marker_3de18d75d5be1ba038945ee846702be7.setIcon(icon_6ab0d534b7f87194cf9aec6114ed1c57);
             
     
-            var marker_b962f7876da1989dda616ed8bc6e0492 = L.marker(
+            var marker_a8ccb9c9429b0244b6ffbfcf0b4de318 = L.marker(
                 [54.549, -160.472],
                 {
 }
-            ).addTo(feature_group_91140fb25efcf98c13201b32e200a4b6);
+            ).addTo(feature_group_2e973bad4b479ca0658c3202ec611bce);
         
     
-            var icon_86989b34016ce8176efaa242b4c2c73e = L.AwesomeMarkers.icon(
+            var icon_8b21a725b9100ded1041eb11e85a87e1 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "red",
@@ -1400,24 +1400,24 @@
             );
         
     
-        var popup_8e7678d7b38591196951e94efeaca529 = L.popup({
+        var popup_c100193bf70aa63e84d2bc9bca152f6b = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_cae7a35c4ef4b7d4bc2d5823ac38d119 = $(`<div id="html_cae7a35c4ef4b7d4bc2d5823ac38d119" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Alaska 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> ALASKA</p>             <p><b>Date:</b> 2025-07-16 00:00:00</p>             <p><b>Intensité:</b> 7.3</p>             <p><b>Population touchée:</b> 12,000</p>             <p><b>Accessibilité:</b> 0.35</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 37 <small>(12.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 11 <small>(9.6% du besoin)</small></p><p><b>Score d'urgence:</b> 0.00%</p></div></div>`)[0];
-                popup_8e7678d7b38591196951e94efeaca529.setContent(html_cae7a35c4ef4b7d4bc2d5823ac38d119);
+                var html_301e32ba4ea0c1b089e672c86edc0a8d = $(`<div id="html_301e32ba4ea0c1b089e672c86edc0a8d" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Alaska 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> ALASKA</p>             <p><b>Date:</b> 2025-07-16 00:00:00</p>             <p><b>Intensité:</b> 7.3</p>             <p><b>Population touchée:</b> 12,000</p>             <p><b>Accessibilité:</b> 0.35</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 586,998 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 99 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 5,308 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(11.1% du besoin)</small></p><p><b>Generateurs:</b> 4 <small>(12.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 2 <small>(10.5% du besoin)</small></p><p><b>Personnel Medical:</b> 32 <small>(9.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 114,049 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 40.03%</p></div></div>`)[0];
+                popup_c100193bf70aa63e84d2bc9bca152f6b.setContent(html_301e32ba4ea0c1b089e672c86edc0a8d);
             
         
 
-        marker_b962f7876da1989dda616ed8bc6e0492.bindPopup(popup_8e7678d7b38591196951e94efeaca529)
+        marker_a8ccb9c9429b0244b6ffbfcf0b4de318.bindPopup(popup_c100193bf70aa63e84d2bc9bca152f6b)
         ;
 
         
     
     
-            marker_b962f7876da1989dda616ed8bc6e0492.bindTooltip(
+            marker_a8ccb9c9429b0244b6ffbfcf0b4de318.bindTooltip(
                 `<div>
                      Séisme Alaska 2025 (Séisme)
                  </div>`,
@@ -1427,17 +1427,17 @@
             );
         
     
-                marker_b962f7876da1989dda616ed8bc6e0492.setIcon(icon_86989b34016ce8176efaa242b4c2c73e);
+                marker_a8ccb9c9429b0244b6ffbfcf0b4de318.setIcon(icon_8b21a725b9100ded1041eb11e85a87e1);
             
     
-            var marker_1d1c7b96942505120477fa65e8946474 = L.marker(
+            var marker_0b420926c3f873f7913175cc58233276 = L.marker(
                 [52.512, 160.324],
                 {
 }
-            ).addTo(feature_group_91140fb25efcf98c13201b32e200a4b6);
+            ).addTo(feature_group_2e973bad4b479ca0658c3202ec611bce);
         
     
-            var icon_dae16f09d41bbb86196e95219e5a4f5f = L.AwesomeMarkers.icon(
+            var icon_b487fcf3e18c4d33244d4b17ee21bdcc = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "red",
@@ -1448,24 +1448,24 @@
             );
         
     
-        var popup_879c4ea53bd3d22d940ee191d76fe2fb = L.popup({
+        var popup_a0aa63975600fd3121150175449da547 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_7a9fdddd89f18d4c58e27c81a251a782 = $(`<div id="html_7a9fdddd89f18d4c58e27c81a251a782" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Russia: Kamchatka Peninsula 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> RUSSIA</p>             <p><b>Date:</b> 2025-07-29 00:00:00</p>             <p><b>Intensité:</b> 8.8</p>             <p><b>Population touchée:</b> 12,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 49 <small>(13.1% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 15 <small>(10.0% du besoin)</small></p><p><b>Score d'urgence:</b> 0.00%</p></div></div>`)[0];
-                popup_879c4ea53bd3d22d940ee191d76fe2fb.setContent(html_7a9fdddd89f18d4c58e27c81a251a782);
+                var html_549c2c6edf5280f35d5fa24091219ebe = $(`<div id="html_549c2c6edf5280f35d5fa24091219ebe" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Séisme Russia: Kamchatka Peninsula 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Séisme</p>             <p><b>Pays:</b> RUSSIA</p>             <p><b>Date:</b> 2025-07-29 00:00:00</p>             <p><b>Intensité:</b> 8.8</p>             <p><b>Population touchée:</b> 12,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 762,046 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 129 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 6,891 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(8.3% du besoin)</small></p><p><b>Generateurs:</b> 5 <small>(11.9% du besoin)</small></p><p><b>Vehicules Urgence:</b> 3 <small>(12.0% du besoin)</small></p><p><b>Personnel Medical:</b> 42 <small>(9.9% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 148,059 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 51.97%</p></div></div>`)[0];
+                popup_a0aa63975600fd3121150175449da547.setContent(html_549c2c6edf5280f35d5fa24091219ebe);
             
         
 
-        marker_1d1c7b96942505120477fa65e8946474.bindPopup(popup_879c4ea53bd3d22d940ee191d76fe2fb)
+        marker_0b420926c3f873f7913175cc58233276.bindPopup(popup_a0aa63975600fd3121150175449da547)
         ;
 
         
     
     
-            marker_1d1c7b96942505120477fa65e8946474.bindTooltip(
+            marker_0b420926c3f873f7913175cc58233276.bindTooltip(
                 `<div>
                      Séisme Russia: Kamchatka Peninsula 2025 (Séisme)
                  </div>`,
@@ -1475,26 +1475,26 @@
             );
         
     
-                marker_1d1c7b96942505120477fa65e8946474.setIcon(icon_dae16f09d41bbb86196e95219e5a4f5f);
+                marker_0b420926c3f873f7913175cc58233276.setIcon(icon_b487fcf3e18c4d33244d4b17ee21bdcc);
             
     
-            feature_group_91140fb25efcf98c13201b32e200a4b6.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_2e973bad4b479ca0658c3202ec611bce.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_b0f4e1dbcfd0109a07c3f349cf11b716 = L.featureGroup(
+            var feature_group_8c71a5496c931d1eb22e10437f573403 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_34bd7f44ef0631c80a080da9036d0835 = L.marker(
+            var marker_7273d6828429bc9352364d0e1abb726a = L.marker(
                 [52.512, 160.324],
                 {
 }
-            ).addTo(feature_group_b0f4e1dbcfd0109a07c3f349cf11b716);
+            ).addTo(feature_group_8c71a5496c931d1eb22e10437f573403);
         
     
-            var icon_ca51a2aeec376b69bdd7055190ef4454 = L.AwesomeMarkers.icon(
+            var icon_caee688df8d7e42817715f0286ac95eb = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "blue",
@@ -1505,24 +1505,24 @@
             );
         
     
-        var popup_aeb90933164c9850761c125b61a5289b = L.popup({
+        var popup_d41fc6d1c486b5ee1280186a9e1a8ec4 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_f0a0de3db5bb62f9dfbc051a44afb852 = $(`<div id="html_f0a0de3db5bb62f9dfbc051a44afb852" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Tsunami Pacifique 29 juillet 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Tsunami</p>             <p><b>Pays:</b> Pacifique</p>             <p><b>Date:</b> 2025-07-29 00:00:00</p>             <p><b>Intensité:</b> 8.8</p>             <p><b>Population touchée:</b> 500,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 3,274 <small>(13.1% du besoin)</small></p><p><b>Medicaments Doses:</b> 15 <small>(3.2% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 954 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.01%</p></div></div>`)[0];
-                popup_aeb90933164c9850761c125b61a5289b.setContent(html_f0a0de3db5bb62f9dfbc051a44afb852);
+                var html_d65f18a9f85a0c0163d90ba662916b7a = $(`<div id="html_d65f18a9f85a0c0163d90ba662916b7a" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Tsunami Pacifique 29 juillet 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Tsunami</p>             <p><b>Pays:</b> Pacifique</p>             <p><b>Date:</b> 2025-07-29 00:00:00</p>             <p><b>Intensité:</b> 8.8</p>             <p><b>Population touchée:</b> 500,000</p>             <p><b>Accessibilité:</b> 0.30</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,703,432 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 271 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 14,442 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 2 <small>(8.7% du besoin)</small></p><p><b>Generateurs:</b> 9 <small>(12.9% du besoin)</small></p><p><b>Vehicules Urgence:</b> 6 <small>(12.8% du besoin)</small></p><p><b>Personnel Medical:</b> 94 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 310,278 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 72.61%</p></div></div>`)[0];
+                popup_d41fc6d1c486b5ee1280186a9e1a8ec4.setContent(html_d65f18a9f85a0c0163d90ba662916b7a);
             
         
 
-        marker_34bd7f44ef0631c80a080da9036d0835.bindPopup(popup_aeb90933164c9850761c125b61a5289b)
+        marker_7273d6828429bc9352364d0e1abb726a.bindPopup(popup_d41fc6d1c486b5ee1280186a9e1a8ec4)
         ;
 
         
     
     
-            marker_34bd7f44ef0631c80a080da9036d0835.bindTooltip(
+            marker_7273d6828429bc9352364d0e1abb726a.bindTooltip(
                 `<div>
                      Tsunami Pacifique 29 juillet 2025 (Tsunami)
                  </div>`,
@@ -1532,17 +1532,17 @@
             );
         
     
-                marker_34bd7f44ef0631c80a080da9036d0835.setIcon(icon_ca51a2aeec376b69bdd7055190ef4454);
+                marker_7273d6828429bc9352364d0e1abb726a.setIcon(icon_caee688df8d7e42817715f0286ac95eb);
             
     
-            var marker_f73bd97fc9af4c2918104c1aebc5952d = L.marker(
+            var marker_f713c7bb4de8151f94aad142282a8195 = L.marker(
                 [54.549, -160.472],
                 {
 }
-            ).addTo(feature_group_b0f4e1dbcfd0109a07c3f349cf11b716);
+            ).addTo(feature_group_8c71a5496c931d1eb22e10437f573403);
         
     
-            var icon_10ac69ab109d7baf2640aaea93f6db3e = L.AwesomeMarkers.icon(
+            var icon_65065d6ec7d4050d50725555334a832d = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "blue",
@@ -1553,24 +1553,24 @@
             );
         
     
-        var popup_e90806a5d9a7cc5a18cd75fe31e3043e = L.popup({
+        var popup_5a0333992dc6847e452376558ad12554 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_7a1198b4eaf0e767a9679c5744318ea4 = $(`<div id="html_7a1198b4eaf0e767a9679c5744318ea4" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Tsunami Alaska/Pacifique 16 juillet 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Tsunami</p>             <p><b>Pays:</b> Pacifique</p>             <p><b>Date:</b> 2025-07-16 00:00:00</p>             <p><b>Intensité:</b> 7.3</p>             <p><b>Population touchée:</b> 300,000</p>             <p><b>Accessibilité:</b> 0.35</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,513 <small>(13.1% du besoin)</small></p><p><b>Medicaments Doses:</b> 6 <small>(2.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 441 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.01%</p></div></div>`)[0];
-                popup_e90806a5d9a7cc5a18cd75fe31e3043e.setContent(html_7a1198b4eaf0e767a9679c5744318ea4);
+                var html_864ed0deca98191dbcc763ad93c1dfc1 = $(`<div id="html_864ed0deca98191dbcc763ad93c1dfc1" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Tsunami Alaska/Pacifique 16 juillet 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Tsunami</p>             <p><b>Pays:</b> Pacifique</p>             <p><b>Date:</b> 2025-07-16 00:00:00</p>             <p><b>Intensité:</b> 7.3</p>             <p><b>Population touchée:</b> 300,000</p>             <p><b>Accessibilité:</b> 0.35</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,261,062 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 201 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 10,691 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(5.9% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(13.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 4 <small>(11.8% du besoin)</small></p><p><b>Personnel Medical:</b> 70 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 229,701 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 53.75%</p></div></div>`)[0];
+                popup_5a0333992dc6847e452376558ad12554.setContent(html_864ed0deca98191dbcc763ad93c1dfc1);
             
         
 
-        marker_f73bd97fc9af4c2918104c1aebc5952d.bindPopup(popup_e90806a5d9a7cc5a18cd75fe31e3043e)
+        marker_f713c7bb4de8151f94aad142282a8195.bindPopup(popup_5a0333992dc6847e452376558ad12554)
         ;
 
         
     
     
-            marker_f73bd97fc9af4c2918104c1aebc5952d.bindTooltip(
+            marker_f713c7bb4de8151f94aad142282a8195.bindTooltip(
                 `<div>
                      Tsunami Alaska/Pacifique 16 juillet 2025 (Tsunami)
                  </div>`,
@@ -1580,26 +1580,26 @@
             );
         
     
-                marker_f73bd97fc9af4c2918104c1aebc5952d.setIcon(icon_10ac69ab109d7baf2640aaea93f6db3e);
+                marker_f713c7bb4de8151f94aad142282a8195.setIcon(icon_65065d6ec7d4050d50725555334a832d);
             
     
-            feature_group_b0f4e1dbcfd0109a07c3f349cf11b716.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_8c71a5496c931d1eb22e10437f573403.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_624f8086459bc847ce5a57f5970ed46c = L.featureGroup(
+            var feature_group_c0380087f51246e5ebf241b6f8cd7e40 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_219726f49503582e659532de8dd909e2 = L.marker(
+            var marker_61c99fe3ac6a059c12b59e7f8680b18c = L.marker(
                 [46.2276, 2.2137],
                 {
 }
-            ).addTo(feature_group_624f8086459bc847ce5a57f5970ed46c);
+            ).addTo(feature_group_c0380087f51246e5ebf241b6f8cd7e40);
         
     
-            var icon_b9fcf6756d8696277954b62f511c0dc3 = L.AwesomeMarkers.icon(
+            var icon_cefb3de73f9f9313ff36010764d45152 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "purple",
@@ -1610,24 +1610,24 @@
             );
         
     
-        var popup_4ea2e7eeafa0c191b214b166120e902e = L.popup({
+        var popup_fd5b55c7075cde3a1762ce1a2d6e6498 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_ed589e70533102fd7bf0ce73f38d66b8 = $(`<div id="html_ed589e70533102fd7bf0ce73f38d66b8" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>COVID-19 Reprise Octobre 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Pandémie</p>             <p><b>Pays:</b> France</p>             <p><b>Date:</b> 2025-10-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 68,000,000</p>             <p><b>Accessibilité:</b> 0.80</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 162,669 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 31 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 1,663 <small>(3.2% du besoin)</small></p><p><b>Personnel Medical:</b> 9 <small>(4.3% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 31,620 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.46%</p></div></div>`)[0];
-                popup_4ea2e7eeafa0c191b214b166120e902e.setContent(html_ed589e70533102fd7bf0ce73f38d66b8);
+                var html_015962bfa8d644ca3df96310b948fcde = $(`<div id="html_015962bfa8d644ca3df96310b948fcde" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>COVID-19 Reprise Octobre 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Pandémie</p>             <p><b>Pays:</b> France</p>             <p><b>Date:</b> 2025-10-01 00:00:00</p>             <p><b>Intensité:</b> 7.5</p>             <p><b>Population touchée:</b> 68,000,000</p>             <p><b>Accessibilité:</b> 0.80</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 855,128 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 90 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 16,111 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 1 <small>(6.7% du besoin)</small></p><p><b>Generateurs:</b> 3 <small>(13.0% du besoin)</small></p><p><b>Vehicules Urgence:</b> 2 <small>(10.5% du besoin)</small></p><p><b>Personnel Medical:</b> 79 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 103,840 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 24.30%</p></div></div>`)[0];
+                popup_fd5b55c7075cde3a1762ce1a2d6e6498.setContent(html_015962bfa8d644ca3df96310b948fcde);
             
         
 
-        marker_219726f49503582e659532de8dd909e2.bindPopup(popup_4ea2e7eeafa0c191b214b166120e902e)
+        marker_61c99fe3ac6a059c12b59e7f8680b18c.bindPopup(popup_fd5b55c7075cde3a1762ce1a2d6e6498)
         ;
 
         
     
     
-            marker_219726f49503582e659532de8dd909e2.bindTooltip(
+            marker_61c99fe3ac6a059c12b59e7f8680b18c.bindTooltip(
                 `<div>
                      COVID-19 Reprise Octobre 2025 (Pandémie)
                  </div>`,
@@ -1637,17 +1637,17 @@
             );
         
     
-                marker_219726f49503582e659532de8dd909e2.setIcon(icon_b9fcf6756d8696277954b62f511c0dc3);
+                marker_61c99fe3ac6a059c12b59e7f8680b18c.setIcon(icon_cefb3de73f9f9313ff36010764d45152);
             
     
-            var marker_2396bf923f3dc9e7ba7006608c4df4ce = L.marker(
+            var marker_73507fc50652621b6efbf15f19332386 = L.marker(
                 [46.2276, 2.2137],
                 {
 }
-            ).addTo(feature_group_624f8086459bc847ce5a57f5970ed46c);
+            ).addTo(feature_group_c0380087f51246e5ebf241b6f8cd7e40);
         
     
-            var icon_228acaebd4f2f78273be09c6f5ce501b = L.AwesomeMarkers.icon(
+            var icon_e5ddd0736d4fb52d7a49286925b4692c = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "purple",
@@ -1658,24 +1658,24 @@
             );
         
     
-        var popup_b75209ced746ba4ec92def97cfbf2601 = L.popup({
+        var popup_e461abd21c52467070c61a874d58ab7d = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_8b28bc56a6424d63a20d37a3cfefe94e = $(`<div id="html_8b28bc56a6424d63a20d37a3cfefe94e" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Grippe 2024-2025</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Pandémie</p>             <p><b>Pays:</b> Mondial</p>             <p><b>Date:</b> 2024-10-01 00:00:00</p>             <p><b>Intensité:</b> 7.0</p>             <p><b>Population touchée:</b> 8,000,000,000</p>             <p><b>Accessibilité:</b> 0.60</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 35,723,515 <small>(13.1% du besoin)</small></p><p><b>Tentes:</b> 6,836 <small>(10.0% du besoin)</small></p><p><b>Medicaments Doses:</b> 365,281 <small>(3.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 72 <small>(7.9% du besoin)</small></p><p><b>Generateurs:</b> 211 <small>(15.5% du besoin)</small></p><p><b>Vehicules Urgence:</b> 141 <small>(12.4% du besoin)</small></p><p><b>Personnel Medical:</b> 2,180 <small>(4.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 6,944,047 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 100.00%</p></div></div>`)[0];
-                popup_b75209ced746ba4ec92def97cfbf2601.setContent(html_8b28bc56a6424d63a20d37a3cfefe94e);
+                var html_6c40f44b4d7fe4889d3be0b0a74c2179 = $(`<div id="html_6c40f44b4d7fe4889d3be0b0a74c2179" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Grippe 2024-2025</h4>             <p><b style="color: red;">⚠ CRISE ACTUELLE</b></p>             <p><b>Type:</b> Pandémie</p>             <p><b>Pays:</b> Mondial</p>             <p><b>Date:</b> 2024-10-01 00:00:00</p>             <p><b>Intensité:</b> 7.0</p>             <p><b>Population touchée:</b> 8,000,000,000</p>             <p><b>Accessibilité:</b> 0.60</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 2,018,217 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 214 <small>(7.7% du besoin)</small></p><p><b>Medicaments Doses:</b> 38,024 <small>(8.2% du besoin)</small></p><p><b>Hopitaux Campagne:</b> 4 <small>(10.8% du besoin)</small></p><p><b>Generateurs:</b> 7 <small>(12.7% du besoin)</small></p><p><b>Vehicules Urgence:</b> 6 <small>(13.0% du besoin)</small></p><p><b>Personnel Medical:</b> 187 <small>(10.0% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 245,077 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 57.35%</p></div></div>`)[0];
+                popup_e461abd21c52467070c61a874d58ab7d.setContent(html_6c40f44b4d7fe4889d3be0b0a74c2179);
             
         
 
-        marker_2396bf923f3dc9e7ba7006608c4df4ce.bindPopup(popup_b75209ced746ba4ec92def97cfbf2601)
+        marker_73507fc50652621b6efbf15f19332386.bindPopup(popup_e461abd21c52467070c61a874d58ab7d)
         ;
 
         
     
     
-            marker_2396bf923f3dc9e7ba7006608c4df4ce.bindTooltip(
+            marker_73507fc50652621b6efbf15f19332386.bindTooltip(
                 `<div>
                      Grippe 2024-2025 (Pandémie)
                  </div>`,
@@ -1685,26 +1685,26 @@
             );
         
     
-                marker_2396bf923f3dc9e7ba7006608c4df4ce.setIcon(icon_228acaebd4f2f78273be09c6f5ce501b);
+                marker_73507fc50652621b6efbf15f19332386.setIcon(icon_e5ddd0736d4fb52d7a49286925b4692c);
             
     
-            feature_group_624f8086459bc847ce5a57f5970ed46c.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_c0380087f51246e5ebf241b6f8cd7e40.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var feature_group_839943b06fbc398925c63cf9865355cc = L.featureGroup(
+            var feature_group_97a11f18b99ed88b084bcc669d464b51 = L.featureGroup(
                 {
 }
             );
         
     
-            var marker_642558d6c646be90b9332062a265b51a = L.marker(
+            var marker_c9f22ee45a6253f7ace1b70dd03293ad = L.marker(
                 [25.7617, -80.1918],
                 {
 }
-            ).addTo(feature_group_839943b06fbc398925c63cf9865355cc);
+            ).addTo(feature_group_97a11f18b99ed88b084bcc669d464b51);
         
     
-            var icon_dbca22eec2216ea1ac5502976e9efb20 = L.AwesomeMarkers.icon(
+            var icon_a23868aa4df4b18c7047906729915497 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "purple",
@@ -1715,24 +1715,24 @@
             );
         
     
-        var popup_03cc1bf7023dd168a60616a540701f81 = L.popup({
+        var popup_748f60b0ba3d324897d583897f0d1069 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_78b93645643e6fbb6e1e1dbaf8407b6b = $(`<div id="html_78b93645643e6fbb6e1e1dbaf8407b6b" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Ouragan Erin Août 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Ouragan</p>             <p><b>Pays:</b> États-Unis</p>             <p><b>Date:</b> 2025-08-15 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 2,000,000</p>             <p><b>Accessibilité:</b> 0.70</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 1,913 <small>(13.1% du besoin)</small></p><p><b>Medicaments Doses:</b> 12 <small>(3.1% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 743 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.02%</p></div></div>`)[0];
-                popup_03cc1bf7023dd168a60616a540701f81.setContent(html_78b93645643e6fbb6e1e1dbaf8407b6b);
+                var html_c82fb4ec6fd053811b320223fb92b11c = $(`<div id="html_c82fb4ec6fd053811b320223fb92b11c" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Ouragan Erin Août 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Ouragan</p>             <p><b>Pays:</b> États-Unis</p>             <p><b>Date:</b> 2025-08-15 00:00:00</p>             <p><b>Intensité:</b> 8.0</p>             <p><b>Population touchée:</b> 2,000,000</p>             <p><b>Accessibilité:</b> 0.70</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 275,170 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 58 <small>(7.6% du besoin)</small></p><p><b>Medicaments Doses:</b> 3,317 <small>(8.2% du besoin)</small></p><p><b>Generateurs:</b> 2 <small>(10.0% du besoin)</small></p><p><b>Vehicules Urgence:</b> 1 <small>(8.3% du besoin)</small></p><p><b>Personnel Medical:</b> 20 <small>(9.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 66,829 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 31.28%</p></div></div>`)[0];
+                popup_748f60b0ba3d324897d583897f0d1069.setContent(html_c82fb4ec6fd053811b320223fb92b11c);
             
         
 
-        marker_642558d6c646be90b9332062a265b51a.bindPopup(popup_03cc1bf7023dd168a60616a540701f81)
+        marker_c9f22ee45a6253f7ace1b70dd03293ad.bindPopup(popup_748f60b0ba3d324897d583897f0d1069)
         ;
 
         
     
     
-            marker_642558d6c646be90b9332062a265b51a.bindTooltip(
+            marker_c9f22ee45a6253f7ace1b70dd03293ad.bindTooltip(
                 `<div>
                      Ouragan Erin Août 2025 (Ouragan)
                  </div>`,
@@ -1742,17 +1742,17 @@
             );
         
     
-                marker_642558d6c646be90b9332062a265b51a.setIcon(icon_dbca22eec2216ea1ac5502976e9efb20);
+                marker_c9f22ee45a6253f7ace1b70dd03293ad.setIcon(icon_a23868aa4df4b18c7047906729915497);
             
     
-            var marker_70aef3782ad39b43a7d8abae8f04ba87 = L.marker(
+            var marker_d4118d5b0724b0b0cb2fc80654c1014f = L.marker(
                 [28.5383, -81.3792],
                 {
 }
-            ).addTo(feature_group_839943b06fbc398925c63cf9865355cc);
+            ).addTo(feature_group_97a11f18b99ed88b084bcc669d464b51);
         
     
-            var icon_165f18700482d3091127e42f2c658b72 = L.AwesomeMarkers.icon(
+            var icon_7e4c12763fbb16384ef0089e154489ef = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "purple",
@@ -1763,24 +1763,24 @@
             );
         
     
-        var popup_1802ff7b5c4605b0e357ef9358dc2d56 = L.popup({
+        var popup_4bc3899e610d7d07ce930bb72214e811 = L.popup({
   "maxWidth": 300,
 });
 
         
             
-                var html_be07757d545ec49048035cdb21f95a3a = $(`<div id="html_be07757d545ec49048035cdb21f95a3a" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Ouragan Melissa Octobre 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Ouragan</p>             <p><b>Pays:</b> États-Unis</p>             <p><b>Date:</b> 2025-10-10 00:00:00</p>             <p><b>Intensité:</b> 6.0</p>             <p><b>Population touchée:</b> 1,500,000</p>             <p><b>Accessibilité:</b> 0.75</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 897 <small>(13.1% du besoin)</small></p><p><b>Medicaments Doses:</b> 5 <small>(2.8% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 348 <small>(10.2% du besoin)</small></p><p><b>Score d'urgence:</b> 0.01%</p></div></div>`)[0];
-                popup_1802ff7b5c4605b0e357ef9358dc2d56.setContent(html_be07757d545ec49048035cdb21f95a3a);
+                var html_31db1efeaad5b12dbabb1ebb2389ef7f = $(`<div id="html_31db1efeaad5b12dbabb1ebb2389ef7f" style="width: 100.0%; height: 100.0%;">         <div style="width: 250px;">             <h4>Ouragan Melissa Octobre 2025</h4>             <p><b style="color: red; font-size: 14px;">⚠ CRISE ACTUELLE 2025</b></p>             <p><b>Type:</b> Ouragan</p>             <p><b>Pays:</b> États-Unis</p>             <p><b>Date:</b> 2025-10-10 00:00:00</p>             <p><b>Intensité:</b> 6.0</p>             <p><b>Population touchée:</b> 1,500,000</p>             <p><b>Accessibilité:</b> 0.75</p>         <hr><h5>📦 Allocation de ressources:</h5><p><b>Eau Potable Litres:</b> 168,571 <small>(18.1% du besoin)</small></p><p><b>Tentes:</b> 35 <small>(7.5% du besoin)</small></p><p><b>Medicaments Doses:</b> 2,032 <small>(8.2% du besoin)</small></p><p><b>Generateurs:</b> 1 <small>(8.3% du besoin)</small></p><p><b>Personnel Medical:</b> 12 <small>(9.7% du besoin)</small></p><p><b>Denrees Alimentaires Kg:</b> 40,940 <small>(8.8% du besoin)</small></p><p><b>Score d'urgence:</b> 19.16%</p></div></div>`)[0];
+                popup_4bc3899e610d7d07ce930bb72214e811.setContent(html_31db1efeaad5b12dbabb1ebb2389ef7f);
             
         
 
-        marker_70aef3782ad39b43a7d8abae8f04ba87.bindPopup(popup_1802ff7b5c4605b0e357ef9358dc2d56)
+        marker_d4118d5b0724b0b0cb2fc80654c1014f.bindPopup(popup_4bc3899e610d7d07ce930bb72214e811)
         ;
 
         
     
     
-            marker_70aef3782ad39b43a7d8abae8f04ba87.bindTooltip(
+            marker_d4118d5b0724b0b0cb2fc80654c1014f.bindTooltip(
                 `<div>
                      Ouragan Melissa Octobre 2025 (Ouragan)
                  </div>`,
@@ -1790,40 +1790,40 @@
             );
         
     
-                marker_70aef3782ad39b43a7d8abae8f04ba87.setIcon(icon_165f18700482d3091127e42f2c658b72);
+                marker_d4118d5b0724b0b0cb2fc80654c1014f.setIcon(icon_7e4c12763fbb16384ef0089e154489ef);
             
     
-            feature_group_839943b06fbc398925c63cf9865355cc.addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            feature_group_97a11f18b99ed88b084bcc669d464b51.addTo(map_d4af36b6fb11cba1511d9018a788e575);
         
     
-            var layer_control_12798f1c38b07a319941d86e00f76eb4_layers = {
+            var layer_control_bbd0461fd3f25e59649e9aaeff6c34a4_layers = {
                 base_layers : {
-                    "openstreetmap" : tile_layer_34677aa1bce1b5b24aa472d7582cccfe,
-                    "cartodbpositron" : tile_layer_530536858bcc1dbb20c7d3888fb03d66,
+                    "openstreetmap" : tile_layer_19b0336c143190ded5bab258bfc92202,
+                    "cartodbpositron" : tile_layer_5ddbaf19aef029555fc15f8a36def4bb,
                 },
                 overlays :  {
-                    "Guerre" : feature_group_3bba20ebe9c3564cf39a83ccd9e3c188,
-                    "Inondation" : feature_group_f4915e7eaccbcdca4e5bccf7e1742300,
-                    "Cyclone" : feature_group_ed917c577945f26fb587ccde009c56e0,
-                    "Famine" : feature_group_6f2375aeeb7b6192d54b8f1e1e38c23e,
-                    "Incendie" : feature_group_ddf280647322a3184020e772786c2c8e,
-                    "Typhon" : feature_group_b9657e5d4acbd264babe775dce9b2c2c,
-                    "\u00c9ruption volcanique" : feature_group_f01987cfb3c96cff97c8a858ba15e406,
-                    "S\u00e9isme" : feature_group_91140fb25efcf98c13201b32e200a4b6,
-                    "Tsunami" : feature_group_b0f4e1dbcfd0109a07c3f349cf11b716,
-                    "Pand\u00e9mie" : feature_group_624f8086459bc847ce5a57f5970ed46c,
-                    "Ouragan" : feature_group_839943b06fbc398925c63cf9865355cc,
+                    "Guerre" : feature_group_a97cbecea56418259e7918a04790c233,
+                    "Inondation" : feature_group_faf414420e6a579bcc2ff3de814ecce5,
+                    "Cyclone" : feature_group_01a1b22a1d6caf4d52aeacefab60e5ec,
+                    "Famine" : feature_group_02d4fdc1181f1ca9e3bf556ab818f29d,
+                    "Incendie" : feature_group_cb2c30ad629b919118fa42bd03114873,
+                    "Typhon" : feature_group_af44aa24ea52aa3bb3053efd5556c0ee,
+                    "\u00c9ruption volcanique" : feature_group_c71b4c6d5aa33be48ef9aaa849c9d4c8,
+                    "S\u00e9isme" : feature_group_2e973bad4b479ca0658c3202ec611bce,
+                    "Tsunami" : feature_group_8c71a5496c931d1eb22e10437f573403,
+                    "Pand\u00e9mie" : feature_group_c0380087f51246e5ebf241b6f8cd7e40,
+                    "Ouragan" : feature_group_97a11f18b99ed88b084bcc669d464b51,
                 },
             };
-            let layer_control_12798f1c38b07a319941d86e00f76eb4 = L.control.layers(
-                layer_control_12798f1c38b07a319941d86e00f76eb4_layers.base_layers,
-                layer_control_12798f1c38b07a319941d86e00f76eb4_layers.overlays,
+            let layer_control_bbd0461fd3f25e59649e9aaeff6c34a4 = L.control.layers(
+                layer_control_bbd0461fd3f25e59649e9aaeff6c34a4_layers.base_layers,
+                layer_control_bbd0461fd3f25e59649e9aaeff6c34a4_layers.overlays,
                 {
   "position": "topright",
   "collapsed": true,
   "autoZIndex": true,
 }
-            ).addTo(map_dc6424e614bf7f4a05a3fb2b82f8fafa);
+            ).addTo(map_d4af36b6fb11cba1511d9018a788e575);
 
         
 </script>
