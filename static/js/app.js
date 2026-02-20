@@ -617,10 +617,12 @@ async function chargerHeatmapExistante() {
         <div class="alert alert-warning">
             <i class="fas fa-info-circle"></i> 
             <strong>Légende:</strong> 
-            <span style="color: #00ff00;">Vert clair</span> = Probabilité faible (0-20%), 
-            <span style="color: #ffff00;">Jaune</span> = Probabilité modérée (40-60%), 
-            <span style="color: #ff8000;">Orange</span> = Probabilité élevée (60-80%), 
-            <span style="color: #8b0000;">Rouge foncé</span> = Probabilité très élevée (80-100%)
+            <span style="color: #90ee90;">Vert clair</span> = Très faible (0-10%), 
+            <span style="color: #4caf50;">Vert</span> = Faible (10-20%), 
+            <span style="color: #c8c800;">Jaune-vert</span> = Modérée (20-35%), 
+            <span style="color: #e68a00;">Orange</span> = Modérée haute (35-50%), 
+            <span style="color: #cc3300;">Rouge</span> = Élevée (50-65%), 
+            <span style="color: #8b0000;">Rouge foncé</span> = Très élevée (65-80%)
         </div>
         <iframe src="${url}" width="100%" height="700" style="border: none; border-radius: 10px;"></iframe>
     `;
@@ -680,10 +682,12 @@ async function genererCarteHeatmap() {
                 <div class="alert alert-warning">
                     <i class="fas fa-info-circle"></i> 
                     <strong>Légende:</strong> 
-                    <span style="color: #00ff00;">Vert clair</span> = Probabilité faible (0-20%), 
-                    <span style="color: #ffff00;">Jaune</span> = Probabilité modérée (40-60%), 
-                    <span style="color: #ff8000;">Orange</span> = Probabilité élevée (60-80%), 
-                    <span style="color: #8b0000;">Rouge foncé</span> = Probabilité très élevée (80-100%)
+                    <span style="color: #90ee90;">Vert clair</span> = Très faible (0-10%), 
+                    <span style="color: #4caf50;">Vert</span> = Faible (10-20%), 
+                    <span style="color: #c8c800;">Jaune-vert</span> = Modérée (20-35%), 
+                    <span style="color: #e68a00;">Orange</span> = Modérée haute (35-50%), 
+                    <span style="color: #cc3300;">Rouge</span> = Élevée (50-65%), 
+                    <span style="color: #8b0000;">Rouge foncé</span> = Très élevée (65-80%)
                 </div>
                 <iframe src="${result.url}" width="100%" height="700" style="border: none; border-radius: 10px;"></iframe>
             `;
@@ -841,7 +845,13 @@ function afficherResultatsPrediction(result) {
             </div>
             <div class="card-body">
                 <h3>${result.probabilite.probabilite}%</h3>
-                <p><strong>Niveau:</strong> <span class="badge bg-warning">${result.probabilite.niveau}</span></p>
+                <p><strong>Niveau:</strong> <span class="badge" style="background-color: ${
+                    result.probabilite.niveau === 'Très élevée' ? '#8b0000' :
+                    result.probabilite.niveau === 'Élevée' ? '#cc3300' :
+                    result.probabilite.niveau === 'Modérée' ? '#e68a00' :
+                    result.probabilite.niveau === 'Faible' ? '#7ab648' :
+                    '#90ee90'
+                }; color: white; font-size: 0.95em; padding: 6px 12px;">${result.probabilite.niveau}</span></p>
                 <p><small>${result.probabilite.explication}</small></p>
             </div>
         </div>

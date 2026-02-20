@@ -541,18 +541,26 @@ def calculer_distance_geographique(lat1, lon1, lat2, lon2):
 def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df_crises):
     """
     Calcule la probabilité qu'un événement d'un type et d'une intensité donnés
-    se produise dans un pays spécifique
+    se produise dans un pays spécifique.
+    
+    La probabilité est basée sur 4 facteurs :
+    1. Proximité géographique avec les crises historiques du même type
+    2. Intensité demandée (plus élevée = événement plus rare)
+    3. Crises d'intensité similaire (±2) dans l'historique
+    4. Proximité temporelle (crise récente = plus probable qu'une crise ancienne)
     
     Args:
         pays_lat (float): Latitude du pays
         pays_lon (float): Longitude du pays
         type_crise (str): Type de crise
         intensite (float): Intensité de la crise (0-10)
-        df_crises (pandas.DataFrame): DataFrame des crises historiques
+        df_crises (pandas.DataFrame): DataFrame des crises historiques (avec colonne 'date')
     
     Returns:
         dict: Dictionnaire avec la probabilité et les détails
     """
+    from datetime import datetime
+    
     # Filtre les crises du même type
     crises_meme_type = df_crises[df_crises['type_crise'] == type_crise].copy()
     
@@ -564,82 +572,137 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
             'explication': f'Aucune crise de type {type_crise} dans l historique'
         }
     
-    # Calcule la distance entre le pays et chaque crise historique
+    # Date actuelle pour le calcul de proximité temporelle
+    date_actuelle = datetime.now()
+    
+    # Calcule la distance et l'ancienneté pour chaque crise historique
     distances = []
     intensites_proches = []
+    anciennetes_annees = []  # Nombre d'années depuis chaque crise
     
     for idx, crise in crises_meme_type.iterrows():
+        # Distance géographique
         distance = calculer_distance_geographique(
             pays_lat, pays_lon,
             crise['latitude'], crise['longitude']
         )
         distances.append(distance)
         
-        # Vérifie si l'intensité est proche
+        # Vérifie si l'intensité est proche (±2)
         diff_intensite = abs(crise['intensite'] - intensite)
-        if diff_intensite <= 2.0:  # Intensité similaire (±2)
+        if diff_intensite <= 2.0:
             intensites_proches.append(crise)
+        
+        # Calcule l'ancienneté en années
+        try:
+            date_crise = pd.to_datetime(crise['date'])
+            anciennete = (date_actuelle - date_crise).days / 365.25
+            anciennetes_annees.append(max(0, anciennete))
+        except (ValueError, TypeError):
+            # Si la date est invalide, considère la crise comme ancienne (30 ans)
+            anciennetes_annees.append(30.0)
     
-    # Facteur 1: Proximité géographique
+    # ======================================================================
+    # FACTEUR 1 : Proximité géographique (poids ~35%)
     # Plus il y a de crises proches, plus la probabilité est élevée
     # Au-delà de 1000 km, l'impact devient négligeable
+    # ======================================================================
     if distances:
         distance_min = min(distances)
-        distance_moyenne = np.mean(distances)
-        
-        # Calcule le facteur de proximité avec une décroissance rapide
-        # Impact maximal pour crises très proches (< 100 km)
-        # Décroissance rapide entre 100 et 1000 km
-        # Impact nul au-delà de 1000 km
         
         if distance_min <= 100:
-            # Crises très proches : impact maximal (1.0)
-            facteur_proximite = 1.0
+            facteur_proximite_geo = 1.0
         elif distance_min <= 500:
-            # Crises moyennement proches : décroissance linéaire de 1.0 à 0.3
-            facteur_proximite = 1.0 - ((distance_min - 100) / 400) * 0.7
+            # Décroissance linéaire de 1.0 à 0.3
+            facteur_proximite_geo = 1.0 - ((distance_min - 100) / 400) * 0.7
         elif distance_min <= 1000:
-            # Crises éloignées : décroissance rapide de 0.3 à 0.0
-            facteur_proximite = 0.3 * (1 - (distance_min - 500) / 500)
+            # Décroissance rapide de 0.3 à 0.05
+            facteur_proximite_geo = 0.3 - ((distance_min - 500) / 500) * 0.25
         else:
-            # Au-delà de 1000 km : impact nul
-            facteur_proximite = 0.0
+            facteur_proximite_geo = 0.05
         
-        # Ajuste également selon le nombre de crises proches
-        # Compte les crises à moins de 500 km
+        # Bonus si plusieurs crises proches
         nb_crises_proches_500 = sum(1 for d in distances if d < 500)
         nb_crises_proches_1000 = sum(1 for d in distances if d < 1000)
         
-        # Bonus si plusieurs crises proches (mais limité)
         if nb_crises_proches_500 >= 3:
-            facteur_proximite = min(1.0, facteur_proximite * 1.2)
+            facteur_proximite_geo = min(1.0, facteur_proximite_geo * 1.2)
         elif nb_crises_proches_1000 >= 5:
-            facteur_proximite = min(1.0, facteur_proximite * 1.1)
+            facteur_proximite_geo = min(1.0, facteur_proximite_geo * 1.1)
     else:
-        facteur_proximite = 0.05  # Impact très faible si aucune crise historique
+        facteur_proximite_geo = 0.05
         distance_min = 10000
-        distance_moyenne = 10000
         nb_crises_proches_500 = 0
         nb_crises_proches_1000 = 0
     
-    # Facteur 2: Fréquence du type de crise
-    frequence_type = len(crises_meme_type) / len(df_crises)
+    # ======================================================================
+    # FACTEUR 2 : Intensité demandée (poids ~20%)
+    # Plus l'intensité est élevée, moins c'est probable (événement rare)
+    # Intensité 1 → facteur 0.96 | Intensité 5 → facteur 0.80 | Intensité 10 → facteur 0.60
+    # ======================================================================
+    facteur_intensite_demandee = 1 - (intensite / 10) * 0.4
     
-    # Facteur 3: Intensité similaire
+    # ======================================================================
+    # FACTEUR 3 : Crises d'intensité similaire (poids ~25%)
+    # Si des crises d'intensité similaire (±2) ont déjà eu lieu → plus probable
+    # ======================================================================
     if intensites_proches:
-        facteur_intensite = len(intensites_proches) / len(crises_meme_type)
+        ratio_similaires = len(intensites_proches) / len(crises_meme_type)
+        # ratio entre 0 et 1 → facteur entre 0.4 et 1.0
+        facteur_intensite_similaire = 0.4 + ratio_similaires * 0.6
     else:
-        # Si aucune crise d'intensité similaire, réduit la probabilité
-        facteur_intensite = 0.3
+        facteur_intensite_similaire = 0.2
     
-    # Facteur 4: Intensité demandée (plus intense = moins probable)
-    facteur_intensite_demandee = 1 - (intensite / 10) * 0.3  # Réduit de 0-30%
+    # ======================================================================
+    # FACTEUR 4 : Proximité temporelle (poids ~35%)
+    # Crises récentes = forte influence sur la probabilité
+    # < 5 ans → facteur max (1.0)
+    # 5-12 ans → décroissance progressive (1.0 → 0.4)
+    # 12-25 ans → décroissance rapide (0.4 → 0.1)
+    # > 25 ans → quasi nul (0.05)
+    # On prend la crise LA PLUS RÉCENTE du même type pour ce facteur
+    # ======================================================================
+    if anciennetes_annees:
+        anciennete_min = min(anciennetes_annees)  # Crise la plus récente
+        
+        if anciennete_min <= 5:
+            # Crise très récente : impact maximal
+            facteur_temporel = 1.0
+        elif anciennete_min <= 12:
+            # Crise récente : décroissance de 1.0 à 0.4
+            facteur_temporel = 1.0 - ((anciennete_min - 5) / 7) * 0.6
+        elif anciennete_min <= 25:
+            # Crise moyennement ancienne : décroissance de 0.4 à 0.1
+            facteur_temporel = 0.4 - ((anciennete_min - 12) / 13) * 0.3
+        else:
+            # Crise très ancienne (> 25 ans) : impact quasi nul
+            facteur_temporel = 0.05
+        
+        # Bonus si plusieurs crises récentes (< 10 ans)
+        nb_crises_recentes = sum(1 for a in anciennetes_annees if a < 10)
+        if nb_crises_recentes >= 3:
+            facteur_temporel = min(1.0, facteur_temporel * 1.25)
+        
+        # Calcul de l'année de la crise la plus récente pour l'explication
+        annee_plus_recente = int(date_actuelle.year - anciennete_min)
+    else:
+        facteur_temporel = 0.1
+        anciennete_min = 50
+        nb_crises_recentes = 0
+        annee_plus_recente = None
     
-    # Calcule la probabilité de base
-    probabilite_base = 50.0  # 50% de base
+    # ======================================================================
+    # CALCUL FINAL DE LA PROBABILITÉ
+    # Formule : base × géo × temporel × intensité_similaire × intensité_demandée
+    # La base est ajustée pour que les facteurs combinés donnent un résultat cohérent
+    # ======================================================================
+    probabilite_base = 80.0
     
-    # Ajuste selon les facteurs
-    probabilite = probabilite_base * facteur_proximite * (1 + frequence_type * 2) * facteur_intensite * facteur_intensite_demandee
+    probabilite = (probabilite_base 
+                   * facteur_proximite_geo 
+                   * facteur_temporel 
+                   * facteur_intensite_similaire 
+                   * facteur_intensite_demandee)
     
     # Limite entre 1% et 95%
     probabilite = max(1.0, min(95.0, probabilite))
@@ -656,7 +719,9 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
     else:
         niveau = 'Très faible'
     
-    # Crée l'explication
+    # ======================================================================
+    # CONSTRUCTION DE L'EXPLICATION DÉTAILLÉE
+    # ======================================================================
     if distances:
         nb_crises_proches_100 = sum(1 for d in distances if d < 100)
         nb_crises_proches_500 = sum(1 for d in distances if d < 500)
@@ -667,6 +732,8 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
         nb_crises_proches_1000 = 0
     
     explication = f"{len(crises_meme_type)} crise(s) de type {type_crise} dans l historique"
+    
+    # Info géographique
     if distance_min < 1000:
         if nb_crises_proches_100 > 0:
             explication += f", {nb_crises_proches_100} crise(s) à moins de 100 km"
@@ -674,10 +741,25 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
             explication += f", {nb_crises_proches_500} crise(s) à moins de 500 km"
         explication += f", crise la plus proche à {distance_min:.0f} km"
     else:
-        explication += f", crise la plus proche à {distance_min:.0f} km (au-delà de 1000 km, impact négligeable)"
+        explication += f", crise la plus proche à {distance_min:.0f} km (éloignée)"
     
+    # Info temporelle
+    if anciennete_min < 50:
+        if anciennete_min <= 3:
+            explication += f", crise récente ({annee_plus_recente})"
+        elif anciennete_min <= 10:
+            explication += f", dernière crise il y a {anciennete_min:.0f} ans ({annee_plus_recente})"
+        elif anciennete_min <= 25:
+            explication += f", dernière crise il y a {anciennete_min:.0f} ans (ancienne)"
+        else:
+            explication += f", dernière crise il y a plus de 25 ans (très ancienne)"
+        
+        if nb_crises_recentes >= 2:
+            explication += f", {nb_crises_recentes} crise(s) dans les 10 dernières années"
+    
+    # Info intensité similaire
     if intensites_proches:
-        explication += f", {len(intensites_proches)} crise(s) d intensite similaire"
+        explication += f", {len(intensites_proches)} crise(s) d intensité similaire"
     
     return {
         'probabilite': round(probabilite, 2),
@@ -687,7 +769,9 @@ def calculer_probabilite_evenement(pays_lat, pays_lon, type_crise, intensite, df
         'nb_crises_historiques': len(crises_meme_type),
         'nb_crises_proches_100': nb_crises_proches_100 if distances else 0,
         'nb_crises_proches_500': nb_crises_proches_500 if distances else 0,
-        'nb_crises_proches_1000': nb_crises_proches_1000 if distances else 0
+        'nb_crises_proches_1000': nb_crises_proches_1000 if distances else 0,
+        'anciennete_min_annees': round(anciennete_min, 1) if anciennetes_annees else None,
+        'nb_crises_recentes_10ans': nb_crises_recentes if anciennetes_annees else 0
     }
 
 

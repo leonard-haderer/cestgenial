@@ -838,19 +838,21 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
     # Ces seuils sont absolus et ne dépendent pas des valeurs min/max
     def obtenir_couleur_probabilite(prob):
         """
-        Retourne la couleur en fonction de la probabilité absolue
-        Utilise des seuils fixes pour garantir la cohérence visuelle
+        Retourne la couleur en fonction de la probabilité absolue (0% à 80% max)
+        Dégradé du vert clair (0%) au rouge foncé (80%)
         """
-        if prob < 15:
-            return '#00ff00'  # Vert clair - Très faible probabilité
-        elif prob < 30:
-            return '#80ff00'  # Vert-jaune - Faible probabilité
+        if prob < 10:
+            return '#90ee90'  # Vert clair - Très faible probabilité
+        elif prob < 20:
+            return '#4caf50'  # Vert moyen - Faible probabilité
+        elif prob < 35:
+            return '#c8c800'  # Jaune-vert - Probabilité modérée basse
         elif prob < 50:
-            return '#ffff00'  # Jaune - Probabilité modérée
-        elif prob < 70:
-            return '#ff8000'  # Orange - Probabilité élevée
+            return '#e68a00'  # Orange - Probabilité modérée haute
+        elif prob < 65:
+            return '#cc3300'  # Rouge-orange - Probabilité élevée
         else:
-            return '#8b0000'  # Rouge foncé - Très élevée probabilité
+            return '#8b0000'  # Rouge foncé - Très élevée probabilité (65-80%)
     
     def obtenir_opacite_probabilite(prob):
         """
@@ -903,11 +905,12 @@ def ajouter_heatmap_probabilite(carte, df_crises, type_crise, intensite=7.0, res
                 border:2px solid grey; padding: 10px;
                 font-size: 11px;">
         <h4 style="margin-top: 0; font-size: 12px;">Probabilité {type_crise}</h4>
-        <p style="margin: 2px 0;"><span style="color: #00ff00;">●</span> &lt; 15% (Très faible)</p>
-        <p style="margin: 2px 0;"><span style="color: #80ff00;">●</span> 15-30% (Faible)</p>
-        <p style="margin: 2px 0;"><span style="color: #ffff00;">●</span> 30-50% (Modérée)</p>
-        <p style="margin: 2px 0;"><span style="color: #ff8000;">●</span> 50-70% (Élevée)</p>
-        <p style="margin: 2px 0;"><span style="color: #8b0000;">●</span> &gt; 70% (Très élevée)</p>
+        <p style="margin: 2px 0;"><span style="color: #90ee90;">●</span> &lt; 10% (Très faible)</p>
+        <p style="margin: 2px 0;"><span style="color: #4caf50;">●</span> 10-20% (Faible)</p>
+        <p style="margin: 2px 0;"><span style="color: #c8c800;">●</span> 20-35% (Modérée basse)</p>
+        <p style="margin: 2px 0;"><span style="color: #e68a00;">●</span> 35-50% (Modérée haute)</p>
+        <p style="margin: 2px 0;"><span style="color: #cc3300;">●</span> 50-65% (Élevée)</p>
+        <p style="margin: 2px 0;"><span style="color: #8b0000;">●</span> &gt; 65% (Très élevée)</p>
     </div>
     """
     carte.get_root().html.add_child(folium.Element(legende_prob_html))
@@ -961,12 +964,12 @@ def creer_carte_avec_heatmap(df_crises, type_crise, intensite=7.0, resolution=3.
                 border:2px solid grey; padding: 10px;
                 font-size: 12px;">
         <h5 style="margin-top: 0;">Probabilité {type_crise}</h5>
-        <div style="height: 20px; background: linear-gradient(to right, #00ff00, #80ff00, #ffff00, #ff8000, #ff4000, #8b0000); 
+        <div style="height: 20px; background: linear-gradient(to right, #90ee90, #4caf50, #c8c800, #e68a00, #cc3300, #8b0000); 
                     border: 1px solid #ccc; margin-bottom: 5px;"></div>
         <div style="display: flex; justify-content: space-between; font-size: 10px;">
             <span>0%</span>
-            <span>50%</span>
-            <span>100%</span>
+            <span>40%</span>
+            <span>80%</span>
         </div>
         <p style="margin-top: 10px; font-size: 10px;"><small>Intensité: {intensite}/10</small></p>
     </div>
