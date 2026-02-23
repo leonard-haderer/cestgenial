@@ -52,9 +52,16 @@ def creer_carte_interactive(df_crises, df_allocation=None, titre="Crises et Allo
     Returns:
         folium.Map: Objet carte Folium
     """
+    # Filtre les crises qui n'ont pas de coordonnées valides (latitude/longitude)
+    nb_avant = len(df_crises)
+    df_crises = df_crises.dropna(subset=['latitude', 'longitude']).copy()
+    nb_filtrees = nb_avant - len(df_crises)
+    if nb_filtrees > 0:
+        print(f"⚠ {nb_filtrees} crises ignorées car coordonnées manquantes (latitude/longitude)")
+    
     # Calcule le centre de la carte (moyenne des latitudes et longitudes)
-    centre_lat = df_crises['latitude'].mean()
-    centre_lon = df_crises['longitude'].mean()
+    centre_lat = df_crises['latitude'].mean() if len(df_crises) > 0 else 0
+    centre_lon = df_crises['longitude'].mean() if len(df_crises) > 0 else 0
     
     # Crée la carte centrée sur la moyenne des coordonnées
     carte = folium.Map(

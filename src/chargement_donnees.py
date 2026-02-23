@@ -32,18 +32,49 @@ def charger_crises(chemin_fichier=None, seulement_actuelles=False, seulement_pas
         raise FileNotFoundError(f"Le fichier {chemin_fichier} n'existe pas.")
     
     # Charge le fichier CSV dans un DataFrame pandas
-    df_crises = pd.read_csv(chemin_fichier, encoding='utf-8')
-    
+    # Détecte automatiquement le séparateur (virgule ou point-virgule)
+    try:
+        # Lit la première ligne pour détecter le séparateur
+        with open(chemin_fichier, 'r', encoding='utf-8') as f:
+            premiere_ligne = f.readline()
+        
+        # Si la première ligne contient plus de points-virgules que de virgules, utilise ;
+        if premiere_ligne.count(';') > premiere_ligne.count(','):
+            sep = ';'
+        else:
+            sep = ','
+        
+        df_crises = pd.read_csv(chemin_fichier, encoding='utf-8', sep=sep, on_bad_lines='warn')
+        print(f"✓ Fichier lu avec le séparateur '{sep}'")
+    except Exception as e:
+        print(f"❌ Erreur lors de la lecture du fichier CSV: {e}")
+        # Tente une lecture avec l'autre séparateur
+        try:
+            autre_sep = ',' if sep == ';' else ';'
+            df_crises = pd.read_csv(chemin_fichier, encoding='utf-8', sep=autre_sep, on_bad_lines='skip')
+            print(f"⚠ Fichier relu avec le séparateur '{autre_sep}' en ignorant les lignes problématiques")
+        except Exception as e2:
+            raise ValueError(f"Impossible de lire le fichier {chemin_fichier}: {e2}")
+
     # Convertit la colonne date en format datetime pour faciliter les manipulations
-    df_crises['date'] = pd.to_datetime(df_crises['date'])
+    try:
+        df_crises['date'] = pd.to_datetime(df_crises['date'], errors='coerce')
+    except Exception as e:
+        print(f"⚠ Erreur lors de la conversion des dates: {e}")
     
     # Convertit la colonne en_cours en booléen si elle existe
     if 'en_cours' in df_crises.columns:
-        df_crises['en_cours'] = df_crises['en_cours'].astype(bool)
+        try:
+            df_crises['en_cours'] = df_crises['en_cours'].astype(bool)
+        except Exception as e:
+            print(f"⚠ Erreur lors de la conversion de en_cours: {e}")
     
     # Convertit date_fin en datetime si elle existe
     if 'date_fin' in df_crises.columns:
-        df_crises['date_fin'] = pd.to_datetime(df_crises['date_fin'], errors='coerce')
+        try:
+            df_crises['date_fin'] = pd.to_datetime(df_crises['date_fin'], errors='coerce')
+        except Exception as e:
+            print(f"⚠ Erreur lors de la conversion de date_fin: {e}")
     
     # Filtre les crises actuelles si demandé
     if seulement_actuelles:
@@ -70,6 +101,7 @@ def charger_crises(chemin_fichier=None, seulement_actuelles=False, seulement_pas
     else:
         print(f"✓ {len(df_crises)} crises chargées depuis {chemin_fichier}")
     
+
     return df_crises
 
 
