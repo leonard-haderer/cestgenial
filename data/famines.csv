@@ -1,0 +1,60 @@
+Année;Pays;Description;Personnes touchées;population_touchee;latitude;longitude;accessibilite;intensite;source
+1945;Viêt Nam;;1200000.0;2000000;21.0285;105.8542;0.3;9.0;Wikipedia - Famine de 1945 au Viêt Nam - https://fr.wikipedia.org/wiki/Famine_de_1945_au_Vi%C3%AAt_Nam
+1947;Union soviétique;;1250000.0;1250000;55.7558;37.6173;0.3;8.5;Encyclopedia Britannica - https://www.britannica.com/event/Soviet-famine-of-1946-1947
+1958;Ethiopia;Famine in Tigray[39];100000.0;100000;14.12;38.73;0.3;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1959;China (mainland);The Great Chinese Famine[239][240][241] Some researchers also include the year 1958 or 1962.[242];35000000.0;36000000;35.8617;104.1954;0.3;9.5;Our World in Data - The Great Chinese Famine - https://ourworldindata.org/famines
+1966;Indonesia;Lombok, drought and malnutrition, exacerbated by restrictions on regional rice trade;50000.0;50000;-8.5833;116.3333;0.4;6.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1966;Burma;Rice crisis[246];;1500000;21.9162;95.956;0.4;6.5;FAO - Global Information and Early Warning System (GIEWS) - http://www.fao.org/giews/english/archives/index.htm
+1967;Biafra;Famine caused by Nigerian Civil War and blockade;2000000.0;2000000;5.3167;7.85;0.2;9.0;International Committee of the Red Cross (ICRC) - https://www.icrc.org/en/doc/war-and-law/armed-conflicts/nigeria-biafra/
+1968;Mauritania, Mali, Chad, Niger and Burkina Faso;Sahel drought created a famine that killed a million people[247];1000000.0;1000000;16.0;-2.0;0.3;9.0;Wikipedia - Sahel famine - https://en.wikipedia.org/wiki/Sahel_famine
+1970;Madagascar;Fourth Kere;;500000;-19.8667;46.4333;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1971;Afghanistan;Afghanistan drought;;1500000;34.5333;69.1333;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1972;Burundi;Politically induced famine;300000.0;300000;-3.3731;29.9189;0.4;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1972;Ethiopia;"Famine in Ethiopia caused by drought and poor governance; failure of the government to handle this crisis led to the fall of Haile Selassie and to Derg rule";60000.0;200000;9.145;40.4897;0.3;8.0;UN Office for the Coordination of Humanitarian Affairs (OCHA) - https://www.unocha.org/ethiopia
+1973;Darfur, Sudan;Darfur drought;1000.0;200000;13.5;24.5;0.3;7.0;UN OCHA - https://www.unocha.org/sudan/darfur-drought-1973
+1974;Bangladesh;Bangladesh famine of 1974[250];760000.0;1500000;23.685;90.3563;0.4;8.5;World Peace Foundation - https://sites.tufts.edu/wpf/famine-trends/famine-bangladesh-1974/
+1975; China; Floods failure of relief;230000.0;250000;34.27;108.94;0.3;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1975; East Timor; Indonesian counterinsurgency;103000.0;103000;-8.8742;125.7275;0.3;7.5;ACLED (Armed Conflict Location & Event Data Project) - https://acleddata.com/ | ReliefWeb - https://reliefweb.int/disaster/fl-2020-000032-tls
+1975;Cambodia;Famine under Khmer Rouge rule. A maximum estimate of 500,000 Cambodians lost their lives to famine;500000.0;2000000;12.5657;104.991;0.2;9.0;World Peace Foundation - https://sites.tufts.edu/wpf/famine-trends/famine-in-cambodia-1975-1979/
+1980;Uganda;Caused by drought and conflict[249];30000.0;300000;1.3733;32.2903;0.3;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1980;Madagascar;Fifth Kere;;600000;-19.8667;46.4333;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1982;Madagascar;Sixth Kere;230000.0;230000;-19.8667;46.4333;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1982;Mozambique;Famine caused by the Mozambican Civil War;100000.0;200000;-18.6657;35.5296;0.3;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1983;Ethiopia;1983–1985 famine in Ethiopia[253];500000.0;1000000;9.145;40.4897;0.3;9.0;UN OCHA - https://www.unocha.org/ethiopia/famine-1983-1985
+1984;Sudan;Famine caused by drought, economic crisis and the Second Sudanese Civil War;240000.0;250000;12.8628;30.2176;0.3;8.5;UN OCHA - ReliefWeb - https://reliefweb.int/disaster/dr-1984-000013-sdn
+1986;Madagascar;Seventh Kere;7600.0;50000;-19.8667;46.5;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1988;Sudan;Famine caused by the Second Sudanese Civil War;100000.0;250000;12.8628;30.2176;0.3;8.0;UN OCHA - ReliefWeb - https://reliefweb.int/disaster/cw-1988-000041-sdn
+1988;Madagascar;Eighth Kere;;1500000;-19.3739;46.7036;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1991;Somalia;Famine in Somalia caused by drought and civil war[249];300000.0;300000;5.1521;46.1996;0.3;8.5;UN OCHA - https://reliefweb.int/report/somalia/somalia-famine-1991-1992
+1992;Madagascar;Ninth Kere;;1500000;-18.7669;46.8691;0.3;7.5;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1993;Sudan;1993 Sudan famine;20000.0;150000;12.8628;30.2176;0.3;7.5;UN OCHA - ReliefWeb - https://reliefweb.int/disaster/fl-1993-000119-sdn
+1995;North Korea;North Korean famine.[257][258] Scholars estimate 600,000 died of starvation (other estimates range from 200,000 to 3.5 million).[259];1800000.0;2000000;40.3399;127.5101;0.2;9.0;Wikipedia - North Korean famine - https://en.wikipedia.org/wiki/North_Korean_famine
+1995;Madagascar;Tenth Kere;;1500000;-18.7669;46.8691;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1997;Madagascar;Eleventh Kere;;1500000;-19.8667;46.4333;0.3;7.0;EM-DAT (International Disaster Database) - https://www.emdat.be/
+1998;Sudan;1998 Sudan famine caused by war and drought;70000.0;2500000;12.8628;30.2176;0.3;8.0;UN OCHA - https://reliefweb.int/report/sudan/sudan-famine-1998-overview
+1998;Afghanistan;1998 Afghanistan famine;;250000;34.5553;69.2075;0.3;7.0;International Federation of Red Cross and Red Crescent Societies (IFRC) - https://reliefweb.int/report/afghanistan/afghanistan-famine-1998
+1998;Ethiopia;Famine in Ethiopia. The situation worsened by Eritrean–Ethiopian War;;8000000;9.145;40.4897;0.3;7.5;UN OCHA - https://reliefweb.int/report/ethiopia/ethiopia-famine-1998-2000
+1998;Democratic Republic of the Congo;Second Congo War. 2.7 million people died, mostly from starvation and disease;2700000.0;2700000;-4.0383;21.7587;0.2;9.0;International Rescue Committee (IRC) - https://www.rescue.org/report/congo-forgotten-crisis
+2002; Malawi; Drought relief failure;3000.0;3000000;-13.2543;34.3015;0.4;7.5;FAO - GIEWS (Global Information and Early Warning System) - http://www.fao.org/giews/english/alerts/malawi.htm
+2003;Sudan;Famine during the War in Darfur;200000.0;200000;13.5;24.5;0.3;8.0;UN OCHA - https://www.unocha.org/darfur-crisis
+2003; Uganda; Counterinsurgency pillage;100000.0;150000;3.3731;32.2903;0.3;7.0;Internal Displacement Monitoring Centre (IDMC) - https://www.internal-displacement.org/database/displacement-data
+2004;Madagascar;Twelfth Kere;;600000;-20.0;46.0;0.3;7.0;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ | ReliefWeb - https://reliefweb.int/disaster/dr-2004-000136-mdg
+2005;Niger and West Africa;2005–2006 Niger food crisis. At least three million were affected in Niger and 10 million throughout West Africa[260][261][262];47000.0;3000000;17.6078;8.0817;0.3;7.5;UN OCHA - https://www.unocha.org/story/niger-food-crisis-2005-2006
+2009;Madagascar;Thirteenth Kere;;700000;-20.0;46.0;0.3;7.0;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1152129/
+2011;Somalia;Famine in Somalia, brought on by the 2011 East Africa drought[264];285000.0;350000;5.1521;46.1996;0.3;9.0;UN OCHA - https://www.unocha.org/somalia/famine-2011
+2012;Senegal, Gambia, Niger, Mauritania, Mali, Burkina Faso;Famine in West Africa, brought on by the 2012 Sahel drought[265];;18700000;14.4667;-11.5;0.4;7.5;OCHA (United Nations Office for the Coordination of Humanitarian Affairs) - https://www.unocha.org/sahel-crisis-2012
+2012; Syria; War siege destruction of essential infrastructure;268000.0;268000;34.7324;36.7137;0.3;8.5;UN OCHA - https://www.unocha.org/syria
+2014;Madagascar;Fourteenth Kere;;1300000;-19.8667;46.4333;0.3;7.0;World Food Programme (WFP) - https://www.wfp.org/countries/madagascar
+2016;Yemen;Famine in Yemen, arising from the Yemeni Civil War and the subsequent blockade of Yemen by Saudi Arabia;200000.0;17000000;15.5527;48.5164;0.3;8.5;OCHA - https://www.unocha.org/yemen
+2017;South Sudan, Unity State and Somalia;Famine in South Sudan.[267] Famine in Somalia, due to 2017 Somali drought.;;6000000;7.0;30.0;0.3;8.0;UN OCHA - https://www.unocha.org/south-sudan/south-sudan-famine-2017 | FAO - http://www.fao.org/emergencies/crisis/somalia-drought/en/
+2016; Nigeria; Counterinsurgency siege requisitioning;340000.0;340000;12.0;13.0;0.3;8.0;ACAPS - https://www.acaps.org/country/nigeria/crisis/famine-2016
+2020;Tigray, Ethiopia;Famine in the Tigray War[268];175000.0;200000;13.5;39.0;0.3;8.0;UN OCHA - https://reliefweb.int/report/ethiopia/ethiopia-tigray-emergency-situation-report-1-20-january-2021
+2021;Madagascar;Fifteenth Kere (2021–present Madagascar famine);;1400000;-20.2204;44.3056;0.3;7.5;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1154646/
+2021;Afghanistan;Aftermath of the War in Afghanistan;;13000000;34.5553;69.2075;0.3;7.5;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1152123/
+2020; Central African Republic; War state failure;553000.0;553000;6.6111;20.9394;0.3;7.5;OCHA Central African Republic - https://reliefweb.int/disaster/ot-2020-000169-caf
+2021; Ethiopia; Forced starvation siege destruction of essential infrastructure pillage;336000.0;350000;11.5742;37.3669;0.3;8.5;ACLED (Armed Conflict Location & Event Data Project) - https://acleddata.com/ && UN OCHA Ethiopia - https://et.humanitarianresponse.info/
+2023;Nagorno-Karabakh;Blockade of Nagorno-Karabakh;1.0;120000;39.8256;46.7639;0.2;7.5;International Crisis Group - https://www.crisisgroup.org/europe-central-asia/caucasus/nagorno-karabakh-conflict/blockade-nagorno-karabakh-risks-famine
+2023;Gaza Strip, Palestine;Gaza Strip famine;;500000;31.5;34.4667;0.2;8.5;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1156245/
+2024;Haiti;2024 famine in Haiti;;4500000;18.5392;-72.3364;0.3;8.5;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1156180/
+2024;Sudan;Famine in Sudan (2024–present);1500.0;5000000;15.5007;32.5599;0.3;8.5;Integrated Food Security Phase Classification (IPC) - https://www.ipcinfo.org/ipc-country-analysis/details-map/en/c/1156183/
+2025;Syria;2025 hunger crisis in Syria;;12000000;34.8021;38.9968;0.3;7.5;World Food Programme (WFP) - https://www.wfp.org/countries/syria
